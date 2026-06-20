@@ -1,0 +1,549 @@
+PROJECT NAME:
+NxtPulse AI (MentorMind AI)
+
+TAGLINE:
+AI Command Center for SDI Excellence
+
+---
+
+## PRODUCT OVERVIEW
+
+Build a full-stack AI-powered SaaS dashboard web application.
+
+Purpose:
+This product helps managers, POCs, and SDI trainees in technical training programs (like CCBP/NxtWave) monitor learning quality, detect struggling trainees early, reduce manager workload, and improve demo performance.
+
+This is NOT a normal website.
+
+This must feel like a premium AI SaaS product demo for hackathons, investors, and judges.
+
+Think:
+Palantir + Notion + modern AI dashboards.
+
+Use:
+
+* Dark futuristic theme
+* Glassmorphism
+* Blue/cyan neon accents
+* Animated charts
+* Premium cards
+* Responsive design
+
+Tech Stack:
+Frontend:
+
+* React
+* TypeScript
+* Tailwind CSS
+
+Backend:
+
+* Supabase / Firebase / Node backend
+
+Optional:
+
+* OpenAI / Gemini / Claude API for AI features
+
+---
+
+## PROBLEM STATEMENT
+
+Current problems in SDI training systems:
+
+1. One manager handles 50–60+ trainees
+2. POCs manually track progress in sheets
+3. Weak trainees remain hidden
+4. AI dependency is increasing
+5. Demo quality is inconsistent
+6. Managers get delayed intervention signals
+7. Too much manual follow-up work
+
+Need:
+An AI system that detects struggling trainees early and automates monitoring.
+
+---
+
+## CORE AI MODULES
+
+1. LearnGuard AI
+   Purpose:
+   Evaluate whether trainee actually understands concepts.
+
+Checks:
+
+* Understanding
+* Confidence
+* AI Dependency
+* Readiness
+
+Example:
+Trainee says:
+"I completed React Task"
+
+AI asks:
+
+* Why use useState?
+* Why not props?
+* Explain re-rendering.
+
+AI generates scores.
+
+---
+
+2. Demo Intelligence
+   Purpose:
+   Evaluate demo quality.
+
+Checks:
+
+* Technical strength
+* Communication
+* Confidence
+* Teaching readiness
+
+Output:
+AI feedback on demo quality.
+
+---
+
+3. Silent Detector AI
+   Purpose:
+   Detect hidden struggling trainees.
+
+Signals:
+
+* Attendance drop
+* Demo quality drop
+* AI dependency increase
+* Reduced engagement
+* Poor standups
+
+Output:
+Risk level + intervention suggestion.
+
+---
+
+4. Understudy AI
+   Purpose:
+   AI simulates POC / manager routine work.
+
+Can handle:
+
+* reminders
+* follow-ups
+* escalation
+* reporting
+
+This is the WOW feature.
+
+---
+
+## USER ROLES
+
+3 roles:
+
+1. SDI Trainee
+2. POC
+3. Manager
+
+Each role gets different dashboard.
+
+---
+
+## APPLICATION FLOW
+
+Landing Page
+→ Login
+→ Role Selection
+→ Redirect to Dashboard
+
+Manager → Manager Dashboard
+POC → POC Dashboard
+SDI → SDI Dashboard
+
+Manager can access:
+
+* LearnGuard
+* Demo Intelligence
+* Silent Detector
+* Insights
+
+POC can access:
+
+* Monitoring
+* Understudy AI
+* Intervention tools
+
+SDI can access:
+
+* Learning dashboard
+* LearnGuard results
+* Wellness insights
+
+---
+
+## PAGE 1 — LANDING PAGE
+
+Hero Section:
+Big title:
+NxtPulse AI
+
+Subtitle:
+AI Command Center for SDI Excellence
+
+Description:
+Detect weak trainees early, validate learning quality, reduce manager workload, and improve training outcomes at scale.
+
+Buttons:
+
+* Enter Command Center
+* View Demo
+
+Section 2:
+Current Reality
+
+Cards:
+
+* 60+ Trainees per Manager
+* Manual Tracking
+* Hidden Strugglers
+* Late Intervention
+
+Section 3:
+Our AI Solution
+
+4 big cards:
+
+* LearnGuard AI
+* Demo Intelligence
+* Silent Detector AI
+* Understudy AI
+
+Section 4:
+Metrics
+
+Cards:
+
+* 4,882 SDI Trainees
+* 384 At Risk
+* 27% AI Dependency
+* 91% Prediction Accuracy
+
+Section 5:
+Footer CTA
+
+Button:
+Enter Command Center
+
+---
+
+## PAGE 2 — AUTH PAGE
+
+Modern role-based login page.
+
+Layout:
+2-column.
+
+Left:
+Branding + product highlights.
+
+Right:
+Login form.
+
+Role cards:
+
+* SDI
+* POC
+* Manager
+
+Form:
+
+* Email
+* Password
+
+Buttons:
+
+* Sign In
+* Google Sign In
+
+---
+
+## PAGE 3 — MANAGER DASHBOARD
+
+Title:
+SDI Command Center
+
+Metrics:
+
+* Avg Learning Score
+* High Risk Trainees
+* Pending Demos
+* Active Interventions
+
+SECTION 1:
+Risk Distribution
+
+Chart:
+High / Medium / Low risk
+
+SECTION 2:
+High Risk Trainees
+
+Table:
+Name | Track | Score | Risk
+
+SECTION 3:
+LearnGuard AI
+
+Recent evaluation:
+React State Management Demo
+
+Questions:
+
+* Why use useState?
+* Why not props?
+* Explain re-rendering
+
+Scores:
+
+* Understanding
+* Confidence
+* AI Dependency
+* Readiness
+
+SECTION 4:
+Demo Intelligence
+
+Latest Demo:
+React Hooks
+
+Metrics:
+
+* Technical Score
+* Communication
+* Confidence
+* Teaching Readiness
+
+AI Feedback:
+Strengths + weaknesses
+
+SECTION 5:
+Silent Detector AI
+
+Example:
+Rahul → High Risk
+Reason:
+Attendance dropped 30%
+
+Sai → Medium Risk
+Reason:
+Low confidence
+
+Kiran → Medium Risk
+Reason:
+High AI dependency
+
+AI Recommendation:
+Follow-up and intervention
+
+SECTION 6:
+Telemetry Table
+
+Columns:
+
+* Trainee
+* Track
+* Learning
+* Demo
+* Risk
+* Status
+
+---
+
+## PAGE 4 — POC DASHBOARD
+
+Title:
+Trainee Monitoring
+
+Metrics:
+
+* Pending Actions
+* Assigned Trainees
+* Resolved Today
+* Drafts Ready
+
+SECTION:
+Understudy AI Command Center
+
+Description:
+Understudy AI simulates POC operations.
+
+Inputs:
+
+* Attendance logs
+* Demo reports
+* Task updates
+* Standup summaries
+
+Simulation Results:
+
+* Handled: 42
+* Escalated: 3
+* Missed: 1
+
+SECTION:
+Suggested Outreach
+
+Cards:
+Trainee Name
+Issue
+Recommendation
+
+Buttons:
+
+* Acknowledge
+* Resolve
+* Dismiss
+
+---
+
+## PAGE 5 — SDI DASHBOARD
+
+Title:
+My Learning Dashboard
+
+Metrics:
+
+* CCBP Modules
+* Demo Score
+* Pending Demos
+* Learning Risk
+
+SECTION 1:
+LearnGuard AI
+
+Latest evaluation:
+JavaScript Closures
+
+Scores:
+
+* Understanding
+* Confidence
+* AI Dependency
+* Readiness
+
+AI Feedback:
+Improvement suggestions
+
+SECTION 2:
+My Telemetry
+
+Table:
+Track | Learning | Demo | Risk
+
+SECTION 3:
+Raise Alert button
+
+---
+
+## PAGE 6 — WELLNESS AI PAGE
+
+Purpose:
+Monitor burnout and stress.
+
+Show:
+
+* Stress level
+* Burnout risk
+* Motivation trend
+
+Example:
+Stress: Medium
+Burnout Risk: Low
+Motivation: Improving
+
+AI Suggestions:
+Take breaks
+Improve consistency
+Sleep better
+
+---
+
+## PAGE 7 — AI INSIGHTS REPORT
+
+Title:
+Executive AI Insights
+
+Summary cards:
+
+* Student Health
+* Learning Health
+* Manager Efficiency
+* Risk Forecast
+
+Charts:
+
+* Risk trend
+* Demo trend
+* AI dependency trend
+* Attendance trend
+
+Final section:
+Recommended Actions
+
+Examples:
+
+* Immediate intervention for 12 trainees
+* Mock demos for 25 trainees
+* Reduce AI dependency
+
+---
+
+## DATA MODELS
+
+Trainee:
+
+* id
+* name
+* cohort
+* attendance
+* learning_score
+* demo_score
+* risk_level
+
+POC:
+
+* id
+* name
+* assigned_trainees
+
+Manager:
+
+* id
+* name
+* teams
+
+Intervention:
+
+* id
+* trainee_id
+* type
+* status
+* recommendation
+
+---
+
+## DESIGN REQUIREMENTS
+
+Must look premium.
+
+Requirements:
+
+* Dark futuristic dashboard
+* Neon blue accents
+* Smooth animations
+* Charts
+* Responsive
+* Premium SaaS feel
+
+This should look like a hackathon-winning AI product.

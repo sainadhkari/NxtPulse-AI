@@ -3,20 +3,38 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: NxtPulse AI API specification
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: auth
+    description: Authentication operations
+  - name: trainees
+    description: SDI Trainee operations
+  - name: interventions
+    description: Intervention operations
+  - name: learnguard
+    description: LearnGuard AI evaluations
+  - name: demo-intelligence
+    description: Demo Intelligence operations
+  - name: silent-detector
+    description: Silent Detector AI operations
+  - name: understudy
+    description: Understudy AI operations
+  - name: wellness
+    description: Wellness AI operations
+  - name: insights
+    description: AI Insights and analytics
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +42,393 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login with email, password and role
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResult"
+        "401":
+          description: Invalid credentials
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current logged-in user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+
+  /trainees:
+    get:
+      operationId: getTrainees
+      tags: [trainees]
+      summary: List all trainees
+      parameters:
+        - name: risk_level
+          in: query
+          schema:
+            type: string
+            enum: [high, medium, low]
+        - name: cohort
+          in: query
+          schema:
+            type: string
+        - name: search
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of trainees
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Trainee"
+
+  /trainees/{id}:
+    get:
+      operationId: getTrainee
+      tags: [trainees]
+      summary: Get a trainee by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Trainee details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Trainee"
+        "404":
+          description: Not found
+
+  /trainees/stats/summary:
+    get:
+      operationId: getTraineeStats
+      tags: [trainees]
+      summary: Get aggregate trainee statistics for manager dashboard
+      responses:
+        "200":
+          description: Trainee statistics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TraineeStats"
+
+  /trainees/stats/risk-distribution:
+    get:
+      operationId: getRiskDistribution
+      tags: [trainees]
+      summary: Get risk level distribution counts
+      responses:
+        "200":
+          description: Risk distribution
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RiskDistribution"
+
+  /trainees/telemetry:
+    get:
+      operationId: getTelemetry
+      tags: [trainees]
+      summary: Get full telemetry table for all trainees
+      responses:
+        "200":
+          description: Telemetry data
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TelemetryRow"
+
+  /interventions:
+    get:
+      operationId: getInterventions
+      tags: [interventions]
+      summary: List interventions
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, resolved, dismissed]
+      responses:
+        "200":
+          description: List of interventions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Intervention"
+
+  /interventions/{id}/acknowledge:
+    post:
+      operationId: acknowledgeIntervention
+      tags: [interventions]
+      summary: Acknowledge an intervention
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Intervention acknowledged
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Intervention"
+
+  /interventions/{id}/resolve:
+    post:
+      operationId: resolveIntervention
+      tags: [interventions]
+      summary: Resolve an intervention
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Intervention resolved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Intervention"
+
+  /interventions/{id}/dismiss:
+    post:
+      operationId: dismissIntervention
+      tags: [interventions]
+      summary: Dismiss an intervention
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Intervention dismissed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Intervention"
+
+  /learnguard/evaluations:
+    get:
+      operationId: getLearnGuardEvaluations
+      tags: [learnguard]
+      summary: List recent LearnGuard AI evaluations
+      parameters:
+        - name: trainee_id
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of evaluations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LearnGuardEvaluation"
+
+  /learnguard/evaluations/latest:
+    get:
+      operationId: getLatestLearnGuardEvaluation
+      tags: [learnguard]
+      summary: Get the most recent LearnGuard evaluation
+      responses:
+        "200":
+          description: Latest evaluation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LearnGuardEvaluation"
+
+  /demo-intelligence/reports:
+    get:
+      operationId: getDemoReports
+      tags: [demo-intelligence]
+      summary: List demo intelligence reports
+      parameters:
+        - name: trainee_id
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: List of demo reports
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/DemoReport"
+
+  /demo-intelligence/reports/latest:
+    get:
+      operationId: getLatestDemoReport
+      tags: [demo-intelligence]
+      summary: Get the most recent demo intelligence report
+      responses:
+        "200":
+          description: Latest demo report
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DemoReport"
+
+  /silent-detector/alerts:
+    get:
+      operationId: getSilentDetectorAlerts
+      tags: [silent-detector]
+      summary: Get all Silent Detector AI alerts
+      responses:
+        "200":
+          description: List of silent detector alerts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SilentDetectorAlert"
+
+  /understudy/simulation:
+    get:
+      operationId: getUnderstudySimulation
+      tags: [understudy]
+      summary: Get latest Understudy AI simulation results
+      responses:
+        "200":
+          description: Simulation results
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnderstudySimulation"
+
+  /understudy/outreach:
+    get:
+      operationId: getOutreachSuggestions
+      tags: [understudy]
+      summary: Get suggested outreach actions from Understudy AI
+      responses:
+        "200":
+          description: Outreach suggestions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/OutreachSuggestion"
+
+  /wellness/metrics:
+    get:
+      operationId: getWellnessMetrics
+      tags: [wellness]
+      summary: Get wellness metrics for the current trainee or all trainees
+      parameters:
+        - name: trainee_id
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Wellness metrics
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WellnessMetrics"
+
+  /wellness/suggestions:
+    get:
+      operationId: getWellnessSuggestions
+      tags: [wellness]
+      summary: Get AI wellness improvement suggestions
+      responses:
+        "200":
+          description: Wellness suggestions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WellnessSuggestion"
+
+  /insights/summary:
+    get:
+      operationId: getInsightsSummary
+      tags: [insights]
+      summary: Get executive AI insights summary cards
+      responses:
+        "200":
+          description: Insights summary
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InsightsSummary"
+
+  /insights/trends:
+    get:
+      operationId: getInsightsTrends
+      tags: [insights]
+      summary: Get trend chart data for risk, demo, AI dependency, attendance
+      responses:
+        "200":
+          description: Trend data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InsightsTrends"
+
+  /insights/recommended-actions:
+    get:
+      operationId: getRecommendedActions
+      tags: [insights]
+      summary: Get AI-recommended priority actions
+      responses:
+        "200":
+          description: Recommended actions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RecommendedAction"
+
 components:
   schemas:
     HealthStatus:
@@ -31,6 +436,390 @@ components:
       properties:
         status:
           type: string
-      required:
-        - status
+      required: [status]
 
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+        role:
+          type: string
+          enum: [sdi, poc, manager]
+      required: [email, password, role]
+
+    AuthResult:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+      required: [token, user]
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum: [sdi, poc, manager]
+        cohort:
+          type: string
+          nullable: true
+      required: [id, name, email, role]
+
+    Trainee:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        cohort:
+          type: string
+        track:
+          type: string
+        attendance:
+          type: number
+        learning_score:
+          type: number
+        demo_score:
+          type: number
+        ai_dependency:
+          type: number
+        risk_level:
+          type: string
+          enum: [high, medium, low]
+        status:
+          type: string
+          enum: [active, on_leave, graduated]
+        last_active:
+          type: string
+      required: [id, name, cohort, track, attendance, learning_score, demo_score, ai_dependency, risk_level, status, last_active]
+
+    TraineeStats:
+      type: object
+      properties:
+        total_trainees:
+          type: integer
+        avg_learning_score:
+          type: number
+        high_risk_count:
+          type: integer
+        pending_demos:
+          type: integer
+        active_interventions:
+          type: integer
+        ai_dependency_avg:
+          type: number
+        prediction_accuracy:
+          type: number
+      required: [total_trainees, avg_learning_score, high_risk_count, pending_demos, active_interventions, ai_dependency_avg, prediction_accuracy]
+
+    RiskDistribution:
+      type: object
+      properties:
+        high:
+          type: integer
+        medium:
+          type: integer
+        low:
+          type: integer
+      required: [high, medium, low]
+
+    TelemetryRow:
+      type: object
+      properties:
+        trainee_id:
+          type: string
+        trainee_name:
+          type: string
+        track:
+          type: string
+        learning_score:
+          type: number
+        demo_score:
+          type: number
+        risk_level:
+          type: string
+          enum: [high, medium, low]
+        status:
+          type: string
+      required: [trainee_id, trainee_name, track, learning_score, demo_score, risk_level, status]
+
+    Intervention:
+      type: object
+      properties:
+        id:
+          type: string
+        trainee_id:
+          type: string
+        trainee_name:
+          type: string
+        type:
+          type: string
+          enum: [attendance, demo_quality, ai_dependency, engagement, standup]
+        status:
+          type: string
+          enum: [pending, acknowledged, resolved, dismissed]
+        recommendation:
+          type: string
+        issue:
+          type: string
+        created_at:
+          type: string
+      required: [id, trainee_id, trainee_name, type, status, recommendation, issue, created_at]
+
+    LearnGuardEvaluation:
+      type: object
+      properties:
+        id:
+          type: string
+        trainee_id:
+          type: string
+        trainee_name:
+          type: string
+        topic:
+          type: string
+        questions:
+          type: array
+          items:
+            type: string
+        understanding_score:
+          type: number
+        confidence_score:
+          type: number
+        ai_dependency_score:
+          type: number
+        readiness_score:
+          type: number
+        ai_feedback:
+          type: string
+        evaluated_at:
+          type: string
+      required: [id, trainee_id, trainee_name, topic, questions, understanding_score, confidence_score, ai_dependency_score, readiness_score, ai_feedback, evaluated_at]
+
+    DemoReport:
+      type: object
+      properties:
+        id:
+          type: string
+        trainee_id:
+          type: string
+        trainee_name:
+          type: string
+        topic:
+          type: string
+        technical_score:
+          type: number
+        communication_score:
+          type: number
+        confidence_score:
+          type: number
+        teaching_readiness_score:
+          type: number
+        strengths:
+          type: array
+          items:
+            type: string
+        weaknesses:
+          type: array
+          items:
+            type: string
+        ai_feedback:
+          type: string
+        reported_at:
+          type: string
+      required: [id, trainee_id, trainee_name, topic, technical_score, communication_score, confidence_score, teaching_readiness_score, strengths, weaknesses, ai_feedback, reported_at]
+
+    SilentDetectorAlert:
+      type: object
+      properties:
+        id:
+          type: string
+        trainee_id:
+          type: string
+        trainee_name:
+          type: string
+        risk_level:
+          type: string
+          enum: [high, medium, low]
+        signals:
+          type: array
+          items:
+            type: string
+        recommendation:
+          type: string
+        detected_at:
+          type: string
+      required: [id, trainee_id, trainee_name, risk_level, signals, recommendation, detected_at]
+
+    UnderstudySimulation:
+      type: object
+      properties:
+        id:
+          type: string
+        handled_count:
+          type: integer
+        escalated_count:
+          type: integer
+        missed_count:
+          type: integer
+        pending_actions:
+          type: integer
+        assigned_trainees:
+          type: integer
+        resolved_today:
+          type: integer
+        drafts_ready:
+          type: integer
+        simulated_at:
+          type: string
+      required: [id, handled_count, escalated_count, missed_count, pending_actions, assigned_trainees, resolved_today, drafts_ready, simulated_at]
+
+    OutreachSuggestion:
+      type: object
+      properties:
+        id:
+          type: string
+        trainee_id:
+          type: string
+        trainee_name:
+          type: string
+        issue:
+          type: string
+        recommendation:
+          type: string
+        priority:
+          type: string
+          enum: [high, medium, low]
+        status:
+          type: string
+          enum: [pending, acknowledged, resolved, dismissed]
+      required: [id, trainee_id, trainee_name, issue, recommendation, priority, status]
+
+    WellnessMetrics:
+      type: object
+      properties:
+        trainee_id:
+          type: string
+        stress_level:
+          type: string
+          enum: [low, medium, high]
+        burnout_risk:
+          type: string
+          enum: [low, medium, high]
+        motivation_trend:
+          type: string
+          enum: [declining, stable, improving]
+        stress_score:
+          type: number
+        burnout_score:
+          type: number
+        motivation_score:
+          type: number
+        weekly_trend:
+          type: array
+          items:
+            $ref: "#/components/schemas/WellnessTrendPoint"
+      required: [trainee_id, stress_level, burnout_risk, motivation_trend, stress_score, burnout_score, motivation_score, weekly_trend]
+
+    WellnessTrendPoint:
+      type: object
+      properties:
+        day:
+          type: string
+        stress:
+          type: number
+        motivation:
+          type: number
+      required: [day, stress, motivation]
+
+    WellnessSuggestion:
+      type: object
+      properties:
+        id:
+          type: string
+        category:
+          type: string
+        suggestion:
+          type: string
+        priority:
+          type: string
+          enum: [high, medium, low]
+      required: [id, category, suggestion, priority]
+
+    InsightsSummary:
+      type: object
+      properties:
+        student_health_score:
+          type: number
+        learning_health_score:
+          type: number
+        manager_efficiency_score:
+          type: number
+        risk_forecast_score:
+          type: number
+        total_trainees:
+          type: integer
+        at_risk_count:
+          type: integer
+        ai_dependency_avg:
+          type: number
+        prediction_accuracy:
+          type: number
+      required: [student_health_score, learning_health_score, manager_efficiency_score, risk_forecast_score, total_trainees, at_risk_count, ai_dependency_avg, prediction_accuracy]
+
+    InsightsTrends:
+      type: object
+      properties:
+        risk_trend:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+        demo_trend:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+        ai_dependency_trend:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+        attendance_trend:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrendPoint"
+      required: [risk_trend, demo_trend, ai_dependency_trend, attendance_trend]
+
+    TrendPoint:
+      type: object
+      properties:
+        week:
+          type: string
+        value:
+          type: number
+      required: [week, value]
+
+    RecommendedAction:
+      type: object
+      properties:
+        id:
+          type: string
+        priority:
+          type: string
+          enum: [critical, high, medium, low]
+        action:
+          type: string
+        affected_count:
+          type: integer
+        category:
+          type: string
+      required: [id, priority, action, affected_count, category]
