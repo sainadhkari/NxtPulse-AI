@@ -145,6 +145,11 @@ export interface Intervention {
   created_at: string;
 }
 
+export interface LearnGuardEvaluateRequest {
+  trainee_name: string;
+  topic: string;
+}
+
 export interface LearnGuardEvaluation {
   id: string;
   trainee_id: string;

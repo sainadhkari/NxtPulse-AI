@@ -21,6 +21,7 @@ export * from './insightsTrends';
 export * from './intervention';
 export * from './interventionStatus';
 export * from './interventionType';
+export * from './learnGuardEvaluateRequest';
 export * from './learnGuardEvaluation';
 export * from './loginRequest';
 export * from './loginRequestRole';

@@ -246,6 +246,25 @@ paths:
               schema:
                 $ref: "#/components/schemas/Intervention"
 
+  /learnguard/evaluate:
+    post:
+      operationId: evaluateLearnGuard
+      tags: [learnguard]
+      summary: Run an on-demand LearnGuard AI evaluation for a trainee on a topic
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LearnGuardEvaluateRequest"
+      responses:
+        "200":
+          description: AI evaluation result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LearnGuardEvaluation"
+
   /learnguard/evaluations:
     get:
       operationId: getLearnGuardEvaluations
@@ -577,6 +596,15 @@ components:
         created_at:
           type: string
       required: [id, trainee_id, trainee_name, type, status, recommendation, issue, created_at]
+
+    LearnGuardEvaluateRequest:
+      type: object
+      properties:
+        trainee_name:
+          type: string
+        topic:
+          type: string
+      required: [trainee_name, topic]
 
     LearnGuardEvaluation:
       type: object

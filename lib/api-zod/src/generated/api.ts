@@ -213,6 +213,29 @@ export const DismissInterventionResponse = zod.object({
 
 
 /**
+ * @summary Run an on-demand LearnGuard AI evaluation for a trainee on a topic
+ */
+export const EvaluateLearnGuardBody = zod.object({
+  "trainee_name": zod.string(),
+  "topic": zod.string()
+})
+
+export const EvaluateLearnGuardResponse = zod.object({
+  "id": zod.string(),
+  "trainee_id": zod.string(),
+  "trainee_name": zod.string(),
+  "topic": zod.string(),
+  "questions": zod.array(zod.string()),
+  "understanding_score": zod.number(),
+  "confidence_score": zod.number(),
+  "ai_dependency_score": zod.number(),
+  "readiness_score": zod.number(),
+  "ai_feedback": zod.string(),
+  "evaluated_at": zod.string()
+})
+
+
+/**
  * @summary List recent LearnGuard AI evaluations
  */
 export const GetLearnGuardEvaluationsQueryParams = zod.object({

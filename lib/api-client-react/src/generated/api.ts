@@ -31,6 +31,7 @@ import type {
   InsightsSummary,
   InsightsTrends,
   Intervention,
+  LearnGuardEvaluateRequest,
   LearnGuardEvaluation,
   LoginRequest,
   OutreachSuggestion,
@@ -967,6 +968,77 @@ export const useDismissIntervention = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getDismissInterventionMutationOptions(options));
+    }
+
+export const getEvaluateLearnGuardUrl = () => {
+
+
+
+
+  return `/api/learnguard/evaluate`
+}
+
+/**
+ * @summary Run an on-demand LearnGuard AI evaluation for a trainee on a topic
+ */
+export const evaluateLearnGuard = async (learnGuardEvaluateRequest: LearnGuardEvaluateRequest, options?: RequestInit): Promise<LearnGuardEvaluation> => {
+
+  return customFetch<LearnGuardEvaluation>(getEvaluateLearnGuardUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      learnGuardEvaluateRequest,)
+  }
+);}
+
+
+
+
+export const getEvaluateLearnGuardMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof evaluateLearnGuard>>, TError,{data: BodyType<LearnGuardEvaluateRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof evaluateLearnGuard>>, TError,{data: BodyType<LearnGuardEvaluateRequest>}, TContext> => {
+
+const mutationKey = ['evaluateLearnGuard'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof evaluateLearnGuard>>, {data: BodyType<LearnGuardEvaluateRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  evaluateLearnGuard(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type EvaluateLearnGuardMutationResult = NonNullable<Awaited<ReturnType<typeof evaluateLearnGuard>>>
+    export type EvaluateLearnGuardMutationBody = BodyType<LearnGuardEvaluateRequest>
+    export type EvaluateLearnGuardMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Run an on-demand LearnGuard AI evaluation for a trainee on a topic
+ */
+export const useEvaluateLearnGuard = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof evaluateLearnGuard>>, TError,{data: BodyType<LearnGuardEvaluateRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof evaluateLearnGuard>>,
+        TError,
+        {data: BodyType<LearnGuardEvaluateRequest>},
+        TContext
+      > => {
+      return useMutation(getEvaluateLearnGuardMutationOptions(options));
     }
 
 export const getGetLearnGuardEvaluationsUrl = (params?: GetLearnGuardEvaluationsParams,) => {

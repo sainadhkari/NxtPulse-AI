@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { 
   Activity, 
   BarChart3, 
+  Brain,
   LayoutDashboard, 
   LogOut,
   TerminalSquare 
@@ -55,6 +56,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
               Command Center
             </Link>
           )}
+          <Link 
+            href="/learnguard"
+            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+          >
+            <Brain className="w-4 h-4" />
+            LearnGuard AI
+          </Link>
           <Link 
             href="/insights"
             className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
