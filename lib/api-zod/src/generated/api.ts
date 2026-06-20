@@ -111,6 +111,53 @@ export const GetTraineeStatsResponse = zod.object({
 
 
 /**
+ * @summary Get per-cohort aggregate statistics for comparison
+ */
+export const GetCohortStatsResponseItem = zod.object({
+  "cohort": zod.string(),
+  "total_trainees": zod.number(),
+  "avg_learning_score": zod.number(),
+  "avg_demo_score": zod.number(),
+  "avg_ai_dependency": zod.number(),
+  "avg_attendance": zod.number(),
+  "high_risk_count": zod.number(),
+  "medium_risk_count": zod.number(),
+  "low_risk_count": zod.number(),
+  "top_performer": zod.object({
+  "id": zod.string(),
+  "name": zod.string(),
+  "cohort": zod.string(),
+  "track": zod.string(),
+  "attendance": zod.number(),
+  "learning_score": zod.number(),
+  "demo_score": zod.number(),
+  "ai_dependency": zod.number(),
+  "risk_level": zod.enum(['high', 'medium', 'low']),
+  "status": zod.enum(['active', 'on_leave', 'graduated']),
+  "last_active": zod.string()
+}),
+  "bottom_performer": zod.object({
+  "id": zod.string(),
+  "name": zod.string(),
+  "cohort": zod.string(),
+  "track": zod.string(),
+  "attendance": zod.number(),
+  "learning_score": zod.number(),
+  "demo_score": zod.number(),
+  "ai_dependency": zod.number(),
+  "risk_level": zod.enum(['high', 'medium', 'low']),
+  "status": zod.enum(['active', 'on_leave', 'graduated']),
+  "last_active": zod.string()
+}),
+  "score_distribution": zod.array(zod.object({
+  "range": zod.string(),
+  "count": zod.number()
+}))
+})
+export const GetCohortStatsResponse = zod.array(GetCohortStatsResponseItem)
+
+
+/**
  * @summary Get risk level distribution counts
  */
 export const GetRiskDistributionResponse = zod.object({

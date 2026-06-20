@@ -7,6 +7,7 @@
  */
 
 export * from './authResult';
+export * from './cohortStats';
 export * from './createInterventionRequest';
 export * from './createInterventionRequestType';
 export * from './demoReport';
@@ -33,6 +34,7 @@ export * from './outreachSuggestionStatus';
 export * from './recommendedAction';
 export * from './recommendedActionPriority';
 export * from './riskDistribution';
+export * from './scoreBucket';
 export * from './silentDetectorAlert';
 export * from './silentDetectorAlertRiskLevel';
 export * from './telemetryRow';

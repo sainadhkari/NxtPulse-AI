@@ -140,6 +140,21 @@ paths:
               schema:
                 $ref: "#/components/schemas/TraineeStats"
 
+  /trainees/stats/cohorts:
+    get:
+      operationId: getCohortStats
+      tags: [trainees]
+      summary: Get per-cohort aggregate statistics for comparison
+      responses:
+        "200":
+          description: Array of cohort statistics
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/CohortStats"
+
   /trainees/stats/risk-distribution:
     get:
       operationId: getRiskDistribution
@@ -542,6 +557,46 @@ components:
         last_active:
           type: string
       required: [id, name, cohort, track, attendance, learning_score, demo_score, ai_dependency, risk_level, status, last_active]
+
+    CohortStats:
+      type: object
+      properties:
+        cohort:
+          type: string
+        total_trainees:
+          type: integer
+        avg_learning_score:
+          type: number
+        avg_demo_score:
+          type: number
+        avg_ai_dependency:
+          type: number
+        avg_attendance:
+          type: number
+        high_risk_count:
+          type: integer
+        medium_risk_count:
+          type: integer
+        low_risk_count:
+          type: integer
+        top_performer:
+          $ref: "#/components/schemas/Trainee"
+        bottom_performer:
+          $ref: "#/components/schemas/Trainee"
+        score_distribution:
+          type: array
+          items:
+            $ref: "#/components/schemas/ScoreBucket"
+      required: [cohort, total_trainees, avg_learning_score, avg_demo_score, avg_ai_dependency, avg_attendance, high_risk_count, medium_risk_count, low_risk_count, top_performer, bottom_performer, score_distribution]
+
+    ScoreBucket:
+      type: object
+      properties:
+        range:
+          type: string
+        count:
+          type: integer
+      required: [range, count]
 
     TraineeStats:
       type: object

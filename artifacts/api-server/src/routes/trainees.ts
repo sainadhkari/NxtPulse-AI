@@ -38,6 +38,37 @@ router.get("/trainees/stats/summary", (_req, res) => {
   });
 });
 
+router.get("/trainees/stats/cohorts", (_req, res) => {
+  const cohortNames = ["Cohort-6", "Cohort-7", "Cohort-8"];
+  const buckets = ["0–20", "21–40", "41–60", "61–80", "81–100"];
+
+  const result = cohortNames.map((cohort) => {
+    const members = TRAINEES.filter((t) => t.cohort === cohort);
+    const avg = (arr: number[]) => arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0;
+    const scores = members.map((t) => t.learning_score);
+    const distribution = buckets.map((range, i) => ({
+      range,
+      count: scores.filter((s) => s >= i * 20 && s < (i + 1) * 20).length,
+    }));
+    const sorted = [...members].sort((a, b) => b.learning_score - a.learning_score);
+    return {
+      cohort,
+      total_trainees: members.length,
+      avg_learning_score: Math.round(avg(members.map((t) => t.learning_score)) * 10) / 10,
+      avg_demo_score: Math.round(avg(members.map((t) => t.demo_score)) * 10) / 10,
+      avg_ai_dependency: Math.round(avg(members.map((t) => t.ai_dependency)) * 10) / 10,
+      avg_attendance: Math.round(avg(members.map((t) => t.attendance)) * 10) / 10,
+      high_risk_count: members.filter((t) => t.risk_level === "high").length,
+      medium_risk_count: members.filter((t) => t.risk_level === "medium").length,
+      low_risk_count: members.filter((t) => t.risk_level === "low").length,
+      top_performer: sorted[0],
+      bottom_performer: sorted[sorted.length - 1],
+      score_distribution: distribution,
+    };
+  });
+  return res.json(result);
+});
+
 router.get("/trainees/stats/risk-distribution", (_req, res) => {
   return res.json({ high: 384, medium: 1205, low: 3293 });
 });

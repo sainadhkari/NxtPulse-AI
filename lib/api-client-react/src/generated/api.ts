@@ -21,6 +21,7 @@ import type {
 
 import type {
   AuthResult,
+  CohortStats,
   CreateInterventionRequest,
   DemoReport,
   GetDemoReportsParams,
@@ -511,6 +512,83 @@ export function useGetTraineeStats<TData = Awaited<ReturnType<typeof getTraineeS
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetTraineeStatsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetCohortStatsUrl = () => {
+
+
+
+
+  return `/api/trainees/stats/cohorts`
+}
+
+/**
+ * @summary Get per-cohort aggregate statistics for comparison
+ */
+export const getCohortStats = async ( options?: RequestInit): Promise<CohortStats[]> => {
+
+  return customFetch<CohortStats[]>(getGetCohortStatsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetCohortStatsQueryKey = () => {
+    return [
+    `/api/trainees/stats/cohorts`
+    ] as const;
+    }
+
+
+export const getGetCohortStatsQueryOptions = <TData = Awaited<ReturnType<typeof getCohortStats>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCohortStats>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCohortStatsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCohortStats>>> = ({ signal }) => getCohortStats({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCohortStats>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetCohortStatsQueryResult = NonNullable<Awaited<ReturnType<typeof getCohortStats>>>
+export type GetCohortStatsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Get per-cohort aggregate statistics for comparison
+ */
+
+export function useGetCohortStats<TData = Awaited<ReturnType<typeof getCohortStats>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getCohortStats>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetCohortStatsQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

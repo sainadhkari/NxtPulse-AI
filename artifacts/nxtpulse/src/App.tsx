@@ -12,6 +12,7 @@ import WellnessPage from "@/pages/wellness";
 import InsightsPage from "@/pages/insights";
 import LearnGuardChat from "@/pages/learnguard-chat";
 import InterventionsPage from "@/pages/interventions";
+import CohortsPage from "@/pages/cohorts";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function Router() {
       <Route path="/insights" component={InsightsPage} />
       <Route path="/learnguard" component={LearnGuardChat} />
       <Route path="/interventions" component={InterventionsPage} />
+      <Route path="/cohorts" component={CohortsPage} />
       <Route component={NotFound} />
     </Switch>
   );

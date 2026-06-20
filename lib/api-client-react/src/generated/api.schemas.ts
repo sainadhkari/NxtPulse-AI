@@ -78,6 +78,26 @@ export interface Trainee {
   last_active: string;
 }
 
+export interface ScoreBucket {
+  range: string;
+  count: number;
+}
+
+export interface CohortStats {
+  cohort: string;
+  total_trainees: number;
+  avg_learning_score: number;
+  avg_demo_score: number;
+  avg_ai_dependency: number;
+  avg_attendance: number;
+  high_risk_count: number;
+  medium_risk_count: number;
+  low_risk_count: number;
+  top_performer: Trainee;
+  bottom_performer: Trainee;
+  score_distribution: ScoreBucket[];
+}
+
 export interface TraineeStats {
   total_trainees: number;
   avg_learning_score: number;
