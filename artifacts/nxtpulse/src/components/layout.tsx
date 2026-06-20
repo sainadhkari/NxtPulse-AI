@@ -6,6 +6,7 @@ import {
   Brain,
   LayoutDashboard, 
   LogOut,
+  ShieldAlert,
   TerminalSquare 
 } from "lucide-react";
 import { getAuthRole, clearAuth } from "@/lib/auth";
@@ -56,6 +57,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
               Command Center
             </Link>
           )}
+          <Link 
+            href="/interventions"
+            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+          >
+            <ShieldAlert className="w-4 h-4" />
+            Interventions
+          </Link>
           <Link 
             href="/learnguard"
             className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"

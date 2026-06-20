@@ -113,6 +113,27 @@ export interface TelemetryRow {
   status: string;
 }
 
+export type CreateInterventionRequestType = typeof CreateInterventionRequestType[keyof typeof CreateInterventionRequestType];
+
+
+export const CreateInterventionRequestType = {
+  attendance: 'attendance',
+  demo_quality: 'demo_quality',
+  ai_dependency: 'ai_dependency',
+  engagement: 'engagement',
+  standup: 'standup',
+} as const;
+
+export interface CreateInterventionRequest {
+  trainee_name: string;
+  trainee_id: string;
+  type: CreateInterventionRequestType;
+  issue: string;
+  recommendation: string;
+  due_date?: string | null;
+  assigned_to?: string | null;
+}
+
 export type InterventionType = typeof InterventionType[keyof typeof InterventionType];
 
 

@@ -19,6 +19,27 @@ const INTERVENTIONS: Array<{
   { id: "i5", trainee_id: "t11", trainee_name: "Rohit Joshi", type: "standup", status: "pending", recommendation: "Mandatory standup participation. Review task completion workflow.", issue: "Missed 8 consecutive standups", created_at: "2025-06-15T11:00:00Z" },
 ];
 
+router.post("/interventions/create", (req, res) => {
+  const { trainee_name, trainee_id, type, issue, recommendation, due_date, assigned_to } = req.body;
+  if (!trainee_name || !trainee_id || !type || !issue || !recommendation) {
+    return res.status(400).json({ error: "trainee_name, trainee_id, type, issue, and recommendation are required" });
+  }
+  const item = {
+    id: `i${Date.now()}`,
+    trainee_id,
+    trainee_name,
+    type,
+    status: "pending" as const,
+    recommendation,
+    issue,
+    due_date: due_date || null,
+    assigned_to: assigned_to || null,
+    created_at: new Date().toISOString(),
+  };
+  INTERVENTIONS.unshift(item as (typeof INTERVENTIONS)[0]);
+  return res.status(201).json(item);
+});
+
 router.get("/interventions", (req, res) => {
   const { status } = req.query as Record<string, string>;
   let result = [...INTERVENTIONS];

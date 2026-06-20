@@ -156,6 +156,20 @@ export const GetInterventionsResponse = zod.array(GetInterventionsResponseItem)
 
 
 /**
+ * @summary Create a new intervention plan for a trainee
+ */
+export const CreateInterventionBody = zod.object({
+  "trainee_name": zod.string(),
+  "trainee_id": zod.string(),
+  "type": zod.enum(['attendance', 'demo_quality', 'ai_dependency', 'engagement', 'standup']),
+  "issue": zod.string(),
+  "recommendation": zod.string(),
+  "due_date": zod.string().nullish(),
+  "assigned_to": zod.string().nullish()
+})
+
+
+/**
  * @summary Acknowledge an intervention
  */
 export const AcknowledgeInterventionParams = zod.object({

@@ -11,6 +11,7 @@ import SDIDashboard from "@/pages/dashboard/sdi";
 import WellnessPage from "@/pages/wellness";
 import InsightsPage from "@/pages/insights";
 import LearnGuardChat from "@/pages/learnguard-chat";
+import InterventionsPage from "@/pages/interventions";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/wellness" component={WellnessPage} />
       <Route path="/insights" component={InsightsPage} />
       <Route path="/learnguard" component={LearnGuardChat} />
+      <Route path="/interventions" component={InterventionsPage} />
       <Route component={NotFound} />
     </Switch>
   );

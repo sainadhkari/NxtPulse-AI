@@ -189,6 +189,25 @@ paths:
                 items:
                   $ref: "#/components/schemas/Intervention"
 
+  /interventions/create:
+    post:
+      operationId: createIntervention
+      tags: [interventions]
+      summary: Create a new intervention plan for a trainee
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInterventionRequest"
+      responses:
+        "201":
+          description: Intervention created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Intervention"
+
   /interventions/{id}/acknowledge:
     post:
       operationId: acknowledgeIntervention
@@ -573,6 +592,28 @@ components:
         status:
           type: string
       required: [trainee_id, trainee_name, track, learning_score, demo_score, risk_level, status]
+
+    CreateInterventionRequest:
+      type: object
+      properties:
+        trainee_name:
+          type: string
+        trainee_id:
+          type: string
+        type:
+          type: string
+          enum: [attendance, demo_quality, ai_dependency, engagement, standup]
+        issue:
+          type: string
+        recommendation:
+          type: string
+        due_date:
+          type: string
+          nullable: true
+        assigned_to:
+          type: string
+          nullable: true
+      required: [trainee_name, trainee_id, type, issue, recommendation]
 
     Intervention:
       type: object

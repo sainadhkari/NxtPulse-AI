@@ -7,6 +7,8 @@
  */
 
 export * from './authResult';
+export * from './createInterventionRequest';
+export * from './createInterventionRequestType';
 export * from './demoReport';
 export * from './getDemoReportsParams';
 export * from './getInterventionsParams';

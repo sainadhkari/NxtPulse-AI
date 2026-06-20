@@ -21,6 +21,7 @@ import type {
 
 import type {
   AuthResult,
+  CreateInterventionRequest,
   DemoReport,
   GetDemoReportsParams,
   GetInterventionsParams,
@@ -759,6 +760,77 @@ export function useGetInterventions<TData = Awaited<ReturnType<typeof getInterve
 
 
 
+
+export const getCreateInterventionUrl = () => {
+
+
+
+
+  return `/api/interventions/create`
+}
+
+/**
+ * @summary Create a new intervention plan for a trainee
+ */
+export const createIntervention = async (createInterventionRequest: CreateInterventionRequest, options?: RequestInit): Promise<Intervention> => {
+
+  return customFetch<Intervention>(getCreateInterventionUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      createInterventionRequest,)
+  }
+);}
+
+
+
+
+export const getCreateInterventionMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createIntervention>>, TError,{data: BodyType<CreateInterventionRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createIntervention>>, TError,{data: BodyType<CreateInterventionRequest>}, TContext> => {
+
+const mutationKey = ['createIntervention'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createIntervention>>, {data: BodyType<CreateInterventionRequest>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createIntervention(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateInterventionMutationResult = NonNullable<Awaited<ReturnType<typeof createIntervention>>>
+    export type CreateInterventionMutationBody = BodyType<CreateInterventionRequest>
+    export type CreateInterventionMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Create a new intervention plan for a trainee
+ */
+export const useCreateIntervention = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createIntervention>>, TError,{data: BodyType<CreateInterventionRequest>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof createIntervention>>,
+        TError,
+        {data: BodyType<CreateInterventionRequest>},
+        TContext
+      > => {
+      return useMutation(getCreateInterventionMutationOptions(options));
+    }
 
 export const getAcknowledgeInterventionUrl = (id: string,) => {
 
