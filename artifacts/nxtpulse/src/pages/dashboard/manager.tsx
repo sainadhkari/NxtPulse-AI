@@ -11,6 +11,7 @@ import {
   useGetInterventions
 } from "@workspace/api-client-react";
 import { AlertCircle, Activity, BrainCircuit, Users } from "lucide-react";
+import { Link } from "wouter";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -101,7 +102,11 @@ function DashboardContent() {
                 <TableBody>
                   {telemetry.filter(t => t.risk_level === 'high').slice(0, 5).map(row => (
                     <TableRow key={row.trainee_id} className="border-card-border hover:bg-card/80">
-                      <TableCell className="font-medium text-white">{row.trainee_name}</TableCell>
+                      <TableCell className="font-medium">
+                        <Link href={`/trainee/${row.trainee_id}`} className="text-white hover:text-primary transition-colors hover:underline underline-offset-2">
+                          {row.trainee_name}
+                        </Link>
+                      </TableCell>
                       <TableCell className="text-muted-foreground text-sm">{row.track}</TableCell>
                       <TableCell className="text-right text-destructive font-mono">{row.learning_score}%</TableCell>
                       <TableCell>
@@ -128,7 +133,9 @@ function DashboardContent() {
             {alerts.map(alert => (
               <div key={alert.id} className="p-4 rounded-md border border-card-border bg-background/50 flex flex-col gap-2">
                 <div className="flex justify-between items-start">
-                  <span className="font-bold text-white">{alert.trainee_name}</span>
+                  <Link href={`/trainee/${alert.trainee_id}`} className="font-bold text-white hover:text-primary transition-colors hover:underline underline-offset-2">
+                    {alert.trainee_name}
+                  </Link>
                   <Badge variant="outline" className={
                     alert.risk_level === 'high' ? "border-destructive text-destructive bg-destructive/10" : 
                     "border-chart-4 text-chart-4 bg-chart-4/10"
