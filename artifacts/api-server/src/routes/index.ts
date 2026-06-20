@@ -9,6 +9,7 @@ import silentDetectorRouter from "./silentDetector";
 import understudyRouter from "./understudy";
 import wellnessRouter from "./wellness";
 import insightsRouter from "./insights";
+import notificationsRouter from "./notifications";
 
 const router: IRouter = Router();
 
@@ -22,5 +23,6 @@ router.use(silentDetectorRouter);
 router.use(understudyRouter);
 router.use(wellnessRouter);
 router.use(insightsRouter);
+router.use(notificationsRouter);
 
 export default router;

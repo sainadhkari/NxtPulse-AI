@@ -4,12 +4,11 @@ import {
   Activity, 
   BarChart3, 
   LayoutDashboard, 
-  LogOut, 
-  Settings, 
-  ShieldAlert, 
+  LogOut,
   TerminalSquare 
 } from "lucide-react";
 import { getAuthRole, clearAuth } from "@/lib/auth";
+import { NotificationBell } from "@/components/notification-bell";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const role = getAuthRole();
@@ -32,10 +31,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
       {/* Sidebar */}
       <aside className="w-full md:w-64 border-r border-card-border bg-card/50 backdrop-blur-xl flex flex-col z-50">
         <div className="p-6 border-b border-card-border">
-          <Link href="/" className="flex items-center gap-3">
-            <TerminalSquare className="w-8 h-8 text-primary shadow-xs" />
-            <span className="font-bold text-xl tracking-tighter uppercase text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">NxtPulse</span>
-          </Link>
+          <div className="flex items-center justify-between">
+            <Link href="/" className="flex items-center gap-3">
+              <TerminalSquare className="w-8 h-8 text-primary shadow-xs" />
+              <span className="font-bold text-xl tracking-tighter uppercase text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">NxtPulse</span>
+            </Link>
+            {role && <NotificationBell />}
+          </div>
           {role && (
             <div className="mt-4 inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary border border-primary/30 uppercase tracking-widest">
               {role}
