@@ -1,5 +1,9 @@
+import { useRef, useState } from "react";
 import { useRoute, Link } from "wouter";
-import { ArrowLeft, Brain, Loader2, MonitorPlay, ShieldAlert, TrendingDown, TrendingUp, User } from "lucide-react";
+import {
+  ArrowLeft, Brain, Download, Loader2, MonitorPlay,
+  ShieldAlert, TrendingDown, TrendingUp, User
+} from "lucide-react";
 import { Layout } from "@/components/layout";
 import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
 import {
@@ -50,9 +54,152 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   );
 };
 
+async function exportProfilePdf(
+  trainee: { name: string; cohort: string; track: string; risk_level: string; learning_score: number; demo_score: number; attendance: number; ai_dependency: number },
+  evaluations: any[],
+  demos: any[],
+  interventions: any[]
+) {
+  const [{ default: jsPDF }, { default: html2canvas }] = await Promise.all([
+    import("jspdf"),
+    import("html2canvas"),
+  ]);
+
+  const overallScore = Math.round((trainee.learning_score + trainee.demo_score + trainee.attendance) / 3);
+  const latestEval = evaluations[0];
+  const latestDemo = demos[0];
+
+  const printDiv = document.createElement("div");
+  printDiv.style.cssText = `
+    position: fixed; top: -9999px; left: -9999px;
+    width: 794px; padding: 48px; background: #040914;
+    font-family: 'Inter', 'Segoe UI', sans-serif; color: #e2e8f0;
+  `;
+
+  const riskHex = trainee.risk_level === "high" ? "#ef4444" : trainee.risk_level === "medium" ? "#eab308" : "#10b981";
+  const scoreColor = (v: number, danger = false) =>
+    danger ? (v > 60 ? "#ef4444" : "#10b981") : v >= 70 ? "#10b981" : v >= 45 ? "#eab308" : "#ef4444";
+
+  const bar = (label: string, value: number, danger = false) => `
+    <div style="margin-bottom:10px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+        <span style="font-size:10px;color:#6b7280;text-transform:uppercase;letter-spacing:0.1em;font-family:monospace">${label}</span>
+        <span style="font-size:11px;font-weight:700;color:${scoreColor(value, danger)}">${value}%</span>
+      </div>
+      <div style="height:5px;background:#1a2744;border-radius:3px;overflow:hidden">
+        <div style="height:100%;width:${value}%;background:${scoreColor(value, danger)};border-radius:3px"></div>
+      </div>
+    </div>`;
+
+  const interventionRows = interventions.length
+    ? interventions.map(iv => `
+      <tr>
+        <td style="padding:8px 12px;font-size:11px;border-bottom:1px solid #1a2744">${iv.issue}</td>
+        <td style="padding:8px 12px;font-size:11px;border-bottom:1px solid #1a2744;color:#6b7280">${iv.recommendation}</td>
+        <td style="padding:8px 12px;font-size:11px;border-bottom:1px solid #1a2744;text-transform:uppercase;color:${iv.status === "resolved" ? "#10b981" : "#eab308"}">${iv.status}</td>
+      </tr>`).join("")
+    : `<tr><td colspan="3" style="padding:12px;font-size:11px;color:#6b7280;text-align:center">No active interventions</td></tr>`;
+
+  const evalSection = latestEval ? `
+    <div style="margin-top:28px">
+      <h3 style="font-size:11px;color:#00f0ff;text-transform:uppercase;letter-spacing:0.12em;font-family:monospace;margin-bottom:14px">LearnGuard AI — Latest Evaluation</h3>
+      <div style="background:#0a1628;border:1px solid #1a2744;border-radius:8px;padding:16px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+          <span style="font-size:13px;font-weight:600">${latestEval.topic}</span>
+          <span style="font-size:10px;color:#6b7280;font-family:monospace">${new Date(latestEval.evaluated_at).toLocaleDateString("en-IN")}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 32px">
+          ${bar("Understanding", latestEval.understanding_score)}
+          ${bar("Confidence", latestEval.confidence_score)}
+          ${bar("AI Dependency", latestEval.ai_dependency_score, true)}
+          ${bar("Readiness", latestEval.readiness_score)}
+        </div>
+        <p style="font-size:11px;color:#94a3b8;margin-top:12px;line-height:1.6;border-left:2px solid #00f0ff;padding-left:10px">${latestEval.ai_feedback}</p>
+      </div>
+    </div>` : "";
+
+  const demoSection = latestDemo ? `
+    <div style="margin-top:28px">
+      <h3 style="font-size:11px;color:#00f0ff;text-transform:uppercase;letter-spacing:0.12em;font-family:monospace;margin-bottom:14px">Demo Intelligence — Latest Report</h3>
+      <div style="background:#0a1628;border:1px solid #1a2744;border-radius:8px;padding:16px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:12px">
+          <span style="font-size:13px;font-weight:600">${latestDemo.topic}</span>
+          <span style="font-size:10px;color:#6b7280;font-family:monospace">${new Date(latestDemo.reported_at).toLocaleDateString("en-IN")}</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 32px">
+          ${bar("Technical", latestDemo.technical_score)}
+          ${bar("Communication", latestDemo.communication_score)}
+          ${bar("Confidence", latestDemo.confidence_score)}
+          ${bar("Teaching", latestDemo.teaching_readiness_score)}
+        </div>
+        <p style="font-size:11px;color:#94a3b8;margin-top:12px;line-height:1.6;border-left:2px solid #00f0ff;padding-left:10px">${latestDemo.ai_feedback}</p>
+      </div>
+    </div>` : "";
+
+  printDiv.innerHTML = `
+    <div style="border-bottom:1px solid #1a2744;padding-bottom:24px;margin-bottom:28px;display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div style="font-size:10px;color:#00f0ff;text-transform:uppercase;letter-spacing:0.15em;font-family:monospace;margin-bottom:6px">NxtPulse AI — Trainee Report</div>
+        <h1 style="font-size:26px;font-weight:800;color:#ffffff;margin:0 0 6px">${trainee.name}</h1>
+        <p style="font-size:12px;color:#94a3b8;margin:0">${trainee.track} · ${trainee.cohort}</p>
+      </div>
+      <div style="text-align:right">
+        <div style="font-size:38px;font-weight:800;color:#ffffff">${overallScore}<span style="font-size:18px;color:#6b7280">%</span></div>
+        <div style="font-size:10px;color:#6b7280;font-family:monospace;text-transform:uppercase">Overall Score</div>
+        <div style="margin-top:8px;padding:4px 12px;border-radius:20px;border:1px solid ${riskHex};background:${riskHex}18;display:inline-block">
+          <span style="font-size:10px;font-weight:700;color:${riskHex};text-transform:uppercase;letter-spacing:0.08em">${trainee.risk_level} risk</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 style="font-size:11px;color:#00f0ff;text-transform:uppercase;letter-spacing:0.12em;font-family:monospace;margin-bottom:14px">Performance Metrics</h3>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 48px;background:#0a1628;border:1px solid #1a2744;border-radius:8px;padding:20px">
+      ${bar("Learning Score", trainee.learning_score)}
+      ${bar("Demo Score", trainee.demo_score)}
+      ${bar("Attendance", trainee.attendance)}
+      ${bar("AI Dependency", trainee.ai_dependency, true)}
+    </div>
+
+    <div style="margin-top:28px">
+      <h3 style="font-size:11px;color:#00f0ff;text-transform:uppercase;letter-spacing:0.12em;font-family:monospace;margin-bottom:14px">Active Interventions</h3>
+      <table style="width:100%;border-collapse:collapse;background:#0a1628;border:1px solid #1a2744;border-radius:8px;overflow:hidden">
+        <thead>
+          <tr style="background:#0f1e38">
+            <th style="padding:10px 12px;font-size:10px;text-align:left;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;font-family:monospace">Issue</th>
+            <th style="padding:10px 12px;font-size:10px;text-align:left;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;font-family:monospace">Recommendation</th>
+            <th style="padding:10px 12px;font-size:10px;text-align:left;color:#6b7280;text-transform:uppercase;letter-spacing:0.08em;font-family:monospace">Status</th>
+          </tr>
+        </thead>
+        <tbody>${interventionRows}</tbody>
+      </table>
+    </div>
+
+    ${evalSection}
+    ${demoSection}
+
+    <div style="margin-top:36px;padding-top:16px;border-top:1px solid #1a2744;display:flex;justify-content:space-between">
+      <span style="font-size:10px;color:#6b7280;font-family:monospace">Generated by NxtPulse AI · SDI Training Management</span>
+      <span style="font-size:10px;color:#6b7280;font-family:monospace">${new Date().toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })}</span>
+    </div>
+  `;
+
+  document.body.appendChild(printDiv);
+  const canvas = await html2canvas(printDiv, { backgroundColor: "#040914", scale: 2, useCORS: true });
+  document.body.removeChild(printDiv);
+
+  const imgData = canvas.toDataURL("image/png");
+  const pdf = new jsPDF({ orientation: "portrait", unit: "px", format: "a4" });
+  const pdfW = pdf.internal.pageSize.getWidth();
+  const pdfH = (canvas.height * pdfW) / canvas.width;
+  pdf.addImage(imgData, "PNG", 0, 0, pdfW, pdfH);
+  pdf.save(`NxtPulse_${trainee.name.replace(/\s+/g, "_")}_Report.pdf`);
+}
+
 export default function TraineeProfile() {
   const [, params] = useRoute("/trainee/:id");
   const id = params?.id || "";
+  const [exporting, setExporting] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const { data: trainee, isLoading: tLoading } = useGetTrainee(id, {
     query: { enabled: !!id, queryKey: getGetTraineeQueryKey(id) },
@@ -79,6 +226,16 @@ export default function TraineeProfile() {
       ]
     : [];
 
+  const handleExport = async () => {
+    if (!trainee) return;
+    setExporting(true);
+    try {
+      await exportProfilePdf(trainee, evaluations, demos, interventions);
+    } finally {
+      setExporting(false);
+    }
+  };
+
   if (tLoading) {
     return (
       <Layout>
@@ -104,16 +261,26 @@ export default function TraineeProfile() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 overflow-y-auto h-screen">
-        {/* Back + Header */}
-        <div className="flex items-center gap-3">
+      <div ref={contentRef} className="p-6 space-y-6 overflow-y-auto h-screen">
+        {/* Back + Export */}
+        <div className="flex items-center justify-between">
           <Link
             href="/dashboard/manager"
             className="flex items-center gap-1.5 text-xs font-mono text-muted-foreground hover:text-primary transition-colors"
-            data-testid="link-back"
           >
             <ArrowLeft className="w-3.5 h-3.5" /> Back
           </Link>
+          <button
+            onClick={handleExport}
+            disabled={exporting}
+            className="flex items-center gap-2 px-4 py-2 rounded border border-primary/40 bg-primary/10 text-primary text-xs font-bold hover:bg-primary/20 hover:border-primary/70 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {exporting ? (
+              <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Generating…</>
+            ) : (
+              <><Download className="w-3.5 h-3.5" /> Export PDF</>
+            )}
+          </button>
         </div>
 
         {/* Hero Card */}
@@ -269,10 +436,10 @@ export default function TraineeProfile() {
                     </div>
                     {d.strengths.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
-                        {d.strengths.map((s, i) => (
+                        {d.strengths.map((s: string, i: number) => (
                           <span key={i} className="text-[10px] px-2 py-0.5 rounded border border-emerald-500/30 bg-emerald-500/10 text-emerald-400">{s}</span>
                         ))}
-                        {d.weaknesses.map((w, i) => (
+                        {d.weaknesses.map((w: string, i: number) => (
                           <span key={`w${i}`} className="text-[10px] px-2 py-0.5 rounded border border-red-500/30 bg-red-500/10 text-red-400">{w}</span>
                         ))}
                       </div>
