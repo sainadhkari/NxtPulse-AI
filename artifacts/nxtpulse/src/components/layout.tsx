@@ -14,6 +14,7 @@ import {
 import { getAuthRole, clearAuth } from "@/lib/auth";
 import { NotificationBell } from "@/components/notification-bell";
 import { GlobalSearch, SearchTrigger } from "@/components/global-search";
+import { AIAssistant } from "@/components/ai-assistant";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const role = getAuthRole();
@@ -34,6 +35,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row dark">
       <GlobalSearch />
+      <AIAssistant />
       {/* Sidebar */}
       <aside className="w-full md:w-64 border-r border-card-border bg-card/50 backdrop-blur-xl flex flex-col z-50">
         <div className="p-6 border-b border-card-border">

@@ -10,6 +10,7 @@ import understudyRouter from "./understudy";
 import wellnessRouter from "./wellness";
 import insightsRouter from "./insights";
 import notificationsRouter from "./notifications";
+import assistantRouter from "./assistant";
 
 const router: IRouter = Router();
 
@@ -24,5 +25,6 @@ router.use(understudyRouter);
 router.use(wellnessRouter);
 router.use(insightsRouter);
 router.use(notificationsRouter);
+router.use(assistantRouter);
 
 export default router;

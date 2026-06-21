@@ -1,0 +1,101 @@
+import { Router } from "express";
+import OpenAI from "openai";
+
+const router = Router();
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+const TRAINEE_CONTEXT = `
+You have access to real-time data about 12 SDI (Software Development Internship) trainees across 3 cohorts:
+
+TRAINEES:
+1. Rahul Verma | Cohort-7 | React+Node | Learning:34% Demo:38% AIDep:78% Attendance:62% | RISK: HIGH
+2. Sai Krishna | Cohort-7 | Python+ML | Learning:58% Demo:55% AIDep:52% Attendance:85% | RISK: MEDIUM
+3. Kiran Patel | Cohort-7 | React+Node | Learning:61% Demo:63% AIDep:67% Attendance:78% | RISK: MEDIUM
+4. Ananya Reddy | Cohort-8 | Data Science | Learning:84% Demo:87% AIDep:22% Attendance:92% | RISK: LOW
+5. Vikram Singh | Cohort-8 | React+Node | Learning:28% Demo:31% AIDep:88% Attendance:55% | RISK: HIGH
+6. Meena Iyer | Cohort-6 | Python+ML | Learning:91% Demo:89% AIDep:11% Attendance:96% | RISK: LOW
+7. Arjun Das | Cohort-8 | Data Science | Learning:47% Demo:44% AIDep:61% Attendance:70% | RISK: MEDIUM
+8. Pooja Menon | Cohort-7 | React+Node | Learning:22% Demo:19% AIDep:91% Attendance:48% | RISK: HIGH
+9. Suresh Babu | Cohort-6 | Python+ML | Learning:74% Demo:72% AIDep:33% Attendance:88% | RISK: LOW
+10. Deepa Nair | Cohort-8 | React+Node | Learning:52% Demo:49% AIDep:58% Attendance:67% | RISK: MEDIUM
+11. Rohit Joshi | Cohort-7 | Data Science | Learning:18% Demo:22% AIDep:94% Attendance:41% | RISK: HIGH
+12. Kavitha Rao | Cohort-6 | React+Node | Learning:88% Demo:86% AIDep:16% Attendance:94% | RISK: LOW
+
+COHORT AVERAGES:
+- Cohort-6 (Alumni/senior): Avg Learning 84%, Attendance 93%, AIDep 20% — top performers
+- Cohort-7 (Current): Avg Learning 39%, Attendance 63%, AIDep 76% — needs attention
+- Cohort-8 (Recent): Avg Learning 53%, Attendance 71%, AIDep 57% — mixed progress
+
+PENDING INTERVENTIONS:
+- Rahul Verma: Missed 3 consecutive standups (HIGH)
+- Vikram Singh: AI dependency critical 88% — no original code (HIGH)
+- Pooja Menon: On leave, no communication 5 days (HIGH)
+- Rohit Joshi: Task completion below 40% (HIGH)
+- Sai Krishna: Demo submission delayed twice (MEDIUM)
+- Arjun Das: Learning stagnant 3 weeks (MEDIUM)
+
+AI PEER PAIRINGS ACTIVE:
+- Rohit Joshi ← Meena Iyer (mentor) — AI dependency focus
+- Pooja Menon ← Kavitha Rao (mentor) — demo confidence focus
+- Vikram Singh ← Ananya Reddy (mentor) — hands-on practice
+- Rahul Verma ← Suresh Babu (mentor) — attendance & consistency
+`;
+
+const SYSTEM_PROMPT = `You are NxtPulse GPT, an intelligent AI assistant embedded inside the NxtPulse platform — an SDI (Software Development Internship) training management system.
+
+${TRAINEE_CONTEXT}
+
+Your role:
+- Answer questions about trainee performance, risk levels, attendance, learning progress, and AI dependency
+- Suggest interventions and actions for at-risk trainees
+- Generate program summaries, cohort comparisons, and insights
+- Help managers prioritize who needs attention today
+- Keep responses concise and actionable — this is a dashboard, not a report
+- Use bullet points, bold names, and clear recommendations
+- When asked for a summary, structure it with sections (🔴 Critical, 🟡 Watch, 🟢 On Track)
+- Never make up data — only use the trainee data provided above
+- Be direct, professional, and helpful`;
+
+type Message = { role: "user" | "assistant"; content: string };
+
+const conversationHistory = new Map<string, Message[]>();
+
+router.post("/assistant/chat", async (req, res) => {
+  const { message, session_id } = req.body as { message: string; session_id?: string };
+  if (!message?.trim()) return res.status(400).json({ error: "message is required" });
+
+  const sid = session_id || "default";
+  if (!conversationHistory.has(sid)) conversationHistory.set(sid, []);
+  const history = conversationHistory.get(sid)!;
+
+  history.push({ role: "user", content: message });
+
+  // Keep last 10 messages for context
+  const recentHistory = history.slice(-10);
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      max_tokens: 400,
+      messages: [
+        { role: "system", content: SYSTEM_PROMPT },
+        ...recentHistory,
+      ],
+    });
+
+    const reply = completion.choices[0]?.message?.content?.trim() || "I'm not sure about that. Try asking about a specific trainee or cohort.";
+    history.push({ role: "assistant", content: reply });
+
+    return res.json({ reply, session_id: sid });
+  } catch (_e) {
+    const fallback = "I'm having trouble connecting right now. Try asking: 'Who are my high-risk trainees?' or 'Summarize Cohort-7'.";
+    return res.json({ reply: fallback, session_id: sid });
+  }
+});
+
+router.delete("/assistant/chat/:session_id", (req, res) => {
+  conversationHistory.delete(req.params.session_id);
+  return res.json({ cleared: true });
+});
+
+export default router;
