@@ -1,4 +1,11 @@
 import { Router } from "express";
+import OpenAI from "openai";
+import pg from "pg";
+
+const router = Router();
+
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 const TOPIC_QUESTIONS: Record<string, string[]> = {
   react: [
@@ -43,13 +50,6 @@ const TOPIC_QUESTIONS: Record<string, string[]> = {
     "How does GROUP BY differ from HAVING?",
     "Explain the N+1 query problem.",
   ],
-  css: [
-    "Explain the CSS box model.",
-    "What is the difference between Flexbox and Grid?",
-    "How does specificity work in CSS?",
-    "What is a CSS custom property and how do you use it?",
-    "Explain how z-index stacking context works.",
-  ],
   typescript: [
     "What is the difference between interface and type in TypeScript?",
     "Explain what generics are and when to use them.",
@@ -72,61 +72,7 @@ function getQuestionsForTopic(topic: string): string[] {
   ];
 }
 
-function seedRandom(s: string) {
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
-  return (Math.abs(h) % 40) + 1;
-}
-
-function generateScores(trainee: string, topic: string) {
-  const base = seedRandom(trainee + topic);
-  const isAtRisk = ["rahul", "vikram", "pooja", "rohit"].some((n) =>
-    trainee.toLowerCase().includes(n)
-  );
-  const isStrong = ["ananya", "meena", "kavitha", "suresh"].some((n) =>
-    trainee.toLowerCase().includes(n)
-  );
-
-  if (isAtRisk) {
-    return {
-      understanding_score: 25 + (base % 20),
-      confidence_score: 20 + (base % 18),
-      ai_dependency_score: 65 + (base % 25),
-      readiness_score: 22 + (base % 18),
-    };
-  }
-  if (isStrong) {
-    return {
-      understanding_score: 82 + (base % 15),
-      confidence_score: 80 + (base % 16),
-      ai_dependency_score: 10 + (base % 18),
-      readiness_score: 85 + (base % 12),
-    };
-  }
-  return {
-    understanding_score: 50 + (base % 30),
-    confidence_score: 48 + (base % 28),
-    ai_dependency_score: 35 + (base % 30),
-    readiness_score: 52 + (base % 28),
-  };
-}
-
-function generateFeedback(trainee: string, topic: string, scores: ReturnType<typeof generateScores>): string {
-  const { understanding_score, confidence_score, ai_dependency_score, readiness_score } = scores;
-  const avg = (understanding_score + confidence_score + readiness_score) / 3;
-
-  if (avg < 40) {
-    return `${trainee} shows early-stage familiarity with ${topic} but cannot yet demonstrate independent understanding. Answers relied heavily on memorised phrases rather than internalized concepts. AI dependency at ${ai_dependency_score}% is critically high — recommend a 5-day AI-restricted sprint with daily check-ins. Not ready for demo assessment.`;
-  }
-  if (avg < 65) {
-    return `${trainee} has a working understanding of core ${topic} concepts but struggles under follow-up questioning. Confidence dips when questions move beyond surface material. AI dependency at ${ai_dependency_score}% needs monitoring. Recommend 2 mock evaluations with adversarial Q&A before next demo submission.`;
-  }
-  return `${trainee} demonstrates solid, independent mastery of ${topic}. Answers were original, precise, and included real-world context. Confidence remained stable under follow-up pressure. AI dependency at ${ai_dependency_score}% is within healthy range. Ready for demo — consider peer mentoring assignment.`;
-}
-
-const router = Router();
-
-const EVALUATIONS = [
+const SEED_EVALUATIONS = [
   {
     id: "lg1",
     trainee_id: "t1",
@@ -147,24 +93,6 @@ const EVALUATIONS = [
   },
   {
     id: "lg2",
-    trainee_id: "s1",
-    trainee_name: "Rahul Verma",
-    topic: "JavaScript Closures",
-    questions: [
-      "What is a closure in JavaScript?",
-      "How does closure relate to lexical scoping?",
-      "Give a real-world use case of a closure.",
-      "What is a common bug caused by closures in loops?",
-    ],
-    understanding_score: 62,
-    confidence_score: 58,
-    ai_dependency_score: 41,
-    readiness_score: 64,
-    ai_feedback: "Good conceptual understanding of closures demonstrated. The trainee explained lexical scoping correctly and provided a relevant use case. However, the loop-closure bug explanation was incomplete. AI dependency is moderate — recommend practice problems without assistance to solidify independent mastery.",
-    evaluated_at: "2025-06-20T09:15:00Z",
-  },
-  {
-    id: "lg3",
     trainee_id: "t4",
     trainee_name: "Ananya Reddy",
     topic: "Machine Learning — Overfitting",
@@ -178,43 +106,136 @@ const EVALUATIONS = [
     confidence_score: 88,
     ai_dependency_score: 14,
     readiness_score: 92,
-    ai_feedback: "Exceptional performance. Trainee demonstrated deep, independent understanding of all overfitting concepts. Answers were original, precise, and included real-world examples not found in standard documentation. Ready for advanced demos and peer mentoring.",
+    ai_feedback: "Exceptional performance. Trainee demonstrated deep, independent understanding of all overfitting concepts. Answers were original, precise, and included real-world examples. Ready for advanced demos and peer mentoring.",
     evaluated_at: "2025-06-20T11:00:00Z",
   },
 ];
 
-router.get("/learnguard/evaluations", (req, res) => {
+async function getEvaluationsFromDB(traineeId?: string): Promise<any[]> {
+  try {
+    let query = "SELECT * FROM learnguard_evaluations ORDER BY evaluated_at DESC";
+    const params: string[] = [];
+    if (traineeId) {
+      query = "SELECT * FROM learnguard_evaluations WHERE trainee_id = $1 ORDER BY evaluated_at DESC";
+      params.push(traineeId);
+    }
+    const result = await pool.query(query, params);
+    if (result.rows.length > 0) return result.rows;
+  } catch (_e) {}
+  return traineeId
+    ? SEED_EVALUATIONS.filter((e) => e.trainee_id === traineeId)
+    : SEED_EVALUATIONS;
+}
+
+router.get("/learnguard/evaluations", async (req, res) => {
   const { trainee_id } = req.query as Record<string, string>;
-  let result = [...EVALUATIONS];
-  if (trainee_id) result = result.filter((e) => e.trainee_id === trainee_id);
-  return res.json(result);
+  const evaluations = await getEvaluationsFromDB(trainee_id);
+  return res.json(evaluations);
 });
 
-router.get("/learnguard/evaluations/latest", (_req, res) => {
-  return res.json(EVALUATIONS[0]);
+router.get("/learnguard/evaluations/latest", async (_req, res) => {
+  const evaluations = await getEvaluationsFromDB();
+  return res.json(evaluations[0] || SEED_EVALUATIONS[0]);
 });
 
-router.post("/learnguard/evaluate", (req, res) => {
+router.post("/learnguard/evaluate", async (req, res) => {
   const { trainee_name, topic } = req.body as { trainee_name: string; topic: string };
   if (!trainee_name || !topic) {
     return res.status(400).json({ error: "trainee_name and topic are required" });
   }
+
   const questions = getQuestionsForTopic(topic);
-  const scores = generateScores(trainee_name, topic);
-  const feedback = generateFeedback(trainee_name, topic, scores);
-  const evaluation = {
-    id: `lg_${Date.now()}`,
-    trainee_id: `dynamic_${trainee_name.toLowerCase().replace(/\s+/g, "_")}`,
-    trainee_name,
-    topic,
-    questions,
-    ...scores,
-    ai_feedback: feedback,
-    evaluated_at: new Date().toISOString(),
-  };
-  EVALUATIONS.unshift(evaluation as (typeof EVALUATIONS)[0]);
-  if (EVALUATIONS.length > 50) EVALUATIONS.pop();
-  return res.json(evaluation);
+
+  const prompt = `You are LearnGuard AI, an intelligent evaluation system for an SDI (Software Development Internship) training program.
+
+A manager has requested an AI-powered evaluation of trainee "${trainee_name}" on the topic "${topic}".
+
+Based on the trainee's name and topic, generate a realistic and insightful evaluation. Consider typical learning patterns for this topic.
+
+Respond with ONLY a valid JSON object in this exact format:
+{
+  "understanding_score": <number 0-100>,
+  "confidence_score": <number 0-100>,
+  "ai_dependency_score": <number 0-100>,
+  "readiness_score": <number 0-100>,
+  "ai_feedback": "<2-3 sentence professional assessment mentioning the trainee by name, the topic, specific strengths or gaps, and a concrete recommendation>"
+}
+
+Rules:
+- understanding_score: how well they grasp the concept
+- confidence_score: how confidently they explain it
+- ai_dependency_score: how much they rely on AI tools (high = bad)
+- readiness_score: demo readiness
+- If readiness < 50, they need intervention
+- ai_dependency > 70 is a red flag
+- Be specific, professional, and actionable in the feedback
+- Do NOT include any text outside the JSON`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      max_tokens: 400,
+      messages: [{ role: "user", content: prompt }],
+      response_format: { type: "json_object" },
+    });
+
+    const parsed = JSON.parse(completion.choices[0]?.message?.content || "{}");
+    const scores = {
+      understanding_score: Math.max(0, Math.min(100, Math.round(parsed.understanding_score || 50))),
+      confidence_score: Math.max(0, Math.min(100, Math.round(parsed.confidence_score || 50))),
+      ai_dependency_score: Math.max(0, Math.min(100, Math.round(parsed.ai_dependency_score || 50))),
+      readiness_score: Math.max(0, Math.min(100, Math.round(parsed.readiness_score || 50))),
+      ai_feedback: parsed.ai_feedback || `Evaluation complete for ${trainee_name} on ${topic}.`,
+    };
+
+    const evaluation = {
+      id: `lg_${Date.now()}`,
+      trainee_id: `dynamic_${trainee_name.toLowerCase().replace(/\s+/g, "_")}`,
+      trainee_name,
+      topic,
+      questions,
+      ...scores,
+      evaluated_at: new Date().toISOString(),
+    };
+
+    try {
+      await pool.query(
+        `INSERT INTO learnguard_evaluations
+          (id, trainee_id, topic, understanding_score, confidence_score, ai_dependency_score, readiness_score, ai_feedback, evaluated_at)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9)`,
+        [
+          evaluation.id,
+          evaluation.trainee_id,
+          evaluation.topic,
+          evaluation.understanding_score,
+          evaluation.confidence_score,
+          evaluation.ai_dependency_score,
+          evaluation.readiness_score,
+          evaluation.ai_feedback,
+          evaluation.evaluated_at,
+        ]
+      );
+    } catch (_e) {}
+
+    return res.json(evaluation);
+  } catch (err: any) {
+    req.log?.warn({ err }, "OpenAI evaluation failed, falling back to heuristic");
+    const base = trainee_name.length % 40 + 10;
+    const fallback = {
+      id: `lg_${Date.now()}`,
+      trainee_id: `dynamic_${trainee_name.toLowerCase().replace(/\s+/g, "_")}`,
+      trainee_name,
+      topic,
+      questions,
+      understanding_score: 40 + base,
+      confidence_score: 35 + base,
+      ai_dependency_score: 60 - base,
+      readiness_score: 38 + base,
+      ai_feedback: `${trainee_name} completed evaluation on ${topic}. Further manual review recommended.`,
+      evaluated_at: new Date().toISOString(),
+    };
+    return res.json(fallback);
+  }
 });
 
 export default router;
