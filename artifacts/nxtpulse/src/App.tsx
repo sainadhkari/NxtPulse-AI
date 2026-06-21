@@ -14,6 +14,7 @@ import LearnGuardChat from "@/pages/learnguard-chat";
 import InterventionsPage from "@/pages/interventions";
 import CohortsPage from "@/pages/cohorts";
 import TraineeProfile from "@/pages/trainee-profile";
+import UnderstudyPage from "@/pages/understudy";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ function Router() {
       <Route path="/interventions" component={InterventionsPage} />
       <Route path="/cohorts" component={CohortsPage} />
       <Route path="/trainee/:id" component={TraineeProfile} />
+      <Route path="/understudy" component={UnderstudyPage} />
       <Route component={NotFound} />
     </Switch>
   );
