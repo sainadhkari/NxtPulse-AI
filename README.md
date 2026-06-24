@@ -18,6 +18,7 @@ https://nxt-pulse-ai--lightlight9381.replit.app/
 
 🔗 **GitHub Repository:**
 https://github.com/sainadhkari/NxtPulse-AI
+https://github.com/saicharanvanam/NxtPulse-AI
 
 ---
 
@@ -401,6 +402,8 @@ NxtPulse transforms raw trainee data into intelligent decisions.
 
 ---
 
-# 👥 Team
+# 👥 Team Members
+* Sainadh Kari
+* Saicharan Vanam
 
 Hackathon 1.0 Submission — NxtPulse AI 🚀
