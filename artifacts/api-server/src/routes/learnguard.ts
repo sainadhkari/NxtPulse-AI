@@ -4,7 +4,14 @@ import pg from "pg";
 
 const router = Router();
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+let _openai: OpenAI | null = null;
+function getOpenAI(): OpenAI {
+  if (!_openai) {
+    _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  }
+  return _openai;
+}
+
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 
 const TOPIC_QUESTIONS: Record<string, string[]> = {
@@ -172,7 +179,7 @@ Rules:
 - Do NOT include any text outside the JSON`;
 
   try {
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: "gpt-4o-mini",
       max_tokens: 400,
       messages: [{ role: "user", content: prompt }],

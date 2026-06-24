@@ -2,7 +2,11 @@ import { Router } from "express";
 import OpenAI from "openai";
 
 const router = Router();
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+let _openai: OpenAI | null = null;
+function getOpenAI(): OpenAI {
+  if (!_openai) _openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+  return _openai;
+}
 
 const TRAINEE_CONTEXT = `
 You have access to real-time data about 12 SDI (Software Development Internship) trainees across 3 cohorts:
@@ -74,7 +78,7 @@ router.post("/assistant/chat", async (req, res) => {
   const recentHistory = history.slice(-10);
 
   try {
-    const completion = await openai.chat.completions.create({
+    const completion = await getOpenAI().chat.completions.create({
       model: "gpt-4o-mini",
       max_tokens: 400,
       messages: [
