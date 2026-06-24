@@ -51,14 +51,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
             </Link>
             {role && <NotificationBell />}
           </div>
-          <div className="mt-2.5 flex items-center gap-1.5">
-            {role && (
+          {role && (
+            <div className="mt-2.5">
               <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-primary/10 text-primary">
                 {formatRole(role)}
               </span>
-            )}
-            <span className="text-[10px] text-muted-foreground/50 font-medium">Powered by NxtWave</span>
-          </div>
+            </div>
+          )}
         </div>
 
         <nav className="flex-1 p-3 space-y-0.5">

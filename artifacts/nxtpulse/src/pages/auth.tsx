@@ -75,10 +75,7 @@ export default function AuthPage() {
           </div>
         </div>
 
-        <div className="space-y-1">
-          <p className="text-white/40 text-xs">© 2026 NxtPulse AI</p>
-          <p className="text-white/30 text-xs">Sainadh Kari · Saicharan Vanam</p>
-        </div>
+        <p className="text-white/40 text-xs">© 2026 NxtPulse AI</p>
       </div>
 
       {/* Right side — login form */}

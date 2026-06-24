@@ -1,0 +1,127 @@
+Please make the following UI/UX improvements while preserving all existing functionality and routing.
+
+Do NOT modify backend logic or break any features.
+Only update UI and visual presentation.
+
+---
+
+# 1. Increase NxtPulse AI Logo Size
+
+Make the NxtPulse AI logo larger across the application.
+
+Requirements:
+
+* Increase logo size to around 1.8x–2x current size
+* Keep proportions balanced
+* Should feel more premium and more visible
+* Do not make it oversized or messy
+
+Apply especially on:
+
+* Landing page
+* Login page
+* Dashboard headers
+
+Goal:
+Make branding stronger and more recognizable.
+
+---
+
+# 2. Redesign Landing Page Stats Section
+
+The stats section on landing page currently looks too plain.
+
+Current stats:
+
+* SDI Trainees: 4882
+* At Risk: 384
+* AI Dependencies
+* Prediction Accuracy
+
+This section needs a complete visual redesign.
+
+Goal:
+Make it look more premium, modern, and AI-dashboard-like.
+
+Requirements:
+
+* Replace current plain cards with a more visually impressive layout
+* Add better card design with gradients / glow / glassmorphism
+* Add icons for each metric
+* Improve spacing and hierarchy
+* Add subtle animations or hover effects if possible
+
+Suggested style:
+
+* Futuristic AI dashboard
+* Premium analytics cards
+* Strong visual hierarchy
+* Clean but impressive
+
+Example improvements:
+
+* Circular progress indicator for prediction accuracy
+* Red alert styling for At Risk
+* Blue analytics styling for SDI Trainees
+* Purple highlight for AI Dependency
+* Better metric emphasis with larger numbers
+
+Important:
+This section should feel like a high-end AI analytics product, not plain statistic cards.
+
+---
+
+# 3. Remove Team Names From Login Page
+
+Remove team names from login page.
+
+Remove:
+
+* Sainadh Kari
+* Saicharan Vanam
+
+Keep team names ONLY in landing page footer.
+
+Login page should look more professional and clean.
+
+---
+
+# 4. Remove “Powered by NxtWave” From Dashboard Headers
+
+Remove “Powered by NxtWave” text from dashboard headers.
+
+Remove from:
+
+* Manager dashboard
+* POC dashboard
+* SDI dashboard
+
+Currently shown beside:
+
+* Manager
+* POC
+* SDI (top left)
+
+Keep dashboard headers clean.
+
+Example:
+Only show:
+
+* Manager
+* POC
+* SDI
+
+Without additional branding beside them.
+
+---
+
+# Final Goal
+
+Make NxtPulse AI feel more polished, premium, and production-ready.
+
+Focus especially on:
+
+* Stronger branding
+* Better landing page visual impact
+* Cleaner dashboards
+* Better visual hierarchy

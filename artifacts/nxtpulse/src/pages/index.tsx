@@ -1,4 +1,4 @@
-import { Shield, Brain, Activity, Zap, BarChart3 } from "lucide-react";
+import { Shield, Brain, Activity, Zap, BarChart3, Users, AlertTriangle, Cpu, Target } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { NxtPulseLogo } from "@/components/nxtpulse-logo";
@@ -42,20 +42,57 @@ export default function LandingPage() {
       </div>
 
       {/* Stats */}
-      <div className="border-y border-border bg-muted/30">
-        <div className="container mx-auto px-6 py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { value: "4,882", label: "SDI Trainees" },
-              { value: "384", label: "At Risk" },
-              { value: "27%", label: "AI Dependency Avg" },
-              { value: "91%", label: "Prediction Accuracy" },
-            ].map((s) => (
-              <div key={s.label}>
-                <div className="text-3xl font-bold text-foreground mb-1">{s.value}</div>
-                <div className="text-sm text-muted-foreground">{s.label}</div>
+      <div className="border-y border-border" style={{ background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0f172a 100%)" }}>
+        <div className="container mx-auto px-6 py-14">
+          <p className="text-center text-xs font-semibold text-blue-400/70 uppercase tracking-widest mb-8">Live Program Intelligence</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            {/* SDI Trainees */}
+            <div className="group relative rounded-2xl p-5 border border-blue-500/20 hover:border-blue-400/40 transition-all hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(145deg, rgba(37,99,235,0.12) 0%, rgba(37,99,235,0.04) 100%)" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: "rgba(37,99,235,0.2)" }}>
+                <Users className="w-4 h-4 text-blue-400" />
               </div>
-            ))}
+              <div className="text-3xl font-bold text-white mb-0.5 tabular-nums">4,882</div>
+              <div className="text-xs text-blue-300/70 font-medium">SDI Trainees</div>
+              <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse" />
+            </div>
+            {/* At Risk */}
+            <div className="group relative rounded-2xl p-5 border border-red-500/20 hover:border-red-400/40 transition-all hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(145deg, rgba(239,68,68,0.12) 0%, rgba(239,68,68,0.04) 100%)" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: "rgba(239,68,68,0.2)" }}>
+                <AlertTriangle className="w-4 h-4 text-red-400" />
+              </div>
+              <div className="text-3xl font-bold text-white mb-0.5 tabular-nums">384</div>
+              <div className="text-xs text-red-300/70 font-medium">At Risk</div>
+              <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse" />
+            </div>
+            {/* AI Dependency */}
+            <div className="group relative rounded-2xl p-5 border border-purple-500/20 hover:border-purple-400/40 transition-all hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(145deg, rgba(124,58,237,0.12) 0%, rgba(124,58,237,0.04) 100%)" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: "rgba(124,58,237,0.2)" }}>
+                <Cpu className="w-4 h-4 text-purple-400" />
+              </div>
+              <div className="text-3xl font-bold text-white mb-0.5 tabular-nums">27%</div>
+              <div className="text-xs text-purple-300/70 font-medium">AI Dependency Avg</div>
+              <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+            </div>
+            {/* Prediction Accuracy */}
+            <div className="group relative rounded-2xl p-5 border border-emerald-500/20 hover:border-emerald-400/40 transition-all hover:-translate-y-0.5"
+              style={{ background: "linear-gradient(145deg, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0.04) 100%)" }}>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center mb-3" style={{ background: "rgba(16,185,129,0.2)" }}>
+                <Target className="w-4 h-4 text-emerald-400" />
+              </div>
+              <div className="flex items-end gap-1.5 mb-0.5">
+                <div className="text-3xl font-bold text-white tabular-nums">91</div>
+                <div className="text-lg font-bold text-emerald-400 mb-0.5">%</div>
+              </div>
+              <div className="text-xs text-emerald-300/70 font-medium">Prediction Accuracy</div>
+              {/* Mini arc indicator */}
+              <div className="mt-2 h-1 rounded-full bg-white/10 overflow-hidden">
+                <div className="h-full rounded-full" style={{ width: "91%", background: "linear-gradient(90deg, #10b981, #34d399)" }} />
+              </div>
+              <div className="absolute top-3 right-3 w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            </div>
           </div>
         </div>
       </div>
