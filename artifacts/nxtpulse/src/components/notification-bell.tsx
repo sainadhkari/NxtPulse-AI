@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Bell, BellRing, Wifi, WifiOff, X, CheckCheck, Trash2 } from "lucide-react";
 import { useNotifications, type NotificationLevel } from "@/hooks/use-notifications";
 
 function levelColor(level: NotificationLevel) {
-  if (level === "high") return "text-red-400 border-red-500/40 bg-red-500/10";
-  if (level === "medium") return "text-yellow-400 border-yellow-500/40 bg-yellow-500/10";
-  return "text-emerald-400 border-emerald-500/40 bg-emerald-500/10";
+  if (level === "high") return "text-red-600 border-red-300 bg-red-50";
+  if (level === "medium") return "text-yellow-600 border-yellow-300 bg-yellow-50";
+  return "text-emerald-600 border-emerald-300 bg-emerald-50";
 }
 
 function levelDot(level: NotificationLevel) {
-  if (level === "high") return "bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.8)]";
-  if (level === "medium") return "bg-yellow-500 shadow-[0_0_6px_rgba(234,179,8,0.8)]";
-  return "bg-emerald-500 shadow-[0_0_6px_rgba(52,211,153,0.8)]";
+  if (level === "high") return "bg-red-500";
+  if (level === "medium") return "bg-yellow-500";
+  return "bg-emerald-500";
 }
 
 function levelLabel(level: NotificationLevel) {
@@ -30,6 +30,31 @@ function formatTime(ts: string) {
 export function NotificationBell() {
   const { notifications, unreadCount, connected, markAllRead, clearAll } = useNotifications();
   const [open, setOpen] = useState(false);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [panelStyle, setPanelStyle] = useState<React.CSSProperties>({});
+
+  useEffect(() => {
+    if (open && buttonRef.current) {
+      const rect = buttonRef.current.getBoundingClientRect();
+      const panelWidth = 360;
+      const viewportWidth = window.innerWidth;
+      const padding = 12;
+
+      let left = rect.left;
+      if (left + panelWidth > viewportWidth - padding) {
+        left = viewportWidth - panelWidth - padding;
+      }
+      if (left < padding) left = padding;
+
+      setPanelStyle({
+        position: "fixed",
+        top: rect.bottom + 8,
+        left,
+        width: Math.min(panelWidth, viewportWidth - padding * 2),
+        zIndex: 9999,
+      });
+    }
+  }, [open]);
 
   const handleOpen = () => {
     setOpen((v) => !v);
@@ -41,6 +66,7 @@ export function NotificationBell() {
   return (
     <div className="relative">
       <button
+        ref={buttonRef}
         data-testid="button-notification-bell"
         onClick={handleOpen}
         className="relative flex items-center justify-center w-9 h-9 rounded-md border border-border bg-card hover:bg-primary/10 hover:border-primary/40 transition-all"
@@ -51,7 +77,7 @@ export function NotificationBell() {
           <Bell className="w-4 h-4 text-muted-foreground" />
         )}
         {unreadCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-foreground px-1 shadow-[0_0_8px_rgba(239,68,68,0.7)]">
+          <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white px-1">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -60,21 +86,22 @@ export function NotificationBell() {
       {open && (
         <>
           <div
-            className="fixed inset-0 z-40"
+            className="fixed inset-0 z-[9998]"
             onClick={() => setOpen(false)}
           />
           <div
             data-testid="panel-notifications"
-            className="absolute right-0 top-11 z-50 w-[380px] max-h-[520px] flex flex-col rounded-lg border border-border bg-card shadow-xl"
+            style={panelStyle}
+            className="max-h-[520px] flex flex-col rounded-xl border border-border bg-card shadow-xl z-[9999]"
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-border">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border shrink-0">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold text-foreground tracking-tight">Live Alerts</span>
-                <span className="flex items-center gap-1 text-[10px] font-mono uppercase">
+                <span className="text-sm font-semibold text-foreground">Live Alerts</span>
+                <span className="flex items-center gap-1 text-[10px] uppercase font-medium">
                   {connected ? (
-                    <><Wifi className="w-3 h-3 text-emerald-400" /><span className="text-emerald-400">Live</span></>
+                    <><Wifi className="w-3 h-3 text-emerald-500" /><span className="text-emerald-600">Live</span></>
                   ) : (
-                    <><WifiOff className="w-3 h-3 text-red-400" /><span className="text-red-400">Offline</span></>
+                    <><WifiOff className="w-3 h-3 text-red-400" /><span className="text-red-500">Offline</span></>
                   )}
                 </span>
               </div>
@@ -93,7 +120,7 @@ export function NotificationBell() {
                       data-testid="button-clear-notifications"
                       onClick={clearAll}
                       title="Clear all"
-                      className="p-1.5 rounded hover:bg-red-500/10 text-muted-foreground hover:text-red-400 transition-colors"
+                      className="p-1.5 rounded hover:bg-red-50 text-muted-foreground hover:text-red-500 transition-colors"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                     </button>
@@ -101,18 +128,18 @@ export function NotificationBell() {
                 )}
                 <button
                   onClick={() => setOpen(false)}
-                  className="p-1.5 rounded hover:bg-card text-muted-foreground hover:text-foreground transition-colors"
+                  className="p-1.5 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-colors"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
               </div>
             </div>
 
-            <div className="flex-1 overflow-y-auto divide-y divide-card-border/50">
+            <div className="flex-1 overflow-y-auto divide-y divide-border/60">
               {notifications.length === 0 ? (
                 <div className="flex flex-col items-center justify-center py-12 text-muted-foreground/60">
                   <Bell className="w-8 h-8 mb-2 opacity-30" />
-                  <p className="text-xs font-mono">Monitoring active. No alerts yet.</p>
+                  <p className="text-xs">Monitoring active. No alerts yet.</p>
                 </div>
               ) : (
                 notifications.map((n) => (
@@ -125,16 +152,16 @@ export function NotificationBell() {
                       <div className={`mt-1.5 w-2 h-2 rounded-full flex-shrink-0 ${levelDot(n.level)}`} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${levelColor(n.level)}`}>
+                          <span className={`text-[10px] font-bold px-1.5 py-0.5 rounded border ${levelColor(n.level)}`}>
                             {levelLabel(n.level)}
                           </span>
                           {!n.read && (
-                            <span className="text-[10px] font-mono text-primary/70">NEW</span>
+                            <span className="text-[10px] font-medium text-primary/70">NEW</span>
                           )}
                         </div>
                         <p className="text-xs font-semibold text-foreground truncate">{n.trainee}</p>
                         <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">{n.reason}</p>
-                        <p className="text-[10px] font-mono text-muted-foreground/60 mt-1">{formatTime(n.timestamp)}</p>
+                        <p className="text-[10px] text-muted-foreground/60 mt-1">{formatTime(n.timestamp)}</p>
                       </div>
                     </div>
                   </div>
@@ -142,8 +169,8 @@ export function NotificationBell() {
               )}
             </div>
 
-            <div className="px-4 py-2 border-t border-border bg-card">
-              <p className="text-[10px] font-mono text-muted-foreground/50 text-center">
+            <div className="px-4 py-2 border-t border-border bg-muted/30 shrink-0 rounded-b-xl">
+              <p className="text-[10px] text-muted-foreground/50 text-center">
                 Silent Detector AI — firing every 15 seconds
               </p>
             </div>

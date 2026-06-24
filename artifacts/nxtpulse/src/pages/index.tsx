@@ -1,18 +1,19 @@
-import { Shield, Brain, Activity, Target, Zap, ChevronRight, BarChart3 } from "lucide-react";
+import { Shield, Brain, Activity, Zap, BarChart3 } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import { NxtPulseLogo } from "@/components/nxtpulse-logo";
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Nav */}
       <nav className="border-b border-border bg-background/95 backdrop-blur sticky top-0 z-50">
         <div className="container mx-auto px-6 h-14 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-              <Target className="w-3.5 h-3.5 text-foreground" />
-            </div>
-            <span className="font-semibold text-foreground">NxtPulse AI</span>
+          <div className="flex items-center gap-3">
+            <NxtPulseLogo size="md" />
+            <span className="hidden sm:inline-block text-xs text-muted-foreground/60 border-l border-border pl-3 font-medium">
+              Powered by NxtWave
+            </span>
           </div>
           <Link href="/auth">
             <Button size="sm">Sign in</Button>
@@ -30,19 +31,14 @@ export default function LandingPage() {
           Training operations,<br />
           <span className="text-primary">made intelligent</span>
         </h1>
-        <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-8">
+        <p className="text-lg text-muted-foreground max-w-xl mx-auto mb-10">
           Catch struggling learners early, validate true comprehension, and automate training workflows — all in one platform.
         </p>
-        <div className="flex items-center justify-center gap-3">
-          <Link href="/auth">
-            <Button size="lg" className="px-6">
-              Get started <ChevronRight className="ml-1 w-4 h-4" />
-            </Button>
-          </Link>
-          <Link href="/auth">
-            <Button size="lg" variant="outline" className="px-6">View demo</Button>
-          </Link>
-        </div>
+        <Link href="/auth">
+          <Button size="lg" className="px-8 text-base h-12">
+            Get access to your dashboard
+          </Button>
+        </Link>
       </div>
 
       {/* Stats */}
@@ -117,10 +113,21 @@ export default function LandingPage() {
           <h2 className="text-2xl font-bold text-foreground mb-3">Ready to get started?</h2>
           <p className="text-muted-foreground mb-6">Sign in to access your training intelligence dashboard.</p>
           <Link href="/auth">
-            <Button size="lg">Sign in to NxtPulse</Button>
+            <Button size="lg">Sign in to NxtPulse AI</Button>
           </Link>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-background py-8 text-center">
+        <p className="text-sm text-muted-foreground font-medium">
+          Built by <span className="text-foreground font-semibold">Team Gradient Descent Into Madness</span>
+        </p>
+        <p className="text-xs text-muted-foreground/70 mt-1.5">
+          Sainadh Kari &bull; Saicharan Vanam
+        </p>
+        <p className="text-xs text-muted-foreground/50 mt-3">© 2026 NxtPulse AI — Powered by NxtWave</p>
+      </footer>
     </div>
   );
 }

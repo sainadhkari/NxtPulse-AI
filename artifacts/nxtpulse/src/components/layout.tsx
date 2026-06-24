@@ -8,13 +8,19 @@ import {
   LayoutDashboard, 
   LogOut,
   ShieldAlert,
-  TerminalSquare,
   Users
 } from "lucide-react";
 import { getAuthRole, clearAuth } from "@/lib/auth";
 import { NotificationBell } from "@/components/notification-bell";
 import { GlobalSearch, SearchTrigger } from "@/components/global-search";
 import { AIAssistant } from "@/components/ai-assistant";
+import { NxtPulseLogo } from "@/components/nxtpulse-logo";
+
+function formatRole(role: string) {
+  if (role === "poc") return "POC";
+  if (role === "sdi") return "SDI";
+  return role.charAt(0).toUpperCase() + role.slice(1);
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const role = getAuthRole();
@@ -38,21 +44,21 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <AIAssistant />
       {/* Sidebar */}
       <aside className="w-full md:w-60 border-r border-border bg-sidebar flex flex-col z-50 shrink-0">
-        <div className="p-5 border-b border-border">
+        <div className="p-4 border-b border-border">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                <TerminalSquare className="w-4 h-4 text-foreground" />
-              </div>
-              <span className="font-semibold text-base text-foreground">NxtPulse</span>
+            <Link href="/" className="flex items-center gap-0">
+              <NxtPulseLogo size="sm" />
             </Link>
             {role && <NotificationBell />}
           </div>
-          {role && (
-            <div className="mt-3 inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-primary/10 text-primary capitalize">
-              {role}
-            </div>
-          )}
+          <div className="mt-2.5 flex items-center gap-1.5">
+            {role && (
+              <span className="inline-flex items-center px-2 py-0.5 rounded-md text-xs font-semibold bg-primary/10 text-primary">
+                {formatRole(role)}
+              </span>
+            )}
+            <span className="text-[10px] text-muted-foreground/50 font-medium">Powered by NxtWave</span>
+          </div>
         </div>
 
         <nav className="flex-1 p-3 space-y-0.5">

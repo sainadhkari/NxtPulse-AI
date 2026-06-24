@@ -1,0 +1,190 @@
+Please make the following UI/UX improvements across the entire NxtPulse AI application while preserving all existing functionality, routing, and business logic.
+
+Important:
+
+* Do NOT change backend logic
+* Do NOT break routing
+* Do NOT modify features
+* Only improve UI, branding, alignment, colors, and text formatting
+
+Goal:
+Make NxtPulse AI look cleaner, more premium, more polished, and production-ready.
+
+---
+
+# 1. Logo Redesign
+
+Change the NxtPulse logo on the landing page and all internal pages.
+
+Requirements:
+
+* Use the visual style from the attached reference image
+* Only copy the design style
+* Do NOT copy the text from reference image
+* Keep text as: **NxtPulse AI**
+
+Apply across:
+
+* Landing page
+* Login page
+* Manager dashboard
+* POC dashboard
+* SDI dashboard
+* All module pages
+
+---
+
+# 2. Landing Page Button Cleanup
+
+There are too many CTA buttons that lead to login.
+
+Remove these buttons:
+
+* Get Started
+* View Demo
+
+Keep only one clean primary CTA button for login/access.
+
+Goal:
+
+* Reduce clutter
+* Cleaner hero section
+* More premium landing page
+
+---
+
+# 3. Branding Near Logo
+
+Beside the NxtPulse AI logo, add subtle branding text.
+
+Suggested text:
+**Powered by NxtWave**
+
+Requirements:
+
+* Clean
+* Minimal
+* Professional
+* Subtle, not too bright
+* Match futuristic dark theme
+
+---
+
+# 4. Footer Update
+
+Update landing page footer.
+
+Add:
+
+Built by Team Gradient Descent Into Madness
+
+Below that add:
+
+Sainadh Kari • Saicharan Vanam
+
+Style:
+
+* Center aligned
+* Clean footer layout
+* Subtle glow or muted text
+* Professional and modern
+* Fits dark futuristic theme
+
+---
+
+# 5. Global Theme Color Update
+
+Change the current primary blue theme color across the entire application.
+
+Replace current blue color with:
+#2563EB
+
+Apply across:
+
+* Buttons
+* Active tabs
+* Borders
+* Icons
+* Highlights
+* Glow effects
+* Graph accents
+* Charts
+* Progress bars
+* Cards with blue accents
+
+Goal:
+Use a cleaner and more modern blue color consistently.
+
+---
+
+# 6. Notification Panel Fix
+
+Notification dropdown alignment is broken.
+
+Issue:
+
+* Notification panel goes outside page boundaries
+
+Fix:
+
+* Properly align notification panel inside viewport
+* Ensure it never overflows screen
+* Make responsive for all screen sizes
+
+Check on:
+
+* Manager dashboard
+* POC dashboard
+* SDI dashboard
+
+---
+
+# 7. Text Formatting Fixes
+
+Fix capitalization issues.
+
+Change:
+
+* Poc → POC
+* Sdi → SDI
+
+Apply wherever these appear:
+
+* Top-left dashboard headings
+* Sidebar labels
+* Navigation
+* Page titles
+* Role labels
+
+---
+
+# 8. Login Page Copyright Fix
+
+On login page footer, update copyright text.
+
+Current:
+© Logio 2025 (or similar)
+
+Change to:
+© 2026 NxtPulse AI
+
+Requirements:
+
+* Clean typography
+* Proper alignment
+* Professional styling
+* Match overall theme
+
+---
+
+# Final Goal
+
+Improve the application visually while keeping all existing features unchanged.
+
+Focus on:
+
+* Cleaner UI
+* Better alignment
+* Better branding
+* Consistent color system
+* More polished production-ready appearance

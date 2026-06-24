@@ -4,10 +4,11 @@ import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Target, UserCheck, ShieldAlert, MonitorPlay } from "lucide-react";
+import { ShieldAlert, MonitorPlay, UserCheck } from "lucide-react";
 import { useLogin, UserRole } from "@workspace/api-client-react";
 import { setAuth } from "@/lib/auth";
 import { useToast } from "@/hooks/use-toast";
+import { NxtPulseLogo } from "@/components/nxtpulse-logo";
 
 export default function AuthPage() {
   const [, setLocation] = useLocation();
@@ -40,34 +41,32 @@ export default function AuthPage() {
     <div className="min-h-screen bg-background flex flex-col md:flex-row">
       {/* Left side — branding panel */}
       <div className="hidden md:flex w-2/5 bg-primary flex-col justify-between p-12">
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
-            <Target className="w-4 h-4 text-foreground" />
-          </div>
-          <span className="font-semibold text-foreground text-lg">NxtPulse AI</span>
+        <div className="flex flex-col gap-1.5">
+          <NxtPulseLogo size="lg" variant="light" />
+          <span className="text-xs text-white/50 mt-1 font-medium">Powered by NxtWave</span>
         </div>
 
         <div>
-          <h1 className="text-4xl font-bold text-foreground mb-4 leading-tight">
+          <h1 className="text-4xl font-bold text-white mb-4 leading-tight">
             Intelligent Training Operations
           </h1>
-          <p className="text-primary-foreground/80 text-base leading-relaxed mb-10">
+          <p className="text-white/80 text-base leading-relaxed mb-10">
             Monitor learner progress, catch risk early, and automate training workflows — all from one place.
           </p>
           <div className="space-y-3">
-            <div className="flex items-center gap-3 text-foreground/90 text-sm">
+            <div className="flex items-center gap-3 text-white/90 text-sm">
               <div className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center shrink-0">
                 <ShieldAlert className="w-3.5 h-3.5" />
               </div>
               Real-time risk detection
             </div>
-            <div className="flex items-center gap-3 text-foreground/90 text-sm">
+            <div className="flex items-center gap-3 text-white/90 text-sm">
               <div className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center shrink-0">
                 <MonitorPlay className="w-3.5 h-3.5" />
               </div>
               Automated demo intelligence
             </div>
-            <div className="flex items-center gap-3 text-foreground/90 text-sm">
+            <div className="flex items-center gap-3 text-white/90 text-sm">
               <div className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center shrink-0">
                 <UserCheck className="w-3.5 h-3.5" />
               </div>
@@ -76,17 +75,18 @@ export default function AuthPage() {
           </div>
         </div>
 
-        <p className="text-foreground/50 text-xs">© 2025 NxtPulse AI</p>
+        <div className="space-y-1">
+          <p className="text-white/40 text-xs">© 2026 NxtPulse AI</p>
+          <p className="text-white/30 text-xs">Sainadh Kari · Saicharan Vanam</p>
+        </div>
       </div>
 
       {/* Right side — login form */}
       <div className="flex-1 flex flex-col justify-center items-center p-8">
         <div className="w-full max-w-sm">
-          <div className="flex items-center gap-2 mb-8 md:hidden">
-            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
-              <Target className="w-3.5 h-3.5 text-foreground" />
-            </div>
-            <span className="font-semibold text-foreground">NxtPulse AI</span>
+          <div className="flex flex-col items-start gap-1 mb-8 md:hidden">
+            <NxtPulseLogo size="md" />
+            <span className="text-xs text-muted-foreground/60 font-medium">Powered by NxtWave</span>
           </div>
 
           <h2 className="text-2xl font-bold text-foreground mb-1">Sign in</h2>
