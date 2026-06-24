@@ -118,11 +118,11 @@ export function GlobalSearch() {
 
       {/* Modal */}
       <div
-        className="relative w-full max-w-xl mx-4 rounded-xl border border-primary/30 bg-[#0a0f1e]/95 shadow-[0_0_40px_rgba(0,240,255,0.15)] overflow-hidden"
+        className="relative w-full max-w-xl mx-4 rounded-xl border border-border bg-card shadow-xl overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Input */}
-        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-card-border">
+        <div className="flex items-center gap-3 px-4 py-3.5 border-b border-border">
           <Search className="w-4 h-4 text-primary flex-shrink-0" />
           <input
             ref={inputRef}
@@ -138,7 +138,7 @@ export function GlobalSearch() {
                 <X className="w-3.5 h-3.5" />
               </button>
             )}
-            <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded border border-card-border text-[10px] font-mono text-muted-foreground/50">ESC</kbd>
+            <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 rounded border border-border text-[10px] font-mono text-muted-foreground/50">ESC</kbd>
           </div>
         </div>
 
@@ -193,7 +193,7 @@ export function GlobalSearch() {
                       selectedIdx === absIdx ? "bg-primary/10" : "hover:bg-white/5"
                     }`}
                   >
-                    <div className="w-7 h-7 rounded-full bg-card/80 border border-card-border flex items-center justify-center flex-shrink-0">
+                    <div className="w-7 h-7 rounded-full bg-card border border-border flex items-center justify-center flex-shrink-0">
                       <page.icon className="w-3.5 h-3.5 text-muted-foreground" />
                     </div>
                     <div className="flex-1 min-w-0">
@@ -223,11 +223,11 @@ export function GlobalSearch() {
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2 border-t border-card-border flex items-center justify-between">
+        <div className="px-4 py-2 border-t border-border flex items-center justify-between">
           <div className="flex items-center gap-3 text-[10px] font-mono text-muted-foreground/30">
-            <span><kbd className="border border-card-border px-1 rounded">↑↓</kbd> navigate</span>
-            <span><kbd className="border border-card-border px-1 rounded">↵</kbd> open</span>
-            <span><kbd className="border border-card-border px-1 rounded">esc</kbd> close</span>
+            <span><kbd className="border border-border px-1 rounded">↑↓</kbd> navigate</span>
+            <span><kbd className="border border-border px-1 rounded">↵</kbd> open</span>
+            <span><kbd className="border border-border px-1 rounded">esc</kbd> close</span>
           </div>
           <span className="text-[10px] font-mono text-muted-foreground/30">
             {totalResults > 0 ? `${totalResults} result${totalResults > 1 ? "s" : ""}` : ""}
@@ -247,7 +247,7 @@ export function SearchTrigger() {
     >
       <Search className="w-4 h-4" />
       <span className="flex-1 text-left">Search</span>
-      <kbd className="hidden group-hover:inline-flex items-center px-1.5 py-0.5 rounded border border-card-border text-[10px] font-mono opacity-60">⌘K</kbd>
+      <kbd className="hidden group-hover:inline-flex items-center px-1.5 py-0.5 rounded border border-border text-[10px] font-mono opacity-60">⌘K</kbd>
     </button>
   );
 }

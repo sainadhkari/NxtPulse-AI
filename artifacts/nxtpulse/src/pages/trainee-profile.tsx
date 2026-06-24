@@ -5,7 +5,7 @@ import {
   ShieldAlert, TrendingDown, TrendingUp, User
 } from "lucide-react";
 import { Layout } from "@/components/layout";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import {
   useGetTrainee,
   useGetLearnGuardEvaluations,
@@ -45,7 +45,7 @@ function ScoreBar({ label, value, danger }: { label: string; value: number; dang
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-[#040914]/95 border border-card-border rounded p-2 text-xs">
+    <div className="bg-card border border-border rounded p-2 text-xs">
       <p className="text-muted-foreground font-mono mb-1">{label}</p>
       {payload.map((p: any) => (
         <p key={p.name} className="text-primary font-bold">{p.value?.toFixed(0)}</p>
@@ -291,11 +291,11 @@ export default function TraineeProfile() {
             </div>
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 flex-wrap mb-1">
-                <NeonTitle className="text-xl">{trainee.name}</NeonTitle>
+                <h2 className="text-xl font-bold text-foreground">{trainee.name}</h2>
                 <span className={`px-2.5 py-0.5 rounded border text-[10px] font-bold uppercase tracking-widest ${riskColor(trainee.risk_level)}`}>
                   {trainee.risk_level} risk
                 </span>
-                <span className="px-2 py-0.5 rounded border border-card-border text-[10px] font-mono text-muted-foreground uppercase">
+                <span className="px-2 py-0.5 rounded border border-border text-[10px] font-mono text-muted-foreground uppercase">
                   {trainee.status}
                 </span>
               </div>
@@ -356,7 +356,7 @@ export default function TraineeProfile() {
             ) : (
               <div className="space-y-2.5">
                 {interventions.map((iv) => (
-                  <div key={iv.id} className="p-3 rounded border border-card-border bg-card/30 flex items-start gap-3">
+                  <div key={iv.id} className="p-3 rounded border border-border bg-card flex items-start gap-3">
                     <div className={`w-2 h-2 rounded-full mt-1.5 flex-shrink-0 ${iv.status === "pending" ? "bg-yellow-500" : iv.status === "resolved" ? "bg-emerald-500" : "bg-blue-500"}`} />
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-semibold text-foreground">{iv.issue}</p>
@@ -383,7 +383,7 @@ export default function TraineeProfile() {
           ) : (
             <div className="space-y-4">
               {evaluations.map((ev) => (
-                <div key={ev.id} className="border border-card-border rounded p-4 space-y-3">
+                <div key={ev.id} className="border border-border rounded p-4 space-y-3">
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <p className="text-sm font-semibold text-foreground">{ev.topic}</p>
                     <p className="text-[10px] font-mono text-muted-foreground/60">{new Date(ev.evaluated_at).toLocaleDateString("en-IN")}</p>
@@ -417,7 +417,7 @@ export default function TraineeProfile() {
                 const avg = Math.round((d.technical_score + d.communication_score + d.confidence_score + d.teaching_readiness_score) / 4);
                 const isStrong = avg >= 70;
                 return (
-                  <div key={d.id} className="border border-card-border rounded p-4 space-y-3">
+                  <div key={d.id} className="border border-border rounded p-4 space-y-3">
                     <div className="flex items-center justify-between flex-wrap gap-2">
                       <div className="flex items-center gap-2">
                         {isStrong ? <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> : <TrendingDown className="w-3.5 h-3.5 text-red-400" />}

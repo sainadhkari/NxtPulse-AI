@@ -135,29 +135,29 @@ export function AIAssistant() {
       {!open && (
         <button
           onClick={() => setOpen(true)}
-          className="fixed bottom-6 right-6 z-[9998] w-14 h-14 rounded-full bg-primary shadow-[0_0_24px_rgba(0,240,255,0.5)] flex items-center justify-center hover:scale-110 transition-all group"
+          className="fixed bottom-6 right-6 z-[9998] w-14 h-14 rounded-full bg-primary shadow-lg flex items-center justify-center hover:scale-110 hover:shadow-xl transition-all group"
         >
-          <Bot className="w-6 h-6 text-[#0a0f1e]" />
-          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-[#0a0f1e] animate-pulse" />
+          <Bot className="w-6 h-6 text-white" />
+          <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-emerald-500 border-2 border-white animate-pulse" />
         </button>
       )}
 
       {/* Chat window */}
       {open && (
         <div
-          className={`fixed bottom-6 right-6 z-[9998] w-[360px] rounded-xl border border-primary/30 bg-[#0a0f1e]/97 shadow-[0_0_40px_rgba(0,240,255,0.12)] flex flex-col overflow-hidden transition-all duration-200 ${
+          className={`fixed bottom-6 right-6 z-[9998] w-[360px] rounded-xl border border-border bg-card shadow-xl flex flex-col overflow-hidden transition-all duration-200 ${
             minimised ? "h-14" : "h-[520px]"
           }`}
         >
           {/* Header */}
-          <div className="flex items-center gap-2.5 px-4 py-3 border-b border-card-border bg-primary/5 flex-shrink-0">
+          <div className="flex items-center gap-2.5 px-4 py-3 border-b border-border bg-primary/5 flex-shrink-0">
             <div className="relative">
               <Bot className="w-5 h-5 text-primary" />
-              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-400 border border-[#0a0f1e]" />
+              <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-white" />
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-xs font-bold text-primary tracking-wide">NxtPulse GPT</p>
-              <p className="text-[9px] font-mono text-muted-foreground/50 uppercase tracking-widest">AI Program Assistant</p>
+              <p className="text-[9px] text-muted-foreground/60">AI Program Assistant</p>
             </div>
             <div className="flex items-center gap-1">
               <button
@@ -197,7 +197,7 @@ export function AIAssistant() {
                       className={`max-w-[82%] rounded-xl px-3 py-2.5 ${
                         msg.role === "user"
                           ? "bg-primary/15 border border-primary/25 rounded-tr-sm"
-                          : "bg-card/60 border border-card-border rounded-tl-sm"
+                          : "bg-card border border-border rounded-tl-sm"
                       }`}
                     >
                       {msg.role === "user" ? (
@@ -214,7 +214,7 @@ export function AIAssistant() {
                     <div className="w-6 h-6 rounded-full bg-primary/10 border border-primary/25 flex items-center justify-center flex-shrink-0 mr-2 mt-0.5">
                       <Bot className="w-3 h-3 text-primary" />
                     </div>
-                    <div className="bg-card/60 border border-card-border rounded-xl rounded-tl-sm px-3 py-2.5">
+                    <div className="bg-card border border-border rounded-xl rounded-tl-sm px-3 py-2.5">
                       <div className="flex gap-1 items-center h-4">
                         {[0, 1, 2].map((i) => (
                           <span
@@ -248,8 +248,8 @@ export function AIAssistant() {
               )}
 
               {/* Input */}
-              <div className="px-3 pb-3 pt-2 border-t border-card-border flex-shrink-0">
-                <div className="flex items-center gap-2 bg-card/50 border border-card-border rounded-lg px-3 py-2 focus-within:border-primary/50 transition-colors">
+              <div className="px-3 pb-3 pt-2 border-t border-border flex-shrink-0">
+                <div className="flex items-center gap-2 bg-card border border-border rounded-lg px-3 py-2 focus-within:border-primary/50 transition-colors">
                   <input
                     ref={inputRef}
                     value={input}

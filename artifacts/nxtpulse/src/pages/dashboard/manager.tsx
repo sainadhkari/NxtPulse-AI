@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout";
 import { ProtectedRoute } from "@/components/protected-route";
 import { MetricCard } from "@/components/metric-card";
 import { RiskDonutChart } from "@/components/charts/RiskDonutChart";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { 
   useGetTraineeStats, 
   useGetRiskDistribution,
@@ -21,7 +21,8 @@ export default function ManagerDashboard() {
     <ProtectedRoute allowedRoles={["manager"]}>
       <Layout>
         <div className="p-8">
-          <NeonTitle className="text-3xl mb-8">SDI Command Center</NeonTitle>
+          <h1 className="text-2xl font-bold text-foreground mb-1">Dashboard</h1>
+          <p className="text-muted-foreground text-sm mb-8">SDI program overview and alerts</p>
           
           <DashboardContent />
         </div>
@@ -41,7 +42,7 @@ function DashboardContent() {
       {/* Top Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {statsLoading ? (
-          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-32 w-full rounded-lg bg-card/60" />)
+          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-32 w-full rounded-lg bg-card" />)
         ) : stats ? (
           <>
             <MetricCard 
@@ -92,7 +93,7 @@ function DashboardContent() {
             <div className="overflow-auto max-h-[300px]">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-card-border hover:bg-transparent">
+                  <TableRow className="border-border hover:bg-transparent">
                     <TableHead className="font-mono text-xs text-muted-foreground">Trainee</TableHead>
                     <TableHead className="font-mono text-xs text-muted-foreground">Track</TableHead>
                     <TableHead className="font-mono text-xs text-muted-foreground text-right">Learning Score</TableHead>
@@ -101,9 +102,9 @@ function DashboardContent() {
                 </TableHeader>
                 <TableBody>
                   {telemetry.filter(t => t.risk_level === 'high').slice(0, 5).map(row => (
-                    <TableRow key={row.trainee_id} className="border-card-border hover:bg-card/80">
+                    <TableRow key={row.trainee_id} className="border-border hover:bg-card">
                       <TableCell className="font-medium">
-                        <Link href={`/trainee/${row.trainee_id}`} className="text-white hover:text-primary transition-colors hover:underline underline-offset-2">
+                        <Link href={`/trainee/${row.trainee_id}`} className="text-foreground hover:text-primary transition-colors hover:underline underline-offset-2">
                           {row.trainee_name}
                         </Link>
                       </TableCell>
@@ -131,14 +132,14 @@ function DashboardContent() {
         ) : alerts ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {alerts.map(alert => (
-              <div key={alert.id} className="p-4 rounded-md border border-card-border bg-background/50 flex flex-col gap-2">
+              <div key={alert.id} className="p-4 rounded-md border border-border bg-background flex flex-col gap-2">
                 <div className="flex justify-between items-start">
-                  <Link href={`/trainee/${alert.trainee_id}`} className="font-bold text-white hover:text-primary transition-colors hover:underline underline-offset-2">
+                  <Link href={`/trainee/${alert.trainee_id}`} className="font-bold text-foreground hover:text-primary transition-colors hover:underline underline-offset-2">
                     {alert.trainee_name}
                   </Link>
                   <Badge variant="outline" className={
                     alert.risk_level === 'high' ? "border-destructive text-destructive bg-destructive/10" : 
-                    "border-chart-4 text-chart-4 bg-chart-4/10"
+                    "border-amber-300 text-amber-600 bg-amber-50"
                   }>
                     {alert.risk_level.toUpperCase()}
                   </Badge>

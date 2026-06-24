@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { ProtectedRoute } from "@/components/protected-route";
 import { MetricCard } from "@/components/metric-card";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { 
   useGetGetMeQueryOptions,
   useGetLatestLearnGuardEvaluation,
@@ -18,7 +18,8 @@ export default function SDIDashboard() {
     <ProtectedRoute allowedRoles={["sdi", "manager", "poc"]}>
       <Layout>
         <div className="p-8">
-          <NeonTitle className="text-3xl mb-8">My Learning Dashboard</NeonTitle>
+          <h1 className="text-2xl font-bold text-foreground mb-1">My Learning Dashboard</h1>
+          <p className="text-muted-foreground text-sm mb-8">Your progress and upcoming milestones</p>
           <DashboardContent />
         </div>
       </Layout>
@@ -69,7 +70,7 @@ function DashboardContent() {
             <Skeleton className="h-64 w-full" />
           ) : evaluation ? (
             <div className="space-y-6">
-              <div className="text-lg font-semibold text-white mb-4">{evaluation.topic}</div>
+              <div className="text-lg font-semibold text-foreground mb-4">{evaluation.topic}</div>
               
               <div className="space-y-4">
                 <div>
@@ -77,7 +78,7 @@ function DashboardContent() {
                     <span className="text-muted-foreground uppercase">Understanding</span>
                     <span className="font-mono text-chart-3">{evaluation.understanding_score}%</span>
                   </div>
-                  <div className="w-full bg-background/50 h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-background h-2 rounded-full overflow-hidden">
                     <div className="bg-chart-3 h-full" style={{ width: `${evaluation.understanding_score}%` }}></div>
                   </div>
                 </div>
@@ -87,7 +88,7 @@ function DashboardContent() {
                     <span className="text-muted-foreground uppercase">Confidence</span>
                     <span className="font-mono text-chart-2">{evaluation.confidence_score}%</span>
                   </div>
-                  <div className="w-full bg-background/50 h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-background h-2 rounded-full overflow-hidden">
                     <div className="bg-chart-2 h-full" style={{ width: `${evaluation.confidence_score}%` }}></div>
                   </div>
                 </div>
@@ -97,7 +98,7 @@ function DashboardContent() {
                     <span className="text-muted-foreground uppercase">AI Dependency</span>
                     <span className="font-mono text-destructive">{evaluation.ai_dependency_score}%</span>
                   </div>
-                  <div className="w-full bg-background/50 h-2 rounded-full overflow-hidden">
+                  <div className="w-full bg-background h-2 rounded-full overflow-hidden">
                     <div className="bg-destructive h-full" style={{ width: `${evaluation.ai_dependency_score}%` }}></div>
                   </div>
                 </div>
@@ -127,7 +128,7 @@ function DashboardContent() {
             <div className="overflow-auto max-h-[400px]">
               <Table>
                 <TableHeader>
-                  <TableRow className="border-card-border hover:bg-transparent">
+                  <TableRow className="border-border hover:bg-transparent">
                     <TableHead className="font-mono text-xs text-muted-foreground">Date</TableHead>
                     <TableHead className="font-mono text-xs text-muted-foreground">Track</TableHead>
                     <TableHead className="font-mono text-xs text-muted-foreground text-right">Learning Score</TableHead>
@@ -137,9 +138,9 @@ function DashboardContent() {
                 <TableBody>
                   {/* Mocking personal telemetry data based on overall telemetry for demo */}
                   {telemetry.slice(0, 8).map((row, i) => (
-                    <TableRow key={row.trainee_id + i} className="border-card-border hover:bg-card/80">
+                    <TableRow key={row.trainee_id + i} className="border-border hover:bg-card">
                       <TableCell className="text-muted-foreground text-sm">2023-10-{20-i}</TableCell>
-                      <TableCell className="text-white font-medium">{row.track}</TableCell>
+                      <TableCell className="text-foreground font-medium">{row.track}</TableCell>
                       <TableCell className="text-right text-primary font-mono">{row.learning_score}%</TableCell>
                       <TableCell>
                         <Badge variant="outline" className="border-chart-3 text-chart-3 bg-chart-3/10">

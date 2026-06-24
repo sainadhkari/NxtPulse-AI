@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -37,95 +37,126 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col md:flex-row dark">
-      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none z-0"></div>
-      
-      {/* Left side */}
-      <div className="w-full md:w-1/2 p-12 flex flex-col justify-center relative z-10 border-r border-card-border bg-card/30 backdrop-blur-sm">
-        <div className="max-w-md mx-auto">
-          <div className="flex items-center gap-3 mb-12">
-            <Target className="w-10 h-10 text-primary shadow-xs" />
-            <span className="font-bold text-3xl tracking-tighter uppercase text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">NxtPulse AI</span>
+    <div className="min-h-screen bg-background flex flex-col md:flex-row">
+      {/* Left side — branding panel */}
+      <div className="hidden md:flex w-2/5 bg-primary flex-col justify-between p-12">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center">
+            <Target className="w-4 h-4 text-foreground" />
           </div>
-          <NeonTitle className="text-4xl mb-6">Initialize Uplink</NeonTitle>
-          <p className="text-lg text-muted-foreground mb-8">
-            Access the high-stakes command center for SDI excellence. Select your operational role to begin.
+          <span className="font-semibold text-foreground text-lg">NxtPulse AI</span>
+        </div>
+
+        <div>
+          <h1 className="text-4xl font-bold text-foreground mb-4 leading-tight">
+            Intelligent Training Operations
+          </h1>
+          <p className="text-primary-foreground/80 text-base leading-relaxed mb-10">
+            Monitor learner progress, catch risk early, and automate training workflows — all from one place.
           </p>
-          
-          <div className="space-y-4">
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <ShieldAlert className="w-5 h-5 text-destructive" /> Real-time risk detection
+          <div className="space-y-3">
+            <div className="flex items-center gap-3 text-foreground/90 text-sm">
+              <div className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                <ShieldAlert className="w-3.5 h-3.5" />
+              </div>
+              Real-time risk detection
             </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <MonitorPlay className="w-5 h-5 text-secondary" /> Automated demo intelligence
+            <div className="flex items-center gap-3 text-foreground/90 text-sm">
+              <div className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                <MonitorPlay className="w-3.5 h-3.5" />
+              </div>
+              Automated demo intelligence
             </div>
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <UserCheck className="w-5 h-5 text-chart-3" /> Predictive learner validation
+            <div className="flex items-center gap-3 text-foreground/90 text-sm">
+              <div className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center shrink-0">
+                <UserCheck className="w-3.5 h-3.5" />
+              </div>
+              Predictive learner validation
             </div>
           </div>
         </div>
+
+        <p className="text-foreground/50 text-xs">© 2025 NxtPulse AI</p>
       </div>
 
-      {/* Right side */}
-      <div className="w-full md:w-1/2 p-12 flex flex-col justify-center relative z-10">
-        <div className="max-w-md mx-auto w-full">
-          <form onSubmit={handleLogin} className="space-y-8">
-            <div className="grid grid-cols-3 gap-4 mb-8">
-              {[
-                { id: "manager", label: "Manager" },
-                { id: "poc", label: "POC" },
-                { id: "sdi", label: "SDI" }
-              ].map((r) => (
-                <div 
-                  key={r.id}
-                  onClick={() => setSelectedRole(r.id as UserRole)}
-                  className={`cursor-pointer border rounded-lg p-4 text-center transition-all ${
-                    role === r.id 
-                      ? "border-primary bg-primary/10 shadow-xs text-primary" 
-                      : "border-card-border bg-card/50 text-muted-foreground hover:border-primary/50"
-                  }`}
-                >
-                  <div className="font-mono text-sm uppercase">{r.label}</div>
-                </div>
-              ))}
+      {/* Right side — login form */}
+      <div className="flex-1 flex flex-col justify-center items-center p-8">
+        <div className="w-full max-w-sm">
+          <div className="flex items-center gap-2 mb-8 md:hidden">
+            <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+              <Target className="w-3.5 h-3.5 text-foreground" />
+            </div>
+            <span className="font-semibold text-foreground">NxtPulse AI</span>
+          </div>
+
+          <h2 className="text-2xl font-bold text-foreground mb-1">Sign in</h2>
+          <p className="text-muted-foreground text-sm mb-8">Select your role and enter your credentials.</p>
+
+          <form onSubmit={handleLogin} className="space-y-5">
+            <div>
+              <Label className="text-xs font-medium text-muted-foreground mb-2 block">Role</Label>
+              <div className="grid grid-cols-3 gap-2">
+                {[
+                  { id: "manager", label: "Manager" },
+                  { id: "poc", label: "POC" },
+                  { id: "sdi", label: "SDI" }
+                ].map((r) => (
+                  <button
+                    key={r.id}
+                    type="button"
+                    onClick={() => setSelectedRole(r.id as UserRole)}
+                    className={`border rounded-lg py-2.5 text-sm font-medium transition-all ${
+                      role === r.id 
+                        ? "border-primary bg-primary/8 text-primary" 
+                        : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+                    }`}
+                  >
+                    {r.label}
+                  </button>
+                ))}
+              </div>
             </div>
 
-            <GlassCard className="p-8">
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="email" className="uppercase font-mono text-xs text-muted-foreground">Operator ID (Email)</Label>
-                  <Input 
-                    id="email" 
-                    type="email" 
-                    placeholder="operator@nxtpulse.ai" 
-                    className="font-mono bg-background/50 border-input focus-visible:ring-primary"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="password" className="uppercase font-mono text-xs text-muted-foreground">Access Code</Label>
-                  <Input 
-                    id="password" 
-                    type="password" 
-                    className="font-mono bg-background/50 border-input focus-visible:ring-primary"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-sm font-medium text-foreground">Email</Label>
+              <Input 
+                id="email" 
+                type="email" 
+                placeholder="you@nxtpulse.ai"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-              <Button 
-                type="submit" 
-                className="w-full mt-8 bg-primary text-primary-foreground hover:bg-primary/90 font-bold uppercase tracking-widest"
-                disabled={login.isPending}
-              >
-                {login.isPending ? "Authenticating..." : "Initialize"}
-              </Button>
-            </GlassCard>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-sm font-medium text-foreground">Password</Label>
+              <Input 
+                id="password" 
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={login.isPending}
+            >
+              {login.isPending ? "Signing in..." : "Sign in"}
+            </Button>
           </form>
+
+          <div className="mt-8 p-4 rounded-lg bg-muted/60 border border-border">
+            <p className="text-xs text-muted-foreground font-medium mb-2">Demo credentials</p>
+            <div className="space-y-1 text-xs text-muted-foreground">
+              <div>Manager: <span className="font-mono text-foreground">manager@nxtpulse.ai / manager123</span></div>
+              <div>POC: <span className="font-mono text-foreground">poc@nxtpulse.ai / poc123</span></div>
+              <div>SDI: <span className="font-mono text-foreground">sdi@nxtpulse.ai / sdi123</span></div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

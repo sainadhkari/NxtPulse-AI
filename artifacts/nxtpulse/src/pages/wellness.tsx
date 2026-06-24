@@ -1,6 +1,6 @@
 import { Layout } from "@/components/layout";
 import { ProtectedRoute } from "@/components/protected-route";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { 
   useGetWellnessMetrics,
   useGetWellnessSuggestions
@@ -15,9 +15,8 @@ export default function WellnessPage() {
     <ProtectedRoute>
       <Layout>
         <div className="p-8">
-          <NeonTitle className="text-3xl mb-8 flex items-center gap-3">
-            <Activity className="w-8 h-8 text-primary" /> Wellness AI
-          </NeonTitle>
+          <h1 className="text-2xl font-bold text-foreground mb-1">Wellness</h1>
+          <p className="text-muted-foreground text-sm mb-8">Trainee wellbeing metrics and suggestions</p>
           <WellnessContent />
         </div>
       </Layout>
@@ -47,24 +46,24 @@ function WellnessContent() {
               </div>
             ) : metrics ? (
               <div className="space-y-4">
-                <div className="flex justify-between items-center p-4 bg-background/50 rounded-lg border border-card-border">
+                <div className="flex justify-between items-center p-4 bg-background rounded-lg border border-border">
                   <div>
                     <div className="text-sm text-muted-foreground uppercase">Stress Level</div>
-                    <div className="text-2xl font-bold text-white capitalize">{metrics.stress_level}</div>
+                    <div className="text-2xl font-bold text-foreground capitalize">{metrics.stress_level}</div>
                   </div>
                   <div className="text-chart-5 text-3xl font-mono">{metrics.stress_score}</div>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-background/50 rounded-lg border border-card-border">
+                <div className="flex justify-between items-center p-4 bg-background rounded-lg border border-border">
                   <div>
                     <div className="text-sm text-muted-foreground uppercase">Burnout Risk</div>
-                    <div className="text-2xl font-bold text-white capitalize">{metrics.burnout_risk}</div>
+                    <div className="text-2xl font-bold text-foreground capitalize">{metrics.burnout_risk}</div>
                   </div>
                   <div className="text-destructive text-3xl font-mono">{metrics.burnout_score}</div>
                 </div>
-                <div className="flex justify-between items-center p-4 bg-background/50 rounded-lg border border-card-border">
+                <div className="flex justify-between items-center p-4 bg-background rounded-lg border border-border">
                   <div>
                     <div className="text-sm text-muted-foreground uppercase">Motivation</div>
-                    <div className="text-2xl font-bold text-white capitalize flex items-center gap-2">
+                    <div className="text-2xl font-bold text-foreground capitalize flex items-center gap-2">
                       {metrics.motivation_trend}
                       {metrics.motivation_trend === 'improving' ? <ArrowUpRight className="w-5 h-5 text-chart-3" /> : <ArrowDownRight className="w-5 h-5 text-destructive" />}
                     </div>
@@ -104,7 +103,7 @@ function WellnessContent() {
         ) : suggestions ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {suggestions.map(sug => (
-              <div key={sug.id} className="p-5 rounded-md border border-card-border bg-background/50">
+              <div key={sug.id} className="p-5 rounded-md border border-border bg-background">
                 <div className="flex justify-between items-start mb-3">
                   <Badge variant="outline" className="border-primary/30 text-primary uppercase font-mono text-[10px]">
                     {sug.category}

@@ -5,7 +5,7 @@ import {
   ArrowRight, Zap, Target
 } from "lucide-react";
 import { Layout } from "@/components/layout";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { useGetUnderstudySimulation } from "@workspace/api-client-react";
 
 const BASE = import.meta.env.BASE_URL?.replace(/\/$/, "") || "";
@@ -38,7 +38,7 @@ function priorityColor(p: string) {
 function statusColor(s: string) {
   if (s === "active") return "text-emerald-400 border-emerald-500/30 bg-emerald-500/10";
   if (s === "scheduled") return "text-blue-400 border-blue-500/30 bg-blue-500/10";
-  return "text-muted-foreground border-card-border bg-card/30";
+  return "text-muted-foreground border-border bg-card";
 }
 
 function ScorePill({ label, value, danger }: { label: string; value: number; danger?: boolean }) {
@@ -120,7 +120,7 @@ function MessageGenerator({ outreach }: { outreach: Outreach }) {
       </div>
 
       {open && (
-        <div className="rounded border border-card-border bg-card/50 p-3 relative">
+        <div className="rounded border border-border bg-card p-3 relative">
           {loading ? (
             <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono py-2">
               <Loader2 className="w-3.5 h-3.5 animate-spin text-primary" /> Generating AI message…
@@ -185,7 +185,7 @@ export default function UnderstudyPage() {
         <div className="flex items-center gap-3">
           <Bot className="w-6 h-6 text-primary" />
           <div>
-            <NeonTitle className="text-base">Understudy AI</NeonTitle>
+            <h2 className="text-base font-semibold text-foreground">Understudy AI</h2>
             <p className="text-xs text-muted-foreground mt-0.5">
               AI-powered peer mentoring engine — matches high performers with struggling trainees and automates outreach
             </p>
@@ -195,7 +195,7 @@ export default function UnderstudyPage() {
         {/* Stat Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {simLoading
-            ? Array(4).fill(0).map((_, i) => <div key={i} className="h-24 rounded-lg bg-card/50 border border-card-border animate-pulse" />)
+            ? Array(4).fill(0).map((_, i) => <div key={i} className="h-24 rounded-lg bg-card border border-border animate-pulse" />)
             : sim && [
               { label: "Actions Handled", value: sim.handled_count, icon: CheckCircle2, color: "text-emerald-400" },
               { label: "Pending Outreach", value: sim.pending_actions, icon: Clock, color: "text-yellow-400" },
@@ -203,7 +203,7 @@ export default function UnderstudyPage() {
               { label: "Drafts Ready", value: sim.drafts_ready, icon: MessageSquare, color: "text-purple-400" },
             ].map(({ label, value, icon: Icon, color }) => (
               <GlassCard key={label} className="p-4 flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-lg bg-card/60 border border-card-border flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-10 h-10 rounded-lg bg-card border border-border flex items-center justify-center flex-shrink-0`}>
                   <Icon className={`w-5 h-5 ${color}`} />
                 </div>
                 <div>
@@ -215,7 +215,7 @@ export default function UnderstudyPage() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 border-b border-card-border pb-0">
+        <div className="flex gap-2 border-b border-border pb-0">
           {(["pairings", "outreach"] as const).map((tab) => (
             <button
               key={tab}

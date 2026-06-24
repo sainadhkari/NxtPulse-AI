@@ -33,97 +33,98 @@ export function Layout({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row dark">
+    <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row">
       <GlobalSearch />
       <AIAssistant />
       {/* Sidebar */}
-      <aside className="w-full md:w-64 border-r border-card-border bg-card/50 backdrop-blur-xl flex flex-col z-50">
-        <div className="p-6 border-b border-card-border">
+      <aside className="w-full md:w-60 border-r border-border bg-sidebar flex flex-col z-50 shrink-0">
+        <div className="p-5 border-b border-border">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-3">
-              <TerminalSquare className="w-8 h-8 text-primary shadow-xs" />
-              <span className="font-bold text-xl tracking-tighter uppercase text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.8)]">NxtPulse</span>
+            <Link href="/" className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+                <TerminalSquare className="w-4 h-4 text-foreground" />
+              </div>
+              <span className="font-semibold text-base text-foreground">NxtPulse</span>
             </Link>
             {role && <NotificationBell />}
           </div>
           {role && (
-            <div className="mt-4 inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium bg-primary/10 text-primary border border-primary/30 uppercase tracking-widest">
+            <div className="mt-3 inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-primary/10 text-primary capitalize">
               {role}
             </div>
           )}
         </div>
 
-        <nav className="flex-1 p-4 space-y-2">
+        <nav className="flex-1 p-3 space-y-0.5">
           <SearchTrigger />
           {role && (
             <Link 
               href={getDashboardLink()}
-              className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
             >
               <LayoutDashboard className="w-4 h-4" />
-              Command Center
+              Dashboard
             </Link>
           )}
           <Link 
             href="/cohorts"
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
           >
             <Users className="w-4 h-4" />
-            Cohort Compare
+            Cohorts
           </Link>
           <Link 
             href="/interventions"
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
           >
             <ShieldAlert className="w-4 h-4" />
             Interventions
           </Link>
           <Link 
             href="/understudy"
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
           >
             <Bot className="w-4 h-4" />
             Understudy AI
           </Link>
           <Link 
             href="/learnguard"
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
           >
             <Brain className="w-4 h-4" />
             LearnGuard AI
           </Link>
           <Link 
             href="/insights"
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
           >
             <BarChart3 className="w-4 h-4" />
-            Executive Insights
+            Insights
           </Link>
           <Link 
             href="/wellness"
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors border border-transparent hover:border-primary/30"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
           >
             <Activity className="w-4 h-4" />
-            Wellness AI
+            Wellness
           </Link>
         </nav>
 
         {role && (
-          <div className="p-4 border-t border-card-border">
+          <div className="p-3 border-t border-border">
             <button 
               onClick={handleLogout}
-              className="flex w-full items-center gap-3 px-4 py-3 rounded-md text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors border border-transparent hover:border-destructive/30"
+              className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              Disconnect
+              Sign out
             </button>
           </div>
         )}
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 relative overflow-hidden bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-background to-background">
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none"></div>
+      <main className="flex-1 overflow-auto bg-background">
         {children}
       </main>
     </div>

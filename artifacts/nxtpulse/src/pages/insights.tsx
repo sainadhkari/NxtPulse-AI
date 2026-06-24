@@ -1,6 +1,6 @@
 import { Layout } from "@/components/layout";
 import { ProtectedRoute } from "@/components/protected-route";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { MetricCard } from "@/components/metric-card";
 import { 
   useGetInsightsSummary,
@@ -18,9 +18,8 @@ export default function InsightsPage() {
     <ProtectedRoute allowedRoles={["manager", "poc"]}>
       <Layout>
         <div className="p-8">
-          <NeonTitle className="text-3xl mb-8 flex items-center gap-3">
-            <BarChart3 className="w-8 h-8 text-primary" /> Executive AI Insights
-          </NeonTitle>
+          <h1 className="text-2xl font-bold text-foreground mb-1">Executive Insights</h1>
+          <p className="text-muted-foreground text-sm mb-8">AI-powered program analytics and recommendations</p>
           <InsightsContent />
         </div>
       </Layout>
@@ -38,7 +37,7 @@ function InsightsContent() {
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {sumLoading ? (
-          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-32 w-full rounded-lg bg-card/60" />)
+          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-32 w-full rounded-lg bg-card" />)
         ) : summary ? (
           <>
             <MetricCard 
@@ -119,7 +118,7 @@ function InsightsContent() {
         ) : actions ? (
           <div className="space-y-4">
             {actions.map(action => (
-              <div key={action.id} className="p-4 rounded-md border border-card-border bg-background/50 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-card/80 transition-colors">
+              <div key={action.id} className="p-4 rounded-md border border-border bg-background flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-card transition-colors">
                 <div>
                   <div className="flex items-center gap-3 mb-2">
                     <Badge variant="outline" className={
@@ -134,7 +133,7 @@ function InsightsContent() {
                       Affects {action.affected_count} trainees
                     </span>
                   </div>
-                  <div className="text-white font-medium">{action.action}</div>
+                  <div className="text-foreground font-medium">{action.action}</div>
                 </div>
                 <Button variant="outline" className="border-primary/50 text-primary hover:bg-primary/10">Execute Plan</Button>
               </div>

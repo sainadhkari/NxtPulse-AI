@@ -5,7 +5,7 @@ import {
   ClipboardList, Clock, UserCheck, Filter, Loader2, ChevronDown
 } from "lucide-react";
 import { Layout } from "@/components/layout";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import {
   useGetInterventions,
   getGetInterventionsQueryKey,
@@ -48,7 +48,7 @@ const STATUS_COLORS: Record<string, string> = {
   pending: "text-yellow-400 border-yellow-500/30 bg-yellow-500/10",
   acknowledged: "text-blue-400 border-blue-500/30 bg-blue-500/10",
   resolved: "text-emerald-400 border-emerald-500/30 bg-emerald-500/10",
-  dismissed: "text-muted-foreground border-card-border bg-card/30",
+  dismissed: "text-muted-foreground border-border bg-card",
 };
 
 const STATUS_TABS = ["all", "pending", "acknowledged", "resolved", "dismissed"] as const;
@@ -76,7 +76,7 @@ function InterventionRow({
   return (
     <tr
       data-testid={`row-intervention-${item.id}`}
-      className="border-b border-card-border/50 hover:bg-primary/[0.02] transition-colors group"
+      className="border-b border-border/50 hover:bg-primary/[0.02] transition-colors group"
     >
       <td className="px-4 py-3">
         <p className="text-sm font-semibold text-foreground">{item.trainee_name}</p>
@@ -125,7 +125,7 @@ function InterventionRow({
                 data-testid={`button-dismiss-${item.id}`}
                 onClick={() => onDismiss(item.id)}
                 title="Dismiss"
-                className="p-1.5 rounded border border-card-border text-muted-foreground hover:border-red-500/30 hover:text-red-400 transition-colors"
+                className="p-1.5 rounded border border-border text-muted-foreground hover:border-red-500/30 hover:text-red-400 transition-colors"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -173,17 +173,17 @@ function CreatePanel({ onClose }: { onClose: () => void }) {
     });
   };
 
-  const inputCls = "w-full bg-card/60 border border-card-border rounded px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono";
+  const inputCls = "w-full bg-card border border-border rounded px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono";
   const labelCls = "block text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1.5";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <GlassCard className="relative w-full max-w-lg border-primary/30 shadow-[0_0_60px_rgba(0,240,255,0.08)]" glowing>
-        <div className="p-5 border-b border-card-border flex items-center justify-between">
+      <GlassCard className="relative w-full max-w-lg shadow-md">
+        <div className="p-5 border-b border-border flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Plus className="w-4 h-4 text-primary" />
-            <NeonTitle className="text-sm">New Intervention Plan</NeonTitle>
+            <h2 className="text-sm font-semibold text-foreground">New Intervention Plan</h2>
           </div>
           <button onClick={onClose} className="text-muted-foreground hover:text-foreground transition-colors">
             <X className="w-4 h-4" />
@@ -286,7 +286,7 @@ function CreatePanel({ onClose }: { onClose: () => void }) {
               {create.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Plus className="w-4 h-4" />}
               Create Intervention
             </button>
-            <button type="button" onClick={onClose} className="px-4 py-2.5 rounded border border-card-border text-sm text-muted-foreground hover:border-primary/30 transition-colors">
+            <button type="button" onClick={onClose} className="px-4 py-2.5 rounded border border-border text-sm text-muted-foreground hover:border-primary/30 transition-colors">
               Cancel
             </button>
           </div>
@@ -342,7 +342,7 @@ export default function InterventionsPage() {
           <div className="flex items-center gap-3">
             <ShieldAlert className="w-6 h-6 text-primary" />
             <div>
-              <NeonTitle className="text-base">Intervention Workflows</NeonTitle>
+              <h2 className="text-base font-semibold text-foreground">Intervention Workflows</h2>
               <p className="text-xs text-muted-foreground mt-0.5">Create, assign, and track structured intervention plans for at-risk trainees</p>
             </div>
           </div>
@@ -387,7 +387,7 @@ export default function InterventionsPage() {
               className={`px-3 py-1.5 rounded text-xs font-mono uppercase tracking-widest border transition-colors ${
                 activeTab === tab
                   ? "bg-primary/20 border-primary/60 text-primary"
-                  : "border-card-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
+                  : "border-border text-muted-foreground hover:border-primary/30 hover:text-foreground"
               }`}
             >
               {tab}
@@ -416,7 +416,7 @@ export default function InterventionsPage() {
             <div className="overflow-x-auto">
               <table className="w-full text-left">
                 <thead>
-                  <tr className="border-b border-card-border">
+                  <tr className="border-b border-border">
                     {["Trainee", "Type", "Issue", "Recommendation", "Status", "Actions"].map((h) => (
                       <th key={h} className="px-4 py-3 text-[10px] font-mono text-muted-foreground uppercase tracking-widest">{h}</th>
                     ))}

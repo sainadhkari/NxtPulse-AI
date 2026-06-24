@@ -12,8 +12,8 @@ export function GlassCard({
 }) {
   return (
     <div className={cn(
-      "relative bg-card/60 backdrop-blur-xl border border-card-border rounded-lg overflow-hidden transition-all duration-300",
-      glowing && "hover:border-primary hover:shadow-xs",
+      "bg-card border border-border rounded-xl shadow-xs transition-all duration-200",
+      glowing && "hover:shadow-md hover:border-primary/40",
       className
     )}>
       {children}
@@ -23,7 +23,7 @@ export function GlassCard({
 
 export function NeonTitle({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <h2 className={cn("text-lg font-bold tracking-widest uppercase text-primary drop-shadow-[0_0_8px_rgba(0,240,255,0.5)]", className)}>
+    <h2 className={cn("text-lg font-semibold text-foreground", className)}>
       {children}
     </h2>
   );

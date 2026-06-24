@@ -1,7 +1,7 @@
 import { Layout } from "@/components/layout";
 import { ProtectedRoute } from "@/components/protected-route";
 import { MetricCard } from "@/components/metric-card";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { 
   useGetUnderstudySimulation,
   useGetOutreachSuggestions
@@ -16,7 +16,8 @@ export default function POCDashboard() {
     <ProtectedRoute allowedRoles={["poc", "manager"]}>
       <Layout>
         <div className="p-8">
-          <NeonTitle className="text-3xl mb-8">Trainee Monitoring (POC)</NeonTitle>
+          <h1 className="text-2xl font-bold text-foreground mb-1">Trainee Monitoring</h1>
+          <p className="text-muted-foreground text-sm mb-8">POC view — cohort progress and outreach</p>
           <DashboardContent />
         </div>
       </Layout>
@@ -33,7 +34,7 @@ function DashboardContent() {
       {/* Top Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {simLoading ? (
-          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-32 w-full rounded-lg bg-card/60" />)
+          Array(4).fill(0).map((_, i) => <Skeleton key={i} className="h-32 w-full rounded-lg bg-card" />)
         ) : simulation ? (
           <>
             <MetricCard 
@@ -72,15 +73,15 @@ function DashboardContent() {
             <Skeleton className="h-64 w-full" />
           ) : simulation ? (
             <div className="space-y-6">
-              <div className="bg-background/50 p-4 rounded-lg border border-card-border">
+              <div className="bg-background p-4 rounded-lg border border-border">
                 <div className="text-muted-foreground text-sm uppercase mb-1">Handled Automatically</div>
                 <div className="text-3xl font-bold text-chart-3">{simulation.handled_count}</div>
               </div>
-              <div className="bg-background/50 p-4 rounded-lg border border-card-border">
+              <div className="bg-background p-4 rounded-lg border border-border">
                 <div className="text-muted-foreground text-sm uppercase mb-1">Escalated to Human</div>
                 <div className="text-3xl font-bold text-chart-4">{simulation.escalated_count}</div>
               </div>
-              <div className="bg-background/50 p-4 rounded-lg border border-destructive/20">
+              <div className="bg-background p-4 rounded-lg border border-destructive/20">
                 <div className="text-destructive/80 text-sm uppercase mb-1">Missed SLAs</div>
                 <div className="text-3xl font-bold text-destructive">{simulation.missed_count}</div>
               </div>
@@ -98,10 +99,10 @@ function DashboardContent() {
           ) : suggestions ? (
             <div className="space-y-4 max-h-[500px] overflow-auto pr-2">
               {suggestions.map(sug => (
-                <div key={sug.id} className="p-4 rounded-md border border-card-border bg-background/50 hover:border-primary/50 transition-colors">
+                <div key={sug.id} className="p-4 rounded-md border border-border bg-background hover:border-primary/50 transition-colors">
                   <div className="flex justify-between items-start mb-2">
                     <div>
-                      <span className="font-bold text-white text-lg">{sug.trainee_name}</span>
+                      <span className="font-bold text-foreground text-lg">{sug.trainee_name}</span>
                       <div className="text-sm text-muted-foreground mt-1">{sug.issue}</div>
                     </div>
                     <Badge variant="outline" className={
@@ -118,7 +119,7 @@ function DashboardContent() {
                   <div className="flex gap-2 mt-4">
                     <Button size="sm" variant="outline" className="border-chart-3/50 text-chart-3 hover:bg-chart-3/10 hover:text-chart-3">Acknowledge</Button>
                     <Button size="sm" variant="outline" className="border-primary/50 text-primary hover:bg-primary/10 hover:text-primary">Resolve</Button>
-                    <Button size="sm" variant="ghost" className="text-muted-foreground hover:text-white">Dismiss</Button>
+                    <Button size="sm" variant="ghost" className="text-muted-foreground hover:text-foreground">Dismiss</Button>
                   </div>
                 </div>
               ))}

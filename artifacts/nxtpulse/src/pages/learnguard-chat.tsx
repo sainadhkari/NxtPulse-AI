@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Send, Bot, User, Brain, Loader2, AlertTriangle, CheckCircle2, TrendingDown, Zap } from "lucide-react";
 import { Layout } from "@/components/layout";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import {
   useEvaluateLearnGuard,
   getGetLearnGuardEvaluationsQueryKey,
@@ -191,11 +191,11 @@ export default function LearnGuardChat() {
   return (
     <Layout>
       <div className="h-screen flex flex-col overflow-hidden">
-        <div className="p-6 border-b border-card-border flex items-center justify-between flex-wrap gap-3">
+        <div className="p-6 border-b border-border flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
             <Brain className="w-6 h-6 text-primary" />
             <div>
-              <NeonTitle className="text-base">LearnGuard AI</NeonTitle>
+              <h2 className="text-base font-semibold text-foreground">LearnGuard AI</h2>
               <p className="text-xs text-muted-foreground mt-0.5">On-demand trainee evaluation — generate questions, scores, and AI feedback for any topic</p>
             </div>
           </div>
@@ -203,14 +203,14 @@ export default function LearnGuardChat() {
             <button
               data-testid="button-mode-form"
               onClick={() => setMode("form")}
-              className={`px-3 py-1.5 rounded text-xs font-mono uppercase tracking-widest border transition-colors ${mode === "form" ? "bg-primary/20 border-primary/60 text-primary" : "border-card-border text-muted-foreground hover:border-primary/40"}`}
+              className={`px-3 py-1.5 rounded text-xs font-mono uppercase tracking-widest border transition-colors ${mode === "form" ? "bg-primary/20 border-primary/60 text-primary" : "border-border text-muted-foreground hover:border-primary/40"}`}
             >
               Form Mode
             </button>
             <button
               data-testid="button-mode-chat"
               onClick={() => setMode("chat")}
-              className={`px-3 py-1.5 rounded text-xs font-mono uppercase tracking-widest border transition-colors ${mode === "chat" ? "bg-primary/20 border-primary/60 text-primary" : "border-card-border text-muted-foreground hover:border-primary/40"}`}
+              className={`px-3 py-1.5 rounded text-xs font-mono uppercase tracking-widest border transition-colors ${mode === "chat" ? "bg-primary/20 border-primary/60 text-primary" : "border-border text-muted-foreground hover:border-primary/40"}`}
             >
               Chat Mode
             </button>
@@ -237,7 +237,7 @@ export default function LearnGuardChat() {
                   )}
                   {msg.type === "bot-thinking" && (
                     <div className="flex items-start gap-2">
-                      <div className="w-7 h-7 rounded-full bg-card border border-card-border flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-7 h-7 rounded-full bg-card border border-border flex items-center justify-center flex-shrink-0 mt-0.5">
                         <Bot className="w-3.5 h-3.5 text-primary" />
                       </div>
                       <GlassCard className="px-4 py-3 max-w-sm">
@@ -274,7 +274,7 @@ export default function LearnGuardChat() {
             </div>
 
             {/* Input Area */}
-            <div className="p-4 border-t border-card-border bg-card/30">
+            <div className="p-4 border-t border-border bg-card">
               {mode === "form" ? (
                 <form onSubmit={handleFormSubmit} className="flex gap-2">
                   <input
@@ -283,7 +283,7 @@ export default function LearnGuardChat() {
                     onChange={(e) => setTraineeInput(e.target.value)}
                     placeholder="Trainee name..."
                     disabled={isPending}
-                    className="flex-1 bg-card/60 border border-card-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
+                    className="flex-1 bg-card border border-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
                   />
                   <input
                     data-testid="input-topic"
@@ -291,7 +291,7 @@ export default function LearnGuardChat() {
                     onChange={(e) => setTopicInput(e.target.value)}
                     placeholder="Topic (e.g. React Hooks, Python Closures)..."
                     disabled={isPending}
-                    className="flex-[2] bg-card/60 border border-card-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
+                    className="flex-[2] bg-card border border-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
                   />
                   <button
                     type="submit"
@@ -311,7 +311,7 @@ export default function LearnGuardChat() {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder='e.g. "Evaluate Rahul Verma on React Hooks"'
                     disabled={isPending}
-                    className="flex-1 bg-card/60 border border-card-border rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
+                    className="flex-1 bg-card border border-border rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
                   />
                   <button
                     type="submit"
@@ -327,7 +327,7 @@ export default function LearnGuardChat() {
           </div>
 
           {/* Sidebar — Quick Suggestions */}
-          <div className="w-56 border-l border-card-border p-4 overflow-y-auto hidden lg:block">
+          <div className="w-56 border-l border-border p-4 overflow-y-auto hidden lg:block">
             <p className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-widest mb-3">Quick Eval</p>
             <div className="space-y-2">
               {SUGGESTIONS.map((s, i) => (
@@ -336,7 +336,7 @@ export default function LearnGuardChat() {
                   data-testid={`button-suggestion-${i}`}
                   onClick={() => runEvaluate(s.trainee, s.topic)}
                   disabled={isPending}
-                  className="w-full text-left p-2.5 rounded border border-card-border bg-card/30 hover:border-primary/40 hover:bg-primary/5 transition-all disabled:opacity-40 group"
+                  className="w-full text-left p-2.5 rounded border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all disabled:opacity-40 group"
                 >
                   <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors truncate">{s.trainee}</p>
                   <p className="text-[10px] text-muted-foreground/70 mt-0.5 leading-tight">{s.topic}</p>

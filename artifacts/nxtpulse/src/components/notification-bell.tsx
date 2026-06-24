@@ -43,7 +43,7 @@ export function NotificationBell() {
       <button
         data-testid="button-notification-bell"
         onClick={handleOpen}
-        className="relative flex items-center justify-center w-9 h-9 rounded-md border border-card-border bg-card/60 hover:bg-primary/10 hover:border-primary/40 transition-all"
+        className="relative flex items-center justify-center w-9 h-9 rounded-md border border-border bg-card hover:bg-primary/10 hover:border-primary/40 transition-all"
       >
         {unreadCount > 0 ? (
           <BellRing className="w-4 h-4 text-primary animate-pulse" />
@@ -51,7 +51,7 @@ export function NotificationBell() {
           <Bell className="w-4 h-4 text-muted-foreground" />
         )}
         {unreadCount > 0 && (
-          <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white px-1 shadow-[0_0_8px_rgba(239,68,68,0.7)]">
+          <span className="absolute -top-1.5 -right-1.5 min-w-[18px] h-[18px] flex items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-foreground px-1 shadow-[0_0_8px_rgba(239,68,68,0.7)]">
             {unreadCount > 9 ? "9+" : unreadCount}
           </span>
         )}
@@ -65,9 +65,9 @@ export function NotificationBell() {
           />
           <div
             data-testid="panel-notifications"
-            className="absolute right-0 top-11 z-50 w-[380px] max-h-[520px] flex flex-col rounded-lg border border-card-border bg-[#040914]/95 backdrop-blur-xl shadow-[0_0_40px_rgba(0,240,255,0.08)]"
+            className="absolute right-0 top-11 z-50 w-[380px] max-h-[520px] flex flex-col rounded-lg border border-border bg-card shadow-xl"
           >
-            <div className="flex items-center justify-between px-4 py-3 border-b border-card-border">
+            <div className="flex items-center justify-between px-4 py-3 border-b border-border">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold text-foreground tracking-tight">Live Alerts</span>
                 <span className="flex items-center gap-1 text-[10px] font-mono uppercase">
@@ -142,7 +142,7 @@ export function NotificationBell() {
               )}
             </div>
 
-            <div className="px-4 py-2 border-t border-card-border bg-card/30">
+            <div className="px-4 py-2 border-t border-border bg-card">
               <p className="text-[10px] font-mono text-muted-foreground/50 text-center">
                 Silent Detector AI — firing every 15 seconds
               </p>

@@ -9,7 +9,7 @@ import {
   LineChart, Line, CartesianGrid,
 } from "recharts";
 import { Layout } from "@/components/layout";
-import { GlassCard, NeonTitle } from "@/components/ui/glass-card";
+import { GlassCard } from "@/components/ui/glass-card";
 import { useGetCohortStats } from "@workspace/api-client-react";
 import type { CohortStats } from "@workspace/api-client-react";
 
@@ -88,7 +88,7 @@ function CohortCard({ stats, selected, onClick }: { stats: CohortStats; selected
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-[#040914]/95 border border-card-border rounded p-3 text-xs">
+    <div className="bg-card border border-border rounded p-3 text-xs">
       <p className="text-muted-foreground font-mono mb-1">{label}</p>
       {payload.map((p: any) => (
         <p key={p.name} style={{ color: p.color }} className="font-semibold">{p.name}: {typeof p.value === "number" ? p.value.toFixed(1) : p.value}</p>
@@ -141,7 +141,7 @@ export default function CohortsPage() {
         <div className="flex items-center gap-3">
           <Users className="w-6 h-6 text-primary" />
           <div>
-            <NeonTitle className="text-base">Cohort Comparison</NeonTitle>
+            <h2 className="text-base font-semibold text-foreground">Cohort Comparison</h2>
             <p className="text-xs text-muted-foreground mt-0.5">
               Side-by-side performance analytics across all cohorts — identify gaps, celebrate wins, prioritise resources
             </p>
@@ -308,14 +308,14 @@ export default function CohortsPage() {
 
         {/* Comparison Table */}
         <GlassCard>
-          <div className="p-4 border-b border-card-border flex items-center gap-2">
+          <div className="p-4 border-b border-border flex items-center gap-2">
             <Brain className="w-4 h-4 text-primary" />
             <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest">Full Metric Comparison</p>
           </div>
           <div className="overflow-x-auto">
             <table className="w-full text-left">
               <thead>
-                <tr className="border-b border-card-border">
+                <tr className="border-b border-border">
                   <th className="px-4 py-3 text-[10px] font-mono text-muted-foreground uppercase tracking-widest">Metric</th>
                   {cohorts.map((c) => (
                     <th key={c.cohort} className="px-4 py-3 text-[10px] font-mono uppercase tracking-widest" style={{ color: COHORT_COLORS[c.cohort] }}>
@@ -338,7 +338,7 @@ export default function CohortsPage() {
                   const values = cohorts.map((c) => parseFloat(fn(c)));
                   const best = good === "high" || good === "high-count" ? Math.max(...values) : good === "low" || good === "low-count" ? Math.min(...values) : null;
                   return (
-                    <tr key={label} className="border-b border-card-border/40 hover:bg-primary/[0.02] transition-colors">
+                    <tr key={label} className="border-b border-border/40 hover:bg-primary/[0.02] transition-colors">
                       <td className="px-4 py-2.5 text-xs font-mono text-muted-foreground">{label}</td>
                       {cohorts.map((c) => {
                         const v = parseFloat(fn(c));
