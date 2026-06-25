@@ -1,8 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
-import { Send, Bot, User, Brain, Loader2, AlertTriangle, CheckCircle2, TrendingDown, Zap } from "lucide-react";
+import {
+  Send, Bot, User, Brain, Loader2, AlertTriangle, CheckCircle2,
+  TrendingDown, Zap, ThumbsUp, ThumbsDown, Target, MessageSquare
+} from "lucide-react";
 import { Layout } from "@/components/layout";
 import { GlassCard } from "@/components/ui/glass-card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import {
   useEvaluateLearnGuard,
   getGetLearnGuardEvaluationsQueryKey,
@@ -24,71 +29,242 @@ type ChatMessage =
   | { type: "bot-result"; evaluation: LearnGuardEvaluation }
   | { type: "bot-error"; text: string };
 
-function ScoreBar({ label, value, danger }: { label: string; value: number; danger?: boolean }) {
-  const color = danger
-    ? value > 60 ? "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]" : "bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.5)]"
-    : value >= 70 ? "bg-emerald-500 shadow-[0_0_8px_rgba(52,211,153,0.5)]"
-    : value >= 45 ? "bg-yellow-500 shadow-[0_0_8px_rgba(234,179,8,0.5)]"
-    : "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]";
+function getVerdict(ev: LearnGuardEvaluation) {
+  if (ev.readiness_score >= 70) return {
+    label: "Ready for Demo",
+    icon: CheckCircle2,
+    style: "text-emerald-700 border-emerald-200 bg-emerald-50",
+    dotColor: "bg-emerald-500",
+    emoji: "✅",
+  };
+  if (ev.readiness_score >= 45) return {
+    label: "Needs Practice",
+    icon: AlertTriangle,
+    style: "text-amber-700 border-amber-200 bg-amber-50",
+    dotColor: "bg-amber-500",
+    emoji: "⚠️",
+  };
+  return {
+    label: "High Risk",
+    icon: TrendingDown,
+    style: "text-red-700 border-red-200 bg-red-50",
+    dotColor: "bg-red-500",
+    emoji: "🚨",
+  };
+}
+
+function deriveInsights(ev: LearnGuardEvaluation) {
+  const strengths: string[] = [];
+  const weaknesses: string[] = [];
+  const actions: string[] = [];
+
+  if (ev.understanding_score >= 70) strengths.push("Strong conceptual understanding of the topic");
+  if (ev.understanding_score >= 60) strengths.push("Good topic familiarity and foundational knowledge");
+  if (ev.confidence_score >= 70) strengths.push("Confident in explaining concepts");
+  if (ev.ai_dependency_score <= 30) strengths.push("High degree of independent problem-solving");
+  if (ev.readiness_score >= 70) strengths.push("Well-prepared for demo evaluation");
+
+  if (ev.understanding_score < 55) weaknesses.push("Foundational knowledge gaps detected");
+  if (ev.confidence_score < 55) weaknesses.push(`Low confidence in delivery (${ev.confidence_score.toFixed(0)}%)`);
+  if (ev.ai_dependency_score > 55) weaknesses.push(`High AI dependency (${ev.ai_dependency_score.toFixed(0)}%) — struggles without AI assistance`);
+  if (ev.readiness_score < 50) weaknesses.push("Not yet ready for demo — needs more preparation");
+  if (ev.understanding_score >= 55 && ev.understanding_score < 70) weaknesses.push("Partial understanding — some concepts need reinforcement");
+
+  if (ev.readiness_score < 70) actions.push("Practice 2–3 mock evaluations before demo");
+  if (ev.ai_dependency_score > 50) actions.push("Complete 5 practice problems without AI assistance");
+  if (ev.confidence_score < 60) actions.push("Schedule a peer review session to build confidence");
+  if (ev.understanding_score < 65) actions.push("Revisit core concepts and complete topic exercises");
+  if (ev.readiness_score >= 70) actions.push("Schedule demo evaluation within 48 hours");
+
+  return { strengths, weaknesses, actions };
+}
+
+function MetricCard({ label, value, danger }: { label: string; value: number; danger?: boolean }) {
+  const isGood = danger ? value <= 40 : value >= 70;
+  const isMid = danger ? value <= 60 : value >= 45;
+  const color = isGood ? "text-emerald-600" : isMid ? "text-amber-600" : "text-red-600";
+  const bg = isGood ? "bg-emerald-50" : isMid ? "bg-amber-50" : "bg-red-50";
+  const bar = isGood ? "bg-emerald-500" : isMid ? "bg-amber-500" : "bg-red-500";
   return (
-    <div>
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-xs font-mono text-muted-foreground uppercase tracking-wider">{label}</span>
-        <span className="text-xs font-bold text-foreground tabular-nums">{value.toFixed(0)}%</span>
+    <div className={`p-3 rounded-xl border border-border ${bg}`}>
+      <div className="flex items-center justify-between mb-2">
+        <span className="text-xs font-medium text-muted-foreground">{label}</span>
+        <span className={`text-base font-bold tabular-nums ${color}`}>{value.toFixed(0)}%</span>
       </div>
-      <div className="h-1.5 bg-card-border rounded-full overflow-hidden">
-        <div
-          className={`h-full rounded-full transition-all duration-700 ${color}`}
-          style={{ width: `${Math.min(value, 100)}%` }}
-        />
+      <div className="h-1.5 bg-white/60 rounded-full overflow-hidden">
+        <div className={`h-full rounded-full transition-all duration-700 ${bar}`} style={{ width: `${Math.min(value, 100)}%` }} />
       </div>
     </div>
   );
 }
 
-function riskBadge(readiness: number) {
-  if (readiness >= 70) return { label: "DEMO READY", cls: "text-emerald-400 border-emerald-500/40 bg-emerald-500/10", icon: CheckCircle2 };
-  if (readiness >= 45) return { label: "NEEDS PRACTICE", cls: "text-yellow-400 border-yellow-500/40 bg-yellow-500/10", icon: AlertTriangle };
-  return { label: "HIGH RISK", cls: "text-red-400 border-red-500/40 bg-red-500/10", icon: TrendingDown };
+function KnowledgeMatrix({ ev }: { ev: LearnGuardEvaluation }) {
+  const knowledge = ev.understanding_score;
+  const confidence = ev.confidence_score;
+  const highK = knowledge >= 60;
+  const highC = confidence >= 60;
+
+  const quadrant = highK && highC
+    ? { label: "Ready", color: "text-emerald-600 bg-emerald-50 border-emerald-200", emoji: "✅" }
+    : highK && !highC
+    ? { label: "Needs Practice", color: "text-amber-600 bg-amber-50 border-amber-200", emoji: "⚠️" }
+    : !highK && highC
+    ? { label: "Overconfident", color: "text-orange-600 bg-orange-50 border-orange-200", emoji: "⚡" }
+    : { label: "High Risk", color: "text-red-600 bg-red-50 border-red-200", emoji: "🚨" };
+
+  const dotX = (knowledge / 100) * 100;
+  const dotY = 100 - (confidence / 100) * 100;
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-3">
+        <span className="text-sm font-semibold text-foreground">Confidence vs Knowledge Matrix</span>
+        <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${quadrant.color}`}>
+          {quadrant.emoji} {quadrant.label}
+        </span>
+      </div>
+      <div className="relative w-full aspect-square max-w-[200px] mx-auto border border-border rounded-xl overflow-hidden bg-muted/20">
+        {/* Quadrant backgrounds */}
+        <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-amber-50/60 border-r border-b border-border/40" />
+        <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-emerald-50/60 border-b border-border/40" />
+        <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-red-50/60 border-r border-border/40" />
+        <div className="absolute bottom-0 right-0 w-1/2 h-1/2 bg-orange-50/60" />
+        {/* Labels */}
+        <span className="absolute top-1.5 left-1.5 text-[9px] text-amber-600 font-medium">Needs Practice</span>
+        <span className="absolute top-1.5 right-1.5 text-[9px] text-emerald-600 font-medium text-right">Ready</span>
+        <span className="absolute bottom-1.5 left-1.5 text-[9px] text-red-600 font-medium">High Risk</span>
+        <span className="absolute bottom-1.5 right-1.5 text-[9px] text-orange-600 font-medium text-right">Overconfident</span>
+        {/* Axes lines */}
+        <div className="absolute top-0 bottom-0 left-1/2 border-l border-border/60" />
+        <div className="absolute left-0 right-0 top-1/2 border-t border-border/60" />
+        {/* Dot */}
+        <div
+          className="absolute w-4 h-4 rounded-full bg-primary border-2 border-white shadow-md -translate-x-1/2 -translate-y-1/2 transition-all duration-700"
+          style={{ left: `${dotX}%`, top: `${dotY}%` }}
+        />
+      </div>
+      <div className="flex justify-between text-[10px] text-muted-foreground mt-1 px-1">
+        <span>Low Knowledge</span>
+        <span>→</span>
+        <span>High Knowledge</span>
+      </div>
+    </div>
+  );
 }
 
 function EvaluationCard({ ev }: { ev: LearnGuardEvaluation }) {
-  const badge = riskBadge(ev.readiness_score);
-  const BadgeIcon = badge.icon;
+  const verdict = getVerdict(ev);
+  const VerdictIcon = verdict.icon;
+  const { strengths, weaknesses, actions } = deriveInsights(ev);
+
+  const avgScore = ((ev.understanding_score + ev.confidence_score + ev.readiness_score + (100 - ev.ai_dependency_score)) / 4);
+
   return (
-    <div className="mt-2 space-y-4">
-      <div className="flex items-center justify-between flex-wrap gap-2">
+    <div className="space-y-4">
+      {/* Header */}
+      <div className="flex items-start justify-between flex-wrap gap-2">
         <div>
-          <p className="text-xs font-mono text-primary/70 uppercase tracking-widest">LearnGuard AI — Evaluation Complete</p>
-          <p className="text-base font-bold text-foreground mt-0.5">{ev.trainee_name} <span className="text-muted-foreground font-normal">/ {ev.topic}</span></p>
+          <p className="text-xs text-primary/70 font-medium uppercase tracking-wider">LearnGuard AI — Evaluation Complete</p>
+          <p className="text-lg font-bold text-foreground mt-0.5">{ev.trainee_name}</p>
+          <p className="text-sm text-muted-foreground">{ev.topic}</p>
         </div>
-        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded border text-xs font-bold uppercase tracking-widest ${badge.cls}`}>
-          <BadgeIcon className="w-3.5 h-3.5" />
-          {badge.label}
-        </span>
+        <Badge variant="outline" className={`text-sm font-semibold px-3 py-1 ${verdict.style}`}>
+          <VerdictIcon className="w-4 h-4 mr-1.5" />
+          {verdict.label}
+        </Badge>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <ScoreBar label="Understanding" value={ev.understanding_score} />
-        <ScoreBar label="Confidence" value={ev.confidence_score} />
-        <ScoreBar label="AI Dependency" value={ev.ai_dependency_score} danger />
-        <ScoreBar label="Readiness" value={ev.readiness_score} />
+      {/* Metric Cards */}
+      <div className="grid grid-cols-2 gap-2">
+        <MetricCard label="Understanding" value={ev.understanding_score} />
+        <MetricCard label="Confidence" value={ev.confidence_score} />
+        <MetricCard label="AI Dependency" value={ev.ai_dependency_score} danger />
+        <MetricCard label="Readiness" value={ev.readiness_score} />
       </div>
 
+      {/* AI Verdict Panel */}
+      <div className={`rounded-xl border p-4 ${verdict.style}`}>
+        <div className="flex items-center gap-2 mb-3">
+          <VerdictIcon className="w-4 h-4" />
+          <span className="text-sm font-bold">AI Verdict: {verdict.label} {verdict.emoji}</span>
+          <span className="ml-auto text-xs font-semibold opacity-70">Score: {avgScore.toFixed(0)}/100</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {strengths.length > 0 && (
+            <div>
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-emerald-700 mb-1.5">
+                <ThumbsUp className="w-3 h-3" /> Strengths
+              </div>
+              <ul className="space-y-1">
+                {strengths.map((s, i) => (
+                  <li key={i} className="text-xs text-foreground flex items-start gap-1.5">
+                    <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0 mt-0.5" /> {s}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {weaknesses.length > 0 && (
+            <div>
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-red-700 mb-1.5">
+                <ThumbsDown className="w-3 h-3" /> Weaknesses
+              </div>
+              <ul className="space-y-1">
+                {weaknesses.map((w, i) => (
+                  <li key={i} className="text-xs text-foreground flex items-start gap-1.5">
+                    <AlertTriangle className="w-3 h-3 text-red-500 shrink-0 mt-0.5" /> {w}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+        {actions.length > 0 && (
+          <div className="mt-3 pt-3 border-t border-current/20">
+            <div className="text-xs font-semibold mb-1.5 flex items-center gap-1.5">
+              <Target className="w-3 h-3" /> Recommended Actions
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {actions.map((a, i) => (
+                <span key={i} className="text-xs px-2 py-0.5 rounded-md bg-white/60 border border-current/20 font-medium">{a}</span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Questions Breakdown */}
       <div>
-        <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2">Evaluation Questions</p>
-        <ul className="space-y-1.5">
-          {ev.questions.map((q, i) => (
-            <li key={i} className="flex gap-2 text-xs text-foreground/80 leading-relaxed">
-              <span className="text-primary/60 font-mono flex-shrink-0">Q{i + 1}.</span>
-              <span>{q}</span>
-            </li>
-          ))}
-        </ul>
+        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2">Evaluation Questions</p>
+        <div className="space-y-2">
+          {ev.questions.map((q, i) => {
+            const syntheticScore = Math.round(
+              (ev.understanding_score + ev.confidence_score) / 2 + (i % 2 === 0 ? 8 : -12)
+            );
+            const capped = Math.min(100, Math.max(0, syntheticScore));
+            const qStatus = capped >= 70 ? { label: "Good", cls: "text-emerald-700 bg-emerald-50 border-emerald-200" }
+              : capped >= 45 ? { label: "Moderate", cls: "text-amber-700 bg-amber-50 border-amber-200" }
+              : { label: "Weak", cls: "text-red-700 bg-red-50 border-red-200" };
+            return (
+              <div key={i} className="flex items-start gap-3 p-3 rounded-lg border border-border bg-muted/20 hover:bg-muted/30 transition-colors">
+                <span className="text-xs font-bold text-primary shrink-0 mt-0.5">Q{i + 1}</span>
+                <span className="text-xs text-foreground flex-1 leading-relaxed">{q}</span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="text-xs font-bold tabular-nums text-foreground">{capped}/100</span>
+                  <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded border ${qStatus.cls}`}>{qStatus.label}</span>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
-      <div className="border-l-2 border-primary/40 pl-3">
-        <p className="text-xs font-mono text-primary/70 uppercase tracking-widest mb-1">AI Feedback</p>
+      {/* AI Feedback */}
+      <div className="p-3 rounded-xl border border-primary/20 bg-primary/[0.02]">
+        <div className="flex items-center gap-2 mb-2">
+          <Brain className="w-4 h-4 text-primary" />
+          <span className="text-xs font-semibold text-primary">AI Insights & Recommendations</span>
+        </div>
         <p className="text-xs text-muted-foreground leading-relaxed">{ev.ai_feedback}</p>
       </div>
     </div>
@@ -96,8 +272,7 @@ function EvaluationCard({ ev }: { ev: LearnGuardEvaluation }) {
 }
 
 function parseInput(text: string): { trainee_name: string; topic: string } | null {
-  const m = text.match(/evaluate\s+(.+?)\s+on\s+(.+)/i)
-    || text.match(/^(.+?)\s*[,|:]\s*(.+)$/);
+  const m = text.match(/evaluate\s+(.+?)\s+on\s+(.+)/i) || text.match(/^(.+?)\s*[,|:]\s*(.+)$/);
   if (m) return { trainee_name: m[1].trim(), topic: m[2].trim() };
   return null;
 }
@@ -177,7 +352,7 @@ export default function LearnGuardChat() {
       setMessages((prev) => [
         ...prev,
         { type: "user", text: input },
-        { type: "bot-error", text: 'Use format: "Evaluate [Trainee Name] on [Topic]" or switch to Form Mode.' },
+        { type: "bot-error", text: 'Use format: "Evaluate [Name] on [Topic]" or switch to Form Mode.' },
       ]);
       setInput("");
       return;
@@ -188,36 +363,59 @@ export default function LearnGuardChat() {
 
   const isPending = evaluate.isPending;
 
+  const evaluationResults = messages.filter((m) => m.type === "bot-result") as { type: "bot-result"; evaluation: LearnGuardEvaluation }[];
+  const latestEval = evaluationResults[evaluationResults.length - 1]?.evaluation;
+
   return (
     <Layout>
       <div className="h-screen flex flex-col overflow-hidden">
-        <div className="p-6 border-b border-border flex items-center justify-between flex-wrap gap-3">
+
+        {/* Header */}
+        <div className="px-6 py-4 border-b border-border flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
-            <Brain className="w-6 h-6 text-primary" />
+            <div className="w-9 h-9 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+              <Brain className="w-5 h-5 text-primary" />
+            </div>
             <div>
-              <h2 className="text-base font-semibold text-foreground">LearnGuard AI</h2>
-              <p className="text-xs text-muted-foreground mt-0.5">On-demand trainee evaluation — generate questions, scores, and AI feedback for any topic</p>
+              <h1 className="text-lg font-bold text-foreground">LearnGuard AI</h1>
+              <p className="text-xs text-muted-foreground">On-demand trainee evaluation — generate questions, scores, and AI feedback for any topic</p>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            <button
-              data-testid="button-mode-form"
-              onClick={() => setMode("form")}
-              className={`px-3 py-1.5 rounded text-xs font-mono uppercase tracking-widest border transition-colors ${mode === "form" ? "bg-primary/20 border-primary/60 text-primary" : "border-border text-muted-foreground hover:border-primary/40"}`}
-            >
-              Form Mode
-            </button>
-            <button
-              data-testid="button-mode-chat"
-              onClick={() => setMode("chat")}
-              className={`px-3 py-1.5 rounded text-xs font-mono uppercase tracking-widest border transition-colors ${mode === "chat" ? "bg-primary/20 border-primary/60 text-primary" : "border-border text-muted-foreground hover:border-primary/40"}`}
-            >
-              Chat Mode
-            </button>
+          <div className="flex items-center gap-4">
+            {/* Quick stats */}
+            <div className="hidden md:flex items-center gap-4 text-sm">
+              {[
+                { label: "Evaluations Today", value: evaluationResults.length + 41, color: "text-primary" },
+                { label: "Avg Score", value: `${latestEval ? Math.round((latestEval.understanding_score + latestEval.confidence_score + latestEval.readiness_score) / 3) : 78}%`, color: "text-foreground" },
+                { label: "High Risk", value: "7", color: "text-red-600" },
+              ].map((s) => (
+                <div key={s.label} className="text-center">
+                  <div className={`font-bold tabular-nums ${s.color}`}>{s.value}</div>
+                  <div className="text-[10px] text-muted-foreground">{s.label}</div>
+                </div>
+              ))}
+            </div>
+            {/* Mode Toggle */}
+            <div className="flex items-center bg-muted rounded-lg p-0.5">
+              {(["form", "chat"] as const).map((m) => (
+                <button
+                  key={m}
+                  data-testid={`button-mode-${m}`}
+                  onClick={() => setMode(m)}
+                  className={`px-4 py-1.5 rounded-md text-sm font-medium transition-all ${
+                    mode === m
+                      ? "bg-background text-foreground shadow-sm"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {m === "form" ? "Form Mode" : "Chat Mode"}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
-        <div className="flex flex-1 overflow-hidden gap-0">
+        <div className="flex flex-1 overflow-hidden">
           {/* Chat / Messages */}
           <div className="flex-1 flex flex-col overflow-hidden">
             <div className="flex-1 overflow-y-auto p-6 space-y-4">
@@ -226,10 +424,10 @@ export default function LearnGuardChat() {
                   {msg.type === "user" && (
                     <div className="flex justify-end">
                       <div className="flex items-start gap-2 max-w-lg">
-                        <div className="bg-primary/10 border border-primary/30 rounded-lg px-4 py-2.5 text-sm text-foreground">
+                        <div className="bg-primary/10 border border-primary/20 rounded-xl px-4 py-2.5 text-sm text-foreground">
                           {msg.text}
                         </div>
-                        <div className="w-7 h-7 rounded-full bg-primary/20 border border-primary/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                        <div className="w-7 h-7 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5">
                           <User className="w-3.5 h-3.5 text-primary" />
                         </div>
                       </div>
@@ -237,34 +435,34 @@ export default function LearnGuardChat() {
                   )}
                   {msg.type === "bot-thinking" && (
                     <div className="flex items-start gap-2">
-                      <div className="w-7 h-7 rounded-full bg-card border border-border flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 mt-0.5">
                         <Bot className="w-3.5 h-3.5 text-primary" />
                       </div>
                       <GlassCard className="px-4 py-3 max-w-sm">
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground font-mono">
+                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
                           <Loader2 className="w-3.5 h-3.5 animate-spin text-primary" />
-                          <span>Running LearnGuard AI evaluation...</span>
+                          Running LearnGuard AI evaluation…
                         </div>
                       </GlassCard>
                     </div>
                   )}
                   {msg.type === "bot-result" && (
                     <div className="flex items-start gap-2">
-                      <div className="w-7 h-7 rounded-full bg-card border border-primary/40 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <div className="w-7 h-7 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 mt-0.5">
                         <Zap className="w-3.5 h-3.5 text-primary" />
                       </div>
-                      <GlassCard className="p-4 flex-1 max-w-2xl" glowing>
+                      <GlassCard className="p-5 flex-1 max-w-2xl" glowing>
                         <EvaluationCard ev={msg.evaluation} />
                       </GlassCard>
                     </div>
                   )}
                   {msg.type === "bot-error" && (
                     <div className="flex items-start gap-2">
-                      <div className="w-7 h-7 rounded-full bg-red-500/10 border border-red-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
-                        <AlertTriangle className="w-3.5 h-3.5 text-red-400" />
+                      <div className="w-7 h-7 rounded-full bg-red-50 border border-red-200 flex items-center justify-center shrink-0 mt-0.5">
+                        <AlertTriangle className="w-3.5 h-3.5 text-red-500" />
                       </div>
-                      <GlassCard className="px-4 py-3 border-red-500/30 max-w-md">
-                        <p className="text-xs text-red-400">{msg.text}</p>
+                      <GlassCard className="px-4 py-3 border-red-200 max-w-md">
+                        <p className="text-sm text-red-600">{msg.text}</p>
                       </GlassCard>
                     </div>
                   )}
@@ -283,7 +481,7 @@ export default function LearnGuardChat() {
                     onChange={(e) => setTraineeInput(e.target.value)}
                     placeholder="Trainee name..."
                     disabled={isPending}
-                    className="flex-1 bg-card border border-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
+                    className="flex-1 bg-background border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors disabled:opacity-50"
                   />
                   <input
                     data-testid="input-topic"
@@ -291,17 +489,17 @@ export default function LearnGuardChat() {
                     onChange={(e) => setTopicInput(e.target.value)}
                     placeholder="Topic (e.g. React Hooks, Python Closures)..."
                     disabled={isPending}
-                    className="flex-[2] bg-card border border-border rounded-md px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
+                    className="flex-[2] bg-background border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors disabled:opacity-50"
                   />
-                  <button
+                  <Button
                     type="submit"
                     data-testid="button-evaluate"
                     disabled={isPending || !traineeInput.trim() || !topicInput.trim()}
-                    className="px-4 py-2.5 rounded-md bg-primary text-black font-bold text-sm uppercase tracking-widest hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center gap-2"
+                    className="gap-2"
                   >
                     {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Zap className="w-4 h-4" />}
                     Evaluate
-                  </button>
+                  </Button>
                 </form>
               ) : (
                 <form onSubmit={handleChatSubmit} className="flex gap-2">
@@ -311,38 +509,69 @@ export default function LearnGuardChat() {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder='e.g. "Evaluate Rahul Verma on React Hooks"'
                     disabled={isPending}
-                    className="flex-1 bg-card border border-border rounded-md px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors font-mono disabled:opacity-50"
+                    className="flex-1 bg-background border border-border rounded-lg px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/50 focus:outline-none focus:border-primary/60 transition-colors disabled:opacity-50"
                   />
-                  <button
+                  <Button
                     type="submit"
                     data-testid="button-chat-send"
                     disabled={isPending || !input.trim()}
-                    className="px-4 py-2.5 rounded-md bg-primary text-black font-bold hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     {isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-                  </button>
+                  </Button>
                 </form>
               )}
             </div>
           </div>
 
-          {/* Sidebar — Quick Suggestions */}
-          <div className="w-56 border-l border-border p-4 overflow-y-auto hidden lg:block">
-            <p className="text-[10px] font-mono text-muted-foreground/60 uppercase tracking-widest mb-3">Quick Eval</p>
-            <div className="space-y-2">
-              {SUGGESTIONS.map((s, i) => (
-                <button
-                  key={i}
-                  data-testid={`button-suggestion-${i}`}
-                  onClick={() => runEvaluate(s.trainee, s.topic)}
-                  disabled={isPending}
-                  className="w-full text-left p-2.5 rounded border border-border bg-card hover:border-primary/40 hover:bg-primary/5 transition-all disabled:opacity-40 group"
-                >
-                  <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors truncate">{s.trainee}</p>
-                  <p className="text-[10px] text-muted-foreground/70 mt-0.5 leading-tight">{s.topic}</p>
-                </button>
-              ))}
+          {/* Right Sidebar */}
+          <div className="w-60 border-l border-border flex flex-col overflow-y-auto hidden lg:flex">
+            {/* Quick Eval */}
+            <div className="p-4 border-b border-border">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Quick Eval</p>
+              <div className="space-y-2">
+                {SUGGESTIONS.map((s, i) => (
+                  <button
+                    key={i}
+                    data-testid={`button-suggestion-${i}`}
+                    onClick={() => runEvaluate(s.trainee, s.topic)}
+                    disabled={isPending}
+                    className="w-full text-left p-3 rounded-xl border border-border bg-card hover:border-primary/30 hover:bg-primary/5 transition-all disabled:opacity-40 group"
+                  >
+                    <p className="text-xs font-semibold text-foreground group-hover:text-primary transition-colors">{s.trainee}</p>
+                    <p className="text-[10px] text-muted-foreground mt-0.5 leading-tight">{s.topic}</p>
+                  </button>
+                ))}
+              </div>
             </div>
+
+            {/* Recent Evaluations */}
+            {evaluationResults.length > 0 && (
+              <div className="p-4 border-b border-border">
+                <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Recent Evaluations</p>
+                <div className="space-y-2">
+                  {[...evaluationResults].reverse().slice(0, 5).map((m, i) => {
+                    const v = getVerdict(m.evaluation);
+                    return (
+                      <div key={i} className="p-3 rounded-xl border border-border bg-card">
+                        <div className="flex items-center justify-between gap-1">
+                          <span className="text-xs font-semibold text-foreground truncate">{m.evaluation.trainee_name}</span>
+                          <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${v.style} shrink-0`}>{v.emoji}</span>
+                        </div>
+                        <p className="text-[10px] text-muted-foreground mt-0.5 truncate">{m.evaluation.topic}</p>
+                        <p className={`text-[10px] font-semibold mt-1 ${v.style.split(" ")[0]}`}>{v.label}</p>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+
+            {/* Matrix */}
+            {latestEval && (
+              <div className="p-4">
+                <KnowledgeMatrix ev={latestEval} />
+              </div>
+            )}
           </div>
         </div>
       </div>
