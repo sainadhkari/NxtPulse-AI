@@ -1,0 +1,2136 @@
+# MASTER PROMPT FOR REPLIT AI — COHORT PAGE REDESIGN
+
+We need to redesign and upgrade the **Cohorts page** in NxtPulse AI to feel like a premium AI-powered analytics dashboard for managers.
+
+Goal:
+
+* Make the page visually stronger
+* Improve hierarchy and spacing
+* Replace weak charts
+* Add meaningful AI insights
+* Make the page feel like an intelligent decision-making system, not just a normal dashboard
+
+Keep current design system:
+
+* Use existing layout
+* Keep sidebar
+* Keep light theme
+* Primary blue color = `#2563eb`
+* Clean modern enterprise dashboard styling
+
+---
+
+# MAIN OBJECTIVE
+
+Current cohorts page feels okay but:
+
+* weak visual hierarchy
+* some charts feel empty
+* page lacks strong AI insights
+* doesn’t feel premium enough
+
+We want the Cohorts page to become one of the strongest pages in the entire product.
+
+---
+
+# PAGE LAYOUT STRUCTURE
+
+Rebuild page in this order:
+
+---
+
+# SECTION 1 — Page Header
+
+Add a proper page header at top.
+
+Height: 80–100px
+
+Layout:
+
+Left:
+
+* Title: `Cohorts Overview`
+* Subtitle: `Track cohort performance, risks, and AI dependency across all cohorts`
+
+Right:
+
+* Track filter dropdown
+* Risk filter dropdown
+* Export Report button
+
+Spacing:
+
+* margin-top: 20px
+* margin-bottom: 24px
+
+---
+
+# SECTION 2 — Executive Summary Cards
+
+Add 4 summary cards in one row.
+
+Height: 120–140px
+
+Cards:
+
+1. Total Cohorts
+2. Total Trainees
+3. At Risk
+4. Critical Alerts
+
+Example:
+
+* Total Cohorts → 3
+* Total Trainees → 12
+* At Risk → 4
+* Critical Alerts → 2
+
+Make cards visually stronger with:
+
+* icon
+* metric value
+* small trend indicator
+
+Example:
+`↑ 8% from last week`
+
+---
+
+# SECTION 3 — Cohort Health Cards
+
+This should be a major visual section.
+
+Add 3 large cohort cards.
+
+Each card shows:
+
+* Cohort Name
+* Health Score (AI-calculated)
+* Learning
+* Demo
+* Attendance
+* AI Dependency
+* Risk status
+
+Example:
+
+Cohort-6
+Health Score: 91/100 🟢
+Learning: 84%
+Demo: 82%
+Attendance: 92%
+AI Dependency: 20%
+
+Cohort-7
+Health Score: 32/100 🔴
+
+Cohort-8
+Health Score: 58/100 🟡
+
+Add:
+
+* color-coded borders
+* risk badge
+* trend arrows
+
+Make these cards larger and more premium.
+
+---
+
+# SECTION 4 — Analytics Charts
+
+Remove the current radar chart completely.
+
+It does not add much value.
+
+Replace with 2 stronger charts.
+
+Layout:
+2-column grid
+
+Left: 60% width
+Right: 40% width
+
+---
+
+## LEFT CHART — Performance Trend
+
+Use line chart.
+
+Track:
+
+* Cohort-6
+* Cohort-7
+* Cohort-8
+
+X-axis:
+
+* Week 1
+* Week 2
+* Week 3
+* Week 4
+
+Y-axis:
+Performance score
+
+Purpose:
+Show performance trend over time.
+
+---
+
+## RIGHT CHART — Risk Distribution
+
+Replace current chart.
+
+Use stacked horizontal bar chart.
+
+Show:
+
+* High Risk
+* Medium Risk
+* Low Risk
+
+Per cohort.
+
+Example:
+C6 → mostly green
+C7 → mostly red
+C8 → mixed
+
+Make this visually strong.
+
+Current chart feels empty and broken.
+
+---
+
+# SECTION 5 — AI Insights (VERY IMPORTANT)
+
+This section is critical.
+
+This is what makes NxtPulse feel like an AI product.
+
+Add AI Insights section with 3–4 smart insight cards.
+
+Examples:
+
+1.
+
+⚠ Cohort-7 risk increased by 18% in last 7 days
+
+2.
+
+🤖 Cohort-7 AI dependency critical at 76%
+
+3.
+
+📉 Demo performance dropped 14% in Cohort-8
+
+4.
+
+📅 Attendance instability detected in Cohort-7
+
+Add CTA button:
+`Generate Full AI Report`
+
+This section should feel premium and smart.
+
+---
+
+# SECTION 6 — AI Risk Prediction
+
+Add prediction card section.
+
+This is a premium feature.
+
+Examples:
+
+AI Prediction:
+
+* Cohort-7 has 82% probability of becoming critical within 7 days
+* Cohort-8 may drop to medium-high risk if attendance decreases further
+
+Style:
+
+* prediction confidence
+* severity color coding
+
+This makes product predictive instead of reactive.
+
+---
+
+# SECTION 7 — AI Recommendations
+
+Add recommendation section.
+
+Show actionable AI suggestions.
+
+Example:
+
+Recommended Actions:
+
+* Schedule mentor intervention for Cohort-7
+* Restrict AI-assisted coding for Python+ML cohort
+* Conduct attendance review for Cohort-8
+
+Each recommendation should have:
+
+* severity
+* priority
+* action button
+
+Buttons:
+
+* Raise Intervention
+* Notify POC
+* Generate Report
+
+---
+
+# SECTION 8 — Alert Timeline
+
+Add alert timeline.
+
+Example:
+
+Jun 20 → Attendance dropped
+Jun 22 → Demo performance declined
+Jun 24 → AI dependency spiked
+
+This helps managers understand what happened.
+
+Display as vertical timeline or activity feed.
+
+---
+
+# SECTION 9 — AI Dependency Heatmap
+
+Add heatmap table.
+
+Rows:
+
+* React
+* Python
+* DSA
+* ML
+
+Columns:
+
+* Cohort-6
+* Cohort-7
+* Cohort-8
+
+Values:
+
+* Low (green)
+* Medium (yellow)
+* High (red)
+
+This is a very unique feature.
+
+---
+
+# SECTION 10 — Comparison Table
+
+Keep current comparison table.
+
+Improve:
+
+* row spacing
+* header contrast
+* visual polish
+
+Highlight:
+
+* best values in green
+* worst values in red
+
+Keep current metrics:
+
+* Total Trainees
+* Avg Learning Score
+* Avg Demo Score
+* Avg Attendance
+* Avg AI Dependency
+* High Risk
+* Medium Risk
+* Low Risk
+
+---
+
+# SECTION 11 — Spotlight Section
+
+Upgrade current spotlight section.
+
+Use 3 cards instead of 2.
+
+Cards:
+
+1. Top Performer 🏆
+2. Most Improved 📈
+3. Needs Intervention 🚨
+
+Each card shows:
+
+* trainee name
+* track
+* metrics
+* risk status
+
+IMPORTANT:
+Risk labels must match actual logic.
+Do not show “Needs Attention” with “Low Risk”.
+
+---
+
+# SECTION 12 — Quick Actions
+
+Add action buttons at bottom.
+
+Examples:
+
+* Raise Intervention
+* Notify POC
+* Generate AI Report
+* Export Cohort Data
+
+Make this easy for managers.
+
+---
+
+# IMPORTANT DESIGN REQUIREMENTS
+
+1. Improve spacing across entire page
+2. Better section hierarchy
+3. Stronger visual emphasis
+4. Make charts larger and more meaningful
+5. Keep page clean and not overcrowded
+6. Everything should feel premium and enterprise-level
+7. Make page feel AI-powered, predictive, and actionable
+
+---
+
+# PRIORITY ORDER FOR IMPLEMENTATION
+
+Implement in this order:
+
+Phase 1:
+
+* Page header
+* Executive summary
+* Cohort health cards
+
+Phase 2:
+
+* Remove radar chart
+* Improve charts
+
+Phase 3:
+
+* Add AI Insights
+* Add Risk Prediction
+
+Phase 4:
+
+* Add Recommendations
+* Add Timeline
+* Add Heatmap
+
+Phase 5:
+
+* Improve spotlight
+* Add quick actions
+
+Goal:
+Transform Cohorts page from a normal dashboard into a premium AI-powered manager decision system.
+
+
+
+
+
+---
+
+# Prompt for Replit AI — Improve Manager Dashboard UI/UX
+
+Improve the **Manager Dashboard** page of NxtPulse AI to make it look more premium, modern, and AI-driven.
+Current dashboard is functional but feels too plain, static, and visually empty.
+Goal: make it look like a polished hackathon-winning AI SaaS product.
+
+---
+
+## Overall Design Goals
+
+* Improve visual hierarchy
+* Reduce empty white space
+* Make dashboard feel more intelligent and AI-powered
+* Improve readability and scanning speed for managers
+* Add stronger visual emphasis for important alerts
+* Use clean modern SaaS dashboard styling
+* Keep existing light theme and blue primary color (#2563eb)
+
+---
+
+# 1) Improve Top KPI Cards
+
+Current cards:
+
+* Avg Learning Score
+* High Risk Trainees
+* Pending Demos
+* Active Interventions
+
+Problems:
+
+* Too static
+* Plain numbers only
+* Not visually engaging
+
+### Required Improvements:
+
+Make KPI cards more premium and informative.
+
+Each card should include:
+
+* Large main metric
+* Trend indicator (up/down)
+* Small subtext
+* Optional mini sparkline chart
+
+Example:
+
+**Avg Learning Score**
+67.3%
+↑ +2.4%
+vs last week
+
+**High Risk Trainees**
+384
+↑ +12
+since yesterday
+
+Use stronger shadows, slightly better spacing, and better card styling.
+
+---
+
+# 2) Replace Risk Distribution Chart
+
+Current risk distribution chart is too empty and wastes space.
+
+### Replace with:
+
+A proper donut/pie chart showing:
+
+* High Risk
+* Medium Risk
+* Low Risk
+
+Example:
+
+* High Risk → Red
+* Medium Risk → Orange/Yellow
+* Low Risk → Green
+
+Also show numeric values beside chart:
+
+* High Risk: 384
+* Medium Risk: 892
+* Low Risk: 3606
+
+This section should feel visually useful.
+
+---
+
+# 3) Add AI Summary Panel (Very Important)
+
+Add a new section below KPI cards.
+
+Title:
+**NxtPulse AI Summary**
+
+This should summarize platform insights in natural language.
+
+Example text:
+
+“NxtPulse AI detected rising risk in Cohort-7 due to increased AI dependency (+14%) and attendance drop (-9%). 4 trainees need immediate intervention.”
+
+Design:
+
+* AI icon
+* Highlighted card
+* Premium styled panel
+* Slight blue background tint
+
+This makes dashboard feel truly AI-powered.
+
+---
+
+# 4) Improve Immediate Action Required Section
+
+Current section is just a plain table.
+
+Make it more actionable.
+
+Each row should include:
+
+* Trainee Name
+* Track
+* Learning Score
+* Risk Status
+* Action button
+
+Add buttons:
+
+* View Profile
+* Raise Intervention
+* Message POC
+
+Example:
+Rahul Verma | React + Node | 34% | HIGH | [View]
+
+Use colored badges:
+
+* Red = High
+* Yellow = Medium
+* Green = Low
+
+---
+
+# 5) Redesign Silent Detector AI Alerts Cards
+
+Current alert cards are too text-heavy and difficult to scan.
+
+### Redesign cards to be concise and scannable.
+
+Each alert card should have:
+
+* Trainee name
+* Risk badge
+* Signals section
+* Recommended Action section
+
+Example:
+
+## Rahul Verma 🔴 HIGH
+
+### Signals:
+
+* Attendance ↓ 30%
+* Demo quality ↓
+* AI dependency ↑ 78%
+
+### Recommended:
+
+* Immediate 1-on-1 intervention
+* Restrict AI access for 5 days
+
+Use:
+
+* red border for high risk
+* yellow border for medium
+* green border for low
+
+Cards should be easier to read quickly.
+
+---
+
+# 6) Add Weekly Trends Section
+
+Add a new section for trend analytics.
+
+Title:
+**Weekly Trends**
+
+Include 3 charts:
+
+* Learning Score Trend
+* Attendance Trend
+* AI Dependency Trend
+
+Show last 7 days.
+
+Purpose:
+Help managers understand whether performance is improving or worsening.
+
+---
+
+# 7) Improve Dashboard Visual Hierarchy
+
+Important sections should stand out more.
+
+Use stronger visual priority for:
+
+* Critical alerts
+* High risk trainees
+* AI recommendations
+
+Use:
+
+* Red accents for critical
+* Yellow for warning
+* Green for healthy
+
+Currently everything feels too visually similar.
+
+---
+
+# Final Dashboard Layout
+
+Use this order:
+
+---
+
+## Row 1 → KPI Cards
+
+* Avg Learning Score
+* High Risk Trainees
+* Pending Demos
+* Active Interventions
+
+---
+
+## Row 2 → AI Summary + Risk Distribution
+
+Left:
+
+* AI Summary Panel
+
+Right:
+
+* Donut Chart
+
+---
+
+## Row 3 → Weekly Trends
+
+* Learning Trend
+* Attendance Trend
+* AI Dependency Trend
+
+---
+
+## Row 4 → Immediate Action Required
+
+Top critical trainees
+
+---
+
+## Row 5 → Silent Detector AI Alerts
+
+Detailed AI-generated alerts
+
+---
+
+# Important
+
+Do NOT break existing functionality.
+Only improve UI/UX, layout, and dashboard intelligence presentation.
+Keep current data and logic intact unless needed for visualization improvements.
+
+Goal is to make the dashboard look like a polished enterprise AI product ready for hackathon judging and real-world demo.
+   
+
+
+3.Here’s a clean structured prompt for Replit AI for the **Understudy AI page**.
+
+---
+
+
+
+Improve the **Understudy AI** page significantly while keeping all existing functionality intact.
+
+Current page works well conceptually, but visually it still feels too plain and has too much empty space.
+Goal is to make this page feel like a premium AI-powered mentoring system and one of the strongest features of NxtPulse AI.
+
+---
+
+# Overall Goals
+
+* Reduce empty space
+* Improve visual hierarchy
+* Make AI intelligence more visible
+* Make mentor-mentee pairing feel smarter and more impressive
+* Improve actionability for managers
+* Keep current light theme and blue primary color (#2563eb)
+
+---
+
+# 1) Improve KPI Cards
+
+Current cards:
+
+* Actions Handled
+* Pending Outreach
+* Active Pairings
+* Drafts Ready
+
+These are good but too basic.
+
+### Required Improvements:
+
+Each card should include:
+
+* Large metric
+* Small trend indicator
+* Helpful subtext
+
+Examples:
+
+**Actions Handled**
+42
++8 this week
+
+**Pending Outreach**
+5
+2 urgent
+
+**Active Pairings**
+1
+1 currently running
+
+**Drafts Ready**
+12
+Awaiting approval
+
+Use better spacing and more premium card styling.
+
+---
+
+# 2) Improve Tabs Design
+
+Current tabs:
+
+* Peer Pairings
+* Outreach Queue
+
+Need stronger active state and better visibility.
+
+Example:
+
+* Peer Pairings (3)
+* Outreach Queue (5 urgent)
+
+Active tab should have:
+
+* stronger blue indicator
+* better contrast
+* more polished styling
+
+---
+
+# 3) Redesign Main Pairing Recommendation Card
+
+Current pairing card has too much empty space.
+
+Need better layout and more useful information.
+
+Recommended layout:
+
+---
+
+Top Section:
+
+* Match Score
+* Pairing Status
+* Sessions Recommended
+
+Middle Section:
+Mentor Card → AI Match Engine → Mentee Card
+
+Bottom Section:
+AI reasoning + projected outcomes + action buttons
+
+---
+
+This section should become the main hero section of the page.
+
+---
+
+# 4) Improve Match Score Circle
+
+Current circular score (example 70%) is unclear.
+
+Need clear label.
+
+Example:
+
+**Match Score**
+70%
+
+or
+
+**Pairing Confidence**
+70%
+
+Managers should instantly understand what this percentage means.
+
+---
+
+# 5) Improve Mentor and Mentee Cards
+
+Current cards are decent but need more detail.
+
+For Mentor card add:
+
+* Name
+* Cohort
+* Track
+* Learning score
+* Demo score
+* Mentor capacity
+
+Example:
+Capacity: 2/3 mentees
+
+For Mentee card add:
+
+* Name
+* Cohort
+* Track
+* Learning score
+* Demo score
+* Risk level
+
+Use stronger visual contrast between mentor and mentee.
+
+---
+
+# 6) Add AI Reasoning Panel (Very Important)
+
+This is one of the most important additions.
+
+Add section:
+
+## Why This Pairing?
+
+Example:
+
+* Mentor has strong Python + ML fundamentals
+* Mentee struggling in AI independence
+* Similar learning patterns detected
+* High compatibility score based on past sessions
+
+This makes AI feel intelligent and justifies recommendations.
+
+---
+
+# 7) Add Projected Outcomes
+
+Show expected impact of pairing.
+
+Example:
+
+## Expected Improvement After 2 Weeks
+
+* Learning Score: +18%
+* Demo Performance: +12%
+* AI Dependency: -20%
+
+Display visually using progress bars or mini stat cards.
+
+This makes the feature more impressive.
+
+---
+
+# 8) Add Action Buttons
+
+Managers should be able to take immediate action.
+
+Add buttons:
+
+* Approve Pairing
+* Reject
+* Message Mentor
+* Edit Pairing
+
+Use proper button hierarchy:
+Primary = Approve
+Secondary = Edit / Message
+Danger = Reject
+
+---
+
+# 9) Add Secondary Pairings Section
+
+Below main pairing card, add more AI recommendations.
+
+Example:
+
+## Other Recommended Pairings
+
+Show 3–5 smaller pairing cards.
+
+This makes page feel richer and more useful.
+
+---
+
+# 10) Improve Outreach Queue
+
+Current outreach queue is okay but can be more actionable.
+
+Each card should show:
+
+* Trainee name
+* Risk level
+* Reason for outreach
+* Recommended action
+* Quick send button
+
+Example:
+
+Rahul Verma — HIGH
+Reason: Attendance critical + 3 missed standups
+Action: Send warning + schedule emergency 1-on-1
+
+Buttons:
+
+* Generate AI Message
+* Send
+* Resolve
+
+Make cards compact and easier to scan.
+
+---
+
+# 11) Add Success Metrics
+
+Add a small analytics section.
+
+Examples:
+
+* Pairing Success Rate: 82%
+* Avg Learning Improvement: +24%
+* Avg AI Dependency Reduction: -17%
+
+This helps demonstrate business impact.
+
+---
+
+# Final Page Layout
+
+---
+
+## Row 1 → KPI Cards
+
+* Actions Handled
+* Pending Outreach
+* Active Pairings
+* Drafts Ready
+
+---
+
+## Row 2 → Tabs
+
+* Peer Pairings
+* Outreach Queue
+
+---
+
+## Row 3 → Main AI Pairing Recommendation
+
+Contains:
+
+* Match Score
+* Mentor
+* Mentee
+* AI reasoning
+* Expected outcomes
+* Action buttons
+
+---
+
+## Row 4 → Secondary Pairings
+
+Show more recommendations
+
+---
+
+## Row 5 → Outreach Queue
+
+Compact actionable cards
+
+---
+
+## Row 6 → Success Metrics
+
+Analytics and performance impact
+
+---
+
+# Important
+
+Do NOT break existing functionality.
+Keep all current data and logic intact.
+Focus on improving:
+
+* UI
+* UX
+* Layout
+* Visual hierarchy
+* AI intelligence presentation
+
+Goal is to make Understudy AI feel like a polished enterprise AI mentoring product and one of the strongest features of NxtPulse AI.
+
+
+Improve the LearnGuard AI page significantly while keeping all existing functionality intact.
+
+Current page is already good conceptually and functionally, but visually it feels too plain and underutilized.
+Goal is to make this page feel like a premium AI-powered evaluation engine for trainee assessment.
+
+LearnGuard AI should feel like one of the strongest and smartest features in NxtPulse AI.
+
+Overall Goals
+Reduce empty space
+Improve visual hierarchy
+Make evaluation results more analytical and AI-driven
+Improve readability for managers
+Make AI insights more useful and actionable
+Keep current light theme and blue primary color (#2563eb)
+1) Improve Header Section
+
+Current header only shows:
+
+LearnGuard AI
+Subtitle
+
+Need to make header more useful.
+
+Add quick stats near header:
+
+Evaluations Today
+Avg Score
+High Risk Trainees
+
+Example:
+
+Evaluations Today: 42
+Avg Score: 78%
+High Risk: 7
+
+This makes the page feel richer.
+
+2) Improve Form Mode / Chat Mode Toggle
+
+Current toggle is functional but plain.
+
+Improve styling:
+
+stronger active state
+better spacing
+more premium tab design
+
+Active mode should be visually obvious.
+
+3) Redesign Main Evaluation Result Card
+
+Current evaluation card structure is good but can be much better.
+
+Need better layout and stronger visual hierarchy.
+
+Recommended layout:
+
+Top Section:
+
+Trainee Name
+Topic Evaluated
+Evaluation Status Badge
+
+Middle Section:
+
+Score Metrics
+Overall Verdict
+
+Bottom Section:
+
+Questions
+AI Insights
+Recommendations
+
+This should become the main hero section.
+
+4) Improve Metrics Section
+
+Current metrics:
+
+Understanding
+Confidence
+AI Dependency
+Readiness
+
+Currently displayed only as progress bars.
+
+Need stronger visual presentation.
+
+Possible options:
+
+radial charts
+OR
+mini metric cards
+OR
+improved progress bars with richer styling
+
+Example metrics:
+
+Understanding → 62%
+Confidence → 58%
+AI Dependency → 41%
+Readiness → 64%
+
+Use color coding:
+
+Green = Good
+Yellow = Moderate
+Red = Critical
+
+Make metrics easier to scan quickly.
+
+5) Add Overall AI Verdict Panel (Very Important)
+
+This is a major missing feature.
+
+Managers need an instant decision.
+
+Add panel:
+
+AI Verdict
+
+Example:
+Needs Practice ⚠️
+
+Strengths:
+
+Good conceptual understanding
+Good topic familiarity
+
+Weaknesses:
+
+Low confidence
+Moderate AI dependency
+
+Recommendation:
+
+Practice 2 more mock evaluations before demo
+
+Possible verdict states:
+
+Ready for Demo ✅
+Needs Practice ⚠️
+High Risk 🚨
+
+This section should be visually prominent.
+
+6) Improve Evaluation Questions Section
+
+Current questions list is too plain.
+
+Need more detailed analysis.
+
+Each question should show:
+
+Question
+Answer Score
+Status
+
+Example:
+
+Q1 — What is closure?
+Score: 8/10
+Status: Good
+
+Q2 — Loop closure bug?
+Score: 4/10
+Status: Weak
+
+This makes evaluation more informative.
+
+7) Improve AI Feedback Section
+
+Current AI feedback block is too plain.
+
+Rename to:
+AI Insights & Recommendations
+
+Split into 3 sections:
+
+Strengths
+Good conceptual clarity
+Strong understanding of lexical scope
+Weaknesses
+Loop closure bug explanation incomplete
+Moderate AI dependency
+Recommended Actions
+Solve 5 practice problems
+Reattempt evaluation in 2 days
+
+This should feel like an intelligent AI-generated report.
+
+8) Improve Quick Eval Right Panel
+
+Current right panel only shows trainee list.
+
+It is underutilized.
+
+Improve it to show:
+
+Recent evaluations
+Topic
+Risk status
+Score preview
+
+Example:
+
+Rahul Verma
+React State Management
+Needs Practice
+
+Vikram Singh
+JavaScript Closures
+High Risk
+
+Sai Krishna
+Node.js Async Patterns
+Ready
+
+Add small status badges:
+
+Green = Ready
+Yellow = Practice
+Red = High Risk
+9) Add Evaluation History Section
+
+Add historical evaluation trends.
+
+Example:
+Past 5 evaluations:
+
+React Hooks → 58%
+Closures → 64%
+State Mgmt → 72%
+Async Patterns → 81%
+
+This helps managers track progress over time.
+
+Could be:
+
+mini chart
+OR
+history cards
+10) Add Confidence vs Knowledge Matrix (Optional but Highly Recommended)
+
+This can make the page very impressive.
+
+2-axis matrix:
+
+Knowledge
+Confidence
+
+Quadrants:
+
+High Knowledge + High Confidence → Ready
+High Knowledge + Low Confidence → Needs Practice
+Low Knowledge + Low Confidence → High Risk
+
+This makes evaluation much smarter and more visual.
+
+Final Page Layout
+Row 1 → Header + Quick Stats
+LearnGuard AI
+Evaluations Today
+Avg Score
+High Risk Count
+Row 2 → Mode Toggle
+Form Mode
+Chat Mode
+Row 3 → Main Evaluation Report
+
+Contains:
+
+Trainee info
+Topic
+Status badge
+Metrics
+AI Verdict
+Row 4 → Questions Breakdown
+
+Questions with score and status
+
+Row 5 → AI Insights & Recommendations
+Strengths
+Weaknesses
+Action plan
+Right Panel → Quick Eval
+
+Recent evaluations with risk badges
+
+Bottom Section → Evaluation History
+
+Performance trend over time
+
+Important
+
+Do NOT break existing functionality.
+Keep all current data and logic intact.
+Only improve:
+
+UI
+UX
+Layout
+Visual hierarchy
+AI report presentation
+
+Goal is to make LearnGuard AI feel like a premium enterprise AI evaluation engine and one of the strongest features in NxtPulse AI.
+
+
+
+
+PROMPT: Improve Executive Insights Page (Systematic)
+
+Improve the Executive Insights page UI/UX significantly while keeping all current functionality, data, and business logic unchanged.
+
+Goal: Make this page feel like a premium AI-powered analytics command center for managers/executives.
+
+Current problems:
+
+Too much empty whitespace
+Charts feel blank and uninformative
+Executive action cards are repetitive
+Page lacks AI-generated summary insights
+Not visually impressive enough for a hackathon-winning product
+
+Keep the existing light theme and primary blue color (#2563eb).
+
+STEP 1: Improve Page Layout
+
+Restructure page into 5 clear sections:
+
+KPI Overview Cards
+Analytics Charts
+AI Executive Summary
+Drilldown Insights
+Recommended Executive Actions
+
+Spacing should feel tighter and more premium. Reduce unnecessary empty white space.
+
+STEP 2: Upgrade KPI Cards
+
+Keep these 4 cards:
+
+Student Health
+Learning Health
+Manager Efficiency
+Risk Forecast
+
+Improve each card by adding:
+
+score
+trend percentage
+best cohort
+worst cohort
+small insight text
+
+Example:
+
+Student Health
+72.4/100
+↑ 4.2%
+
+Best Cohort: C6
+Worst Cohort: C7
+
+Keep cards compact but more informative.
+
+STEP 3: Improve Charts Section
+
+Current charts look empty and weak.
+
+Replace with more useful charts.
+
+Left Chart → Cohort Risk Trend
+
+Use line chart.
+
+Show:
+
+High Risk
+Medium Risk
+Low Risk
+
+Across:
+
+Week 1 to Week 8
+
+Purpose:
+Help managers see whether risk is increasing or decreasing over time.
+
+Right Chart → Cohort Performance Comparison
+
+Use grouped bar chart.
+
+Compare:
+
+Cohort 6
+Cohort 7
+Cohort 8
+
+Metrics:
+
+Learning Score
+Demo Score
+Attendance
+AI Dependency
+
+Purpose:
+Quick cohort comparison.
+
+STEP 4: Add AI Executive Summary Section
+
+Add a prominent new section below charts.
+
+Title:
+AI Executive Summary
+
+This should summarize key findings from AI analysis.
+
+Include 3 subsections:
+
+Critical Findings
+
+Example:
+
+Cohort-7 risk increased by 22%
+12 trainees have attendance below 60%
+AI dependency rising in React + Node track
+Predictions
+
+Example:
+
+4 trainees may fail demo next week
+Cohort-8 likely to improve by 14%
+Recommended Priorities
+
+Show priority ranking:
+
+Attendance
+Demo Readiness
+AI Dependency
+
+This section should feel intelligent and highly valuable.
+
+STEP 5: Add Drilldown Insights Section
+
+Add 4 small insight cards.
+
+Cards:
+
+Best Cohort
+Worst Cohort
+Best Track
+Worst Track
+
+Example:
+
+Best Cohort → Cohort 6
+Worst Cohort → Cohort 7
+Best Track → Python + ML
+Worst Track → React + Node
+
+Purpose:
+Quick executive understanding.
+
+STEP 6: Improve Recommended Executive Actions Section
+
+Current cards are too repetitive.
+
+Group actions into tabs:
+
+Critical
+High
+Medium / Low
+
+This improves readability.
+
+Each action card should show:
+
+Severity badge
+Problem title
+Short issue summary
+Number of trainees affected
+Expected impact
+Execute Plan button
+
+Example:
+
+CRITICAL
+Attendance Crisis — Cohort 7
+
+12 trainees affected
+Expected impact: Risk ↓ 18%
+
+[Execute Plan]
+
+Make cards more visually distinct.
+
+STEP 7: Add Forecast Panel
+
+Add a new prediction panel.
+
+Title:
+Next 7 Days Forecast
+
+Example content:
+
+High Risk: 12 → 18
+Medium Risk: 31 → 28
+Demo Failure Risk: 6 trainees
+
+Purpose:
+Show AI-powered forecasting.
+
+STEP 8: UI Improvements
+
+Improve overall UI quality:
+
+Better spacing
+Better card shadows
+Stronger visual hierarchy
+Better chart sizing
+Cleaner typography
+More premium dashboard feel
+Reduce empty areas
+
+Make this page feel like:
+Executive AI Command Center
+
+Not just a normal dashboard.
+
+IMPORTANT
+
+Do NOT change:
+
+backend logic
+database logic
+API functionality
+routing
+existing calculations
+
+Only improve:
+
+UI
+UX
+Layout
+Visual hierarchy
+Data presentation
+
+Goal:
+Make Executive Insights one of the strongest and most premium pages in NxtPulse AI.
+
+
+PROMPT: Major Redesign of Wellness AI Page
+
+Improve the Wellness AI page significantly while keeping all existing functionality, backend logic, and data flow unchanged.
+
+Goal: Transform this page into a premium AI-powered wellness monitoring dashboard for managers.
+
+Current problems:
+
+Too much empty space
+Page feels static and generic
+Suggestions are too basic
+Not enough AI intelligence
+Missing trainee-level wellness alerts
+Missing prediction and intervention insights
+
+Keep:
+
+existing light theme
+primary blue color (#2563eb)
+current navigation/sidebar layout
+STEP 1: Redesign Overall Layout
+
+Restructure the page into 7 major sections:
+
+Wellness KPI Overview
+Wellness Trend Charts
+Cohort Wellness Comparison
+AI Wellness Alerts
+AI Wellness Insights
+Burnout Heatmap
+Intervention Recommendations
+
+Goal:
+Reduce empty whitespace and improve information density.
+
+STEP 2: Improve Top KPI Cards
+
+Replace current wellness cards with 4 compact KPI cards:
+
+Stress Index
+Burnout Risk
+Motivation Score
+Engagement Score
+
+Each card should show:
+
+current score
+trend percentage
+color-based status
+
+Example:
+
+Stress Index
+52
+↑ 8%
+
+Burnout Risk
+31
+Low
+
+Motivation
+68
+Improving
+
+Engagement
+74
+Stable
+
+Make these visually stronger and more informative.
+
+STEP 3: Add Wellness Trend Chart
+
+Add line chart.
+
+Title:
+Stress vs Motivation Trend
+
+Show 7-day trend lines for:
+
+Stress
+Motivation
+
+Purpose:
+Track emotional and energy changes over time.
+
+STEP 4: Add Cohort Wellness Comparison
+
+Add bar chart.
+
+Compare:
+
+Cohort 6
+Cohort 7
+Cohort 8
+
+Metrics:
+
+Stress
+Motivation
+Burnout Risk
+
+Purpose:
+Allow managers to compare cohort wellness quickly.
+
+STEP 5: Add AI Wellness Alerts Section
+
+Add dedicated alert cards for high-risk trainees.
+
+Each alert card should include:
+
+trainee name
+wellness issue
+risk level
+AI recommendation
+
+Example:
+
+Rahul Verma
+Stress increased 28% in last 5 days
+Burnout Risk: HIGH
+
+Recommendation:
+Schedule immediate wellness check-in.
+
+Example 2:
+
+Sai Krishna
+Motivation dropped 15%
+Peer interaction declining
+
+Recommendation:
+Assign peer mentor.
+
+This section should feel actionable and important.
+
+STEP 6: Add AI Wellness Insights Section
+
+Add AI-generated summary panel.
+
+Title:
+AI Wellness Summary
+
+Include:
+
+Critical Findings
+
+Example:
+
+Cohort-7 has highest burnout risk
+Demo week causing stress spikes
+React + Node trainees show lower motivation
+Predictions
+
+Example:
+
+6 trainees may burn out in next 7 days
+Stress likely to rise 12% before assessments
+Recommended Priorities
+
+Example:
+
+Reduce burnout
+Improve engagement
+Lower stress
+
+This section should feel highly intelligent.
+
+STEP 7: Add Burnout Heatmap
+
+Add cohort-level burnout breakdown.
+
+Example table:
+
+Cohort	Low	Medium	High
+C6	8	2	0
+C7	2	5	3
+C8	4	3	1
+
+Purpose:
+Quickly identify high-risk cohorts.
+
+STEP 8: Replace Generic Suggestions
+
+Remove current generic suggestions such as:
+
+Sleep
+Rest
+Exercise
+
+These feel too generic and not AI-driven.
+
+Replace with manager-level intervention recommendations.
+
+Examples:
+
+HIGH PRIORITY
+Conduct 1-on-1 with 5 high-risk trainees
+
+MEDIUM PRIORITY
+Assign peer mentors to isolated trainees
+
+LOW PRIORITY
+Conduct wellness workshop before demo week
+
+This section should focus on actionable interventions.
+
+STEP 9: Add Wellness Factors Breakdown
+
+Add a new section showing root causes affecting wellness.
+
+Example factors:
+
+Attendance Issues
+AI Dependency
+Isolation
+Demo Pressure
+Low Confidence
+
+Display as:
+
+pie chart
+OR
+progress bars
+
+Example:
+
+Demo Pressure → 34%
+Low Confidence → 28%
+Isolation → 18%
+
+Purpose:
+Help managers understand why wellness is declining.
+
+STEP 10: Improve UI Quality
+
+Improve overall design quality:
+
+better spacing
+better card styling
+stronger visual hierarchy
+cleaner typography
+better chart sizing
+reduce empty spaces
+more premium dashboard feel
+
+Goal:
+Make Wellness AI feel like an advanced emotional health monitoring system powered by AI.
+
+It should feel like one of the most intelligent and unique pages in NxtPulse AI.
+
+IMPORTANT
+
+Do NOT change:
+
+backend logic
+APIs
+routing
+existing functionality
+database logic
+
+Only improve:
+
+UI
+UX
+layout
+visual hierarchy
+data presentation
+
+Final goal:
+Make Wellness AI one of the strongest pages in NxtPulse AI.
+
+
+PROMPT: Improve NxtPulse GPT (Manager AI Assistant)
+
+Improve the NxtPulse GPT widget for Manager dashboard significantly while keeping current functionality and backend logic unchanged.
+
+Goal: Transform NxtPulse GPT into a powerful AI program assistant for managers.
+
+Current problems:
+
+Shortcut buttons feel random
+GPT feels like generic chatbot
+Not structured enough for manager workflows
+Missing categories and AI intelligence
+UI feels basic
+
+Keep:
+
+current light theme
+current chatbot widget design
+primary blue color (#2563eb)
+
+Goal:
+Make this feel like a premium AI-powered program assistant.
+
+STEP 1: Improve Welcome Section
+
+Replace current welcome text with stronger, more professional messaging.
+
+Current text feels too generic.
+
+Use:
+
+Hi! I’m NxtPulse GPT — your AI program assistant.
+
+I help you:
+
+identify trainee risks
+analyze cohort performance
+prioritize interventions
+recommend actions
+predict future issues
+
+You can ask me anything about trainees, cohorts, risks, and performance.
+
+This should feel smarter and more premium.
+
+STEP 2: Organize Shortcut Buttons into Categories
+
+Instead of random shortcut buttons, group them into 5 sections.
+
+Sections:
+
+Risk Monitoring
+Cohort Analytics
+Trainee Insights
+Recommendations
+Predictions
+
+This makes GPT more structured and easier to use.
+
+STEP 3: Add Risk Monitoring Shortcuts
+
+Add shortcut buttons under:
+
+Risk Monitoring
+
+Buttons:
+
+Who are my highest-risk trainees?
+Show critical alerts
+Who needs attention today?
+Which trainees may fail soon?
+
+Purpose:
+Managers use these most frequently.
+
+STEP 4: Add Cohort Analytics Shortcuts
+
+Add section:
+
+Cohort Analytics
+
+Buttons:
+
+Summarize Cohort-7
+Compare all cohorts
+Which cohort is weakest?
+Show cohort risk trends
+
+Purpose:
+Quick cohort analysis.
+
+STEP 5: Add Trainee Insights Shortcuts
+
+Add section:
+
+Trainee Insights
+
+Buttons:
+
+Who has highest AI dependency?
+Lowest attendance trainees
+Show weak demo performers
+Who improved this week?
+
+Purpose:
+Deep trainee-level insights.
+
+STEP 6: Add Recommendation Shortcuts
+
+Add section:
+
+Recommendations
+
+Buttons:
+
+What should I prioritize today?
+Recommend interventions
+Which trainees need mentoring?
+Suggest action plan
+
+Purpose:
+Help managers decide what actions to take.
+
+STEP 7: Add Prediction Shortcuts
+
+Add section:
+
+Predictions
+
+Buttons:
+
+Who may become high risk next week?
+Predict demo failures
+Forecast cohort performance
+Burnout risk predictions
+
+Purpose:
+Show AI-powered future insights.
+
+This is one of the strongest features.
+
+STEP 8: Add Special Daily Brief Shortcut
+
+Add a special highlighted shortcut button:
+
+Generate Morning Brief
+
+When clicked, GPT should generate a daily manager summary.
+
+Example output:
+
+Today’s Summary:
+
+4 critical trainees require attention
+Cohort-7 risk increased by 12%
+2 demos pending
+AI dependency rising in React + Node track
+
+Purpose:
+Give managers instant overview.
+
+This should feel like a premium AI feature.
+
+STEP 9: Add Suggested Follow-Up Questions
+
+After every GPT response, show follow-up suggestion buttons.
+
+Example:
+
+If GPT says:
+Highest-risk trainees:
+
+Rahul
+Vikram
+Rohit
+
+Then show:
+
+Why is Rahul high risk?
+Show intervention plan
+Notify POC
+Compare with cohort average
+
+This makes interactions smarter and more natural.
+
+STEP 10: Improve UI/UX
+
+Improve overall chatbot design.
+
+Enhancements:
+
+better spacing
+cleaner shortcut layout
+category headers
+better visual hierarchy
+improved button styling
+smoother chat experience
+more premium AI assistant feel
+
+Reduce clutter and improve readability.
+
+STEP 11: Improve Input Section
+
+Improve chat input placeholder.
+
+Current placeholder is too basic.
+
+Use:
+
+Ask about trainees, cohorts, risks, interventions, or predictions...
+
+Example queries:
+
+Why is Cohort-7 declining?
+Who skipped standup today?
+Which trainees need immediate intervention?
+
+This guides users better.
+
+IMPORTANT
+
+Do NOT change:
+
+backend logic
+APIs
+routing
+existing chat functionality
+data handling
+
+Only improve:
+
+UI
+UX
+layout
+chatbot intelligence presentation
+shortcut structure
+
+Final goal:
+Make NxtPulse GPT the smartest and most impressive feature in the entire NxtPulse platform.
