@@ -22,9 +22,37 @@ function formatRole(role: string) {
   return role.charAt(0).toUpperCase() + role.slice(1);
 }
 
+interface NavLinkProps {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+  currentPath: string;
+  matchPrefix?: boolean;
+}
+
+function NavLink({ href, icon, label, currentPath, matchPrefix }: NavLinkProps) {
+  const isActive = matchPrefix
+    ? currentPath.startsWith(href)
+    : currentPath === href;
+
+  return (
+    <Link
+      href={href}
+      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+        isActive
+          ? "bg-primary/10 text-primary"
+          : "text-muted-foreground hover:bg-accent hover:text-foreground"
+      }`}
+    >
+      <span className={isActive ? "text-primary" : ""}>{icon}</span>
+      {label}
+    </Link>
+  );
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
   const role = getAuthRole();
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
 
   const handleLogout = () => {
     clearAuth();
@@ -37,6 +65,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
     if (role === "sdi") return "/dashboard/sdi";
     return "/";
   };
+
+  const dashboardLink = getDashboardLink();
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row">
@@ -63,61 +93,55 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <nav className="flex-1 p-3 space-y-0.5">
           <SearchTrigger />
           {role && (
-            <Link 
-              href={getDashboardLink()}
-              className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-            >
-              <LayoutDashboard className="w-4 h-4" />
-              Dashboard
-            </Link>
+            <NavLink
+              href={dashboardLink}
+              icon={<LayoutDashboard className="w-4 h-4" />}
+              label="Dashboard"
+              currentPath={location}
+              matchPrefix
+            />
           )}
-          <Link 
+          <NavLink
             href="/cohorts"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-          >
-            <Users className="w-4 h-4" />
-            Cohorts
-          </Link>
-          <Link 
+            icon={<Users className="w-4 h-4" />}
+            label="Cohorts"
+            currentPath={location}
+          />
+          <NavLink
             href="/interventions"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-          >
-            <ShieldAlert className="w-4 h-4" />
-            Interventions
-          </Link>
-          <Link 
+            icon={<ShieldAlert className="w-4 h-4" />}
+            label="Interventions"
+            currentPath={location}
+          />
+          <NavLink
             href="/understudy"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-          >
-            <Bot className="w-4 h-4" />
-            Understudy AI
-          </Link>
-          <Link 
+            icon={<Bot className="w-4 h-4" />}
+            label="Understudy AI"
+            currentPath={location}
+          />
+          <NavLink
             href="/learnguard"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-          >
-            <Brain className="w-4 h-4" />
-            LearnGuard AI
-          </Link>
-          <Link 
+            icon={<Brain className="w-4 h-4" />}
+            label="LearnGuard AI"
+            currentPath={location}
+          />
+          <NavLink
             href="/insights"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-          >
-            <BarChart3 className="w-4 h-4" />
-            Insights
-          </Link>
-          <Link 
+            icon={<BarChart3 className="w-4 h-4" />}
+            label="Insights"
+            currentPath={location}
+          />
+          <NavLink
             href="/wellness"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-accent hover:text-foreground transition-colors"
-          >
-            <Activity className="w-4 h-4" />
-            Wellness
-          </Link>
+            icon={<Activity className="w-4 h-4" />}
+            label="Wellness"
+            currentPath={location}
+          />
         </nav>
 
         {role && (
           <div className="p-3 border-t border-border">
-            <button 
+            <button
               onClick={handleLogout}
               className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-destructive/10 hover:text-destructive transition-colors"
             >
