@@ -42,22 +42,22 @@ export default function LandingPage() {
       </div>
 
       {/* Stats */}
-      <div className="border-y border-border bg-background">
+      <div className="bg-background">
         <div className="container mx-auto px-6 py-12">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-border rounded-xl overflow-hidden shadow-sm">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {[
-              { icon: <Users className="w-4 h-4" />, value: "4,882", label: "SDI Trainees", color: "text-primary", bg: "bg-primary/8" },
-              { icon: <AlertTriangle className="w-4 h-4" />, value: "384", label: "At Risk", color: "text-red-500", bg: "bg-red-50" },
-              { icon: <Cpu className="w-4 h-4" />, value: "27%", label: "AI Dependency Avg", color: "text-violet-600", bg: "bg-violet-50" },
-              { icon: <Target className="w-4 h-4" />, value: "91%", label: "Prediction Accuracy", color: "text-emerald-600", bg: "bg-emerald-50" },
+              { icon: <Users className="w-5 h-5" />, value: "4,882", label: "SDI Trainees", color: "text-primary", bg: "bg-primary/8" },
+              { icon: <AlertTriangle className="w-5 h-5" />, value: "384", label: "At Risk", color: "text-red-500", bg: "bg-red-50" },
+              { icon: <Cpu className="w-5 h-5" />, value: "27%", label: "AI Dependency Avg", color: "text-violet-600", bg: "bg-violet-50" },
+              { icon: <Target className="w-5 h-5" />, value: "91%", label: "Prediction Accuracy", color: "text-emerald-600", bg: "bg-emerald-50" },
             ].map((s) => (
-              <div key={s.label} className="bg-background flex flex-col gap-3 px-6 py-7 hover:bg-muted/40 transition-colors">
-                <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${s.color} ${s.bg}`}>
+              <div key={s.label} className="flex flex-col gap-4 p-6 rounded-xl border border-border bg-card hover:shadow-sm transition-shadow">
+                <div className={`w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${s.color} ${s.bg}`}>
                   {s.icon}
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-foreground tabular-nums">{s.value}</div>
-                  <div className="text-xs text-muted-foreground mt-0.5">{s.label}</div>
+                  <div className="text-sm text-muted-foreground mt-0.5">{s.label}</div>
                 </div>
               </div>
             ))}
