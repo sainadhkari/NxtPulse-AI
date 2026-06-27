@@ -1,0 +1,177 @@
+Implement real login authentication for NxtPulse AI.
+
+Current problem:
+Login is not secure and accepts any email/password combination.
+
+Goal:
+Only valid demo credentials should work.
+
+Users must be authenticated using real database-backed credentials.
+
+Demo Credentials
+
+Only these credentials should be valid.
+
+Manager
+
+Email: manager@nxtpulse.ai
+Password: manager123
+
+POC
+
+Email: poc@nxtpulse.ai
+Password: poc123
+
+SDI
+
+Email: sdi@nxtpulse.ai
+Password: sdi123
+
+No other credentials should work.
+
+STEP 1: Create Real User Database
+
+Set up a real database table for users.
+
+Use PostgreSQL.
+
+Create users table with fields:
+
+id
+name
+email
+password
+role
+created_at
+
+Example:
+
+id	name	email	password	role
+1	Manager	manager@nxtpulse.ai	hashed	manager
+2	POC	poc@nxtpulse.ai	hashed	poc
+3	SDI	sdi@nxtpulse.ai	hashed	sdi
+
+Store passwords securely using bcrypt hashing.
+
+STEP 2: Seed Demo Users
+
+Automatically insert 3 demo users into database.
+
+Users:
+
+Manager
+manager@nxtpulse.ai
+manager123
+
+POC
+poc@nxtpulse.ai
+poc123
+
+SDI
+sdi@nxtpulse.ai
+sdi123
+
+Passwords must be hashed before storing.
+
+STEP 3: Implement Backend Authentication
+
+Create real authentication logic.
+
+Login flow:
+
+User enters email + password
+Backend checks user in database
+Compare password with hashed password
+If valid → login success
+If invalid → login failure
+
+Reject all invalid credentials.
+
+STEP 4: Add Role-Based Routing
+
+After successful login:
+
+Manager → redirect to manager dashboard
+POC → redirect to POC dashboard
+SDI → redirect to SDI dashboard
+
+Use user role for routing.
+
+STEP 5: Handle Invalid Login
+
+If credentials are incorrect:
+
+do not login
+show error message
+
+Example:
+Invalid email or password
+
+UI should show clear validation feedback.
+
+STEP 6: Persist Login Session
+
+Keep user logged in after refresh.
+
+Use:
+
+session
+OR
+JWT
+OR
+local storage with auth state
+
+Session should persist until logout.
+
+STEP 7: Secure Protected Routes
+
+Prevent access to dashboards without login.
+
+Example:
+Unauthenticated users should not access:
+
+/manager/*
+/poc/*
+/sdi/*
+
+Redirect unauthorized users to login page.
+
+STEP 8: Implement Logout Properly
+
+On logout:
+
+clear session/token
+clear auth state
+redirect to login page
+STEP 9: Improve Login UI
+
+Add demo credentials section on login page.
+
+Example:
+
+Demo Credentials:
+
+Manager
+manager@nxtpulse.ai / manager123
+
+POC
+poc@nxtpulse.ai / poc123
+
+SDI
+sdi@nxtpulse.ai / sdi123
+
+This helps during demo.
+
+IMPORTANT
+
+Do NOT break existing dashboards or routing.
+
+Only improve:
+
+authentication
+security
+login validation
+session handling
+
+Goal:
+Make NxtPulse AI feel like a real production-ready platform with secure role-based authentication.

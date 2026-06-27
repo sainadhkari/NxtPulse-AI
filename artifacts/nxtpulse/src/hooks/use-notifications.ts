@@ -12,7 +12,7 @@ export interface Notification {
   read: boolean;
 }
 
-const MAX_NOTIFICATIONS = 20;
+const MAX_NOTIFICATIONS = 30;
 
 export function useNotifications() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -29,6 +29,7 @@ export function useNotifications() {
       try {
         const data = JSON.parse(e.data) as Omit<Notification, "read">;
         setNotifications((prev) => {
+          if (prev.find((n) => n.id === data.id)) return prev;
           const next = [{ ...data, read: false }, ...prev];
           return next.slice(0, MAX_NOTIFICATIONS);
         });
@@ -52,7 +53,11 @@ export function useNotifications() {
     setNotifications([]);
   }, []);
 
+  const dismiss = useCallback((id: string) => {
+    setNotifications((prev) => prev.filter((n) => n.id !== id));
+  }, []);
+
   const unreadCount = notifications.filter((n) => !n.read).length;
 
-  return { notifications, unreadCount, connected, markAllRead, clearAll };
+  return { notifications, unreadCount, connected, markAllRead, clearAll, dismiss };
 }
