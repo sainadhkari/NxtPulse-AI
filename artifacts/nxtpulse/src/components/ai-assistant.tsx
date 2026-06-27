@@ -238,8 +238,8 @@ export function AIAssistant() {
       {/* Chat window */}
       {open && (
         <div
-          className={`fixed bottom-6 right-6 z-[9998] w-[380px] rounded-2xl border border-border bg-card shadow-2xl shadow-black/10 flex flex-col overflow-hidden transition-all duration-200 ${
-            minimised ? "h-14" : "h-[580px]"
+          className={`fixed bottom-4 right-4 z-[9998] w-[380px] rounded-2xl border border-border bg-card shadow-2xl shadow-black/10 flex flex-col overflow-hidden transition-all duration-200 ${
+            minimised ? "h-14" : "h-[min(560px,calc(100dvh-24px))]"
           }`}
         >
           {/* Header */}

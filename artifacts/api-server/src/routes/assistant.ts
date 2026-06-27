@@ -91,9 +91,11 @@ router.post("/assistant/chat", async (req, res) => {
     history.push({ role: "assistant", content: reply });
 
     return res.json({ reply, session_id: sid });
-  } catch (_e) {
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.error("[assistant] OpenAI error:", msg);
     const fallback = "I'm having trouble connecting right now. Try asking: 'Who are my high-risk trainees?' or 'Summarize Cohort-7'.";
-    return res.json({ reply: fallback, session_id: sid });
+    return res.json({ reply: fallback, session_id: sid, error: msg });
   }
 });
 
