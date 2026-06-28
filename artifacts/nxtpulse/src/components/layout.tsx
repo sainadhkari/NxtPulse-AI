@@ -6,6 +6,7 @@ import {
   Bot,
   Brain,
   CalendarCheck,
+  CalendarDays,
   LayoutDashboard,
   LogOut,
   MessageSquare,
@@ -86,12 +87,13 @@ function POCNav({ location, dashboardLink }: { location: string; dashboardLink: 
       <NavLink href="/poc/my-trainees" icon={<UserCheck className="w-4 h-4" />} label="My Trainees" currentPath={location} />
       <NavLink href="/poc/attendance" icon={<CalendarCheck className="w-4 h-4" />} label="Attendance" currentPath={location} />
       <NavLink href="/poc/standups" icon={<MessageSquare className="w-4 h-4" />} label="Standups" currentPath={location} />
+      <NavLink href="/poc/syncups" icon={<CalendarDays className="w-4 h-4" />} label="Sync-ups" currentPath={location} />
       <NavSection label="Programme" />
-      <NavLink href="/cohorts" icon={<Users className="w-4 h-4" />} label="Cohorts" currentPath={location} />
-      <NavLink href="/interventions" icon={<ShieldAlert className="w-4 h-4" />} label="Interventions" currentPath={location} />
+      <NavLink href="/poc/cohorts" icon={<Users className="w-4 h-4" />} label="Cohorts" currentPath={location} />
+      <NavLink href="/poc/interventions" icon={<ShieldAlert className="w-4 h-4" />} label="Interventions" currentPath={location} />
       <NavSection label="AI Tools" />
-      <NavLink href="/understudy" icon={<Bot className="w-4 h-4" />} label="Understudy AI" currentPath={location} />
-      <NavLink href="/learnguard" icon={<Brain className="w-4 h-4" />} label="LearnGuard AI" currentPath={location} />
+      <NavLink href="/poc/understudy" icon={<Bot className="w-4 h-4" />} label="Understudy AI" currentPath={location} />
+      <NavLink href="/poc/learnguard" icon={<Brain className="w-4 h-4" />} label="LearnGuard AI" currentPath={location} />
     </>
   );
 }

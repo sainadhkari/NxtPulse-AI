@@ -18,6 +18,11 @@ import UnderstudyPage from "@/pages/understudy";
 import MyTraineesPage from "@/pages/poc/my-trainees";
 import AttendancePage from "@/pages/poc/attendance";
 import StandupsPage from "@/pages/poc/standups";
+import POCCohortsPage from "@/pages/poc/cohorts";
+import POCInterventionsPage from "@/pages/poc/interventions";
+import POCUnderstudyPage from "@/pages/poc/understudy";
+import POCLearnGuardPage from "@/pages/poc/learnguard";
+import POCSyncUpsPage from "@/pages/poc/syncups";
 
 const queryClient = new QueryClient();
 
@@ -39,6 +44,11 @@ function Router() {
       <Route path="/poc/my-trainees" component={MyTraineesPage} />
       <Route path="/poc/attendance" component={AttendancePage} />
       <Route path="/poc/standups" component={StandupsPage} />
+      <Route path="/poc/cohorts" component={POCCohortsPage} />
+      <Route path="/poc/interventions" component={POCInterventionsPage} />
+      <Route path="/poc/understudy" component={POCUnderstudyPage} />
+      <Route path="/poc/learnguard" component={POCLearnGuardPage} />
+      <Route path="/poc/syncups" component={POCSyncUpsPage} />
       <Route component={NotFound} />
     </Switch>
   );
