@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import {
   Activity,
   BarChart3,
+  Bell,
   Bot,
   Brain,
   CalendarCheck,
@@ -88,6 +89,8 @@ function POCNav({ location, dashboardLink }: { location: string; dashboardLink: 
       <NavLink href="/poc/attendance" icon={<CalendarCheck className="w-4 h-4" />} label="Attendance" currentPath={location} />
       <NavLink href="/poc/standups" icon={<MessageSquare className="w-4 h-4" />} label="Standups" currentPath={location} />
       <NavLink href="/poc/syncups" icon={<CalendarDays className="w-4 h-4" />} label="Sync-ups" currentPath={location} />
+      <NavLink href="/poc/calendar" icon={<CalendarDays className="w-4 h-4" />} label="Calendar" currentPath={location} />
+      <NavLink href="/poc/notifications" icon={<Bell className="w-4 h-4" />} label="Notifications" currentPath={location} />
       <NavSection label="Programme" />
       <NavLink href="/poc/cohorts" icon={<Users className="w-4 h-4" />} label="Cohorts" currentPath={location} />
       <NavLink href="/poc/interventions" icon={<ShieldAlert className="w-4 h-4" />} label="Interventions" currentPath={location} />

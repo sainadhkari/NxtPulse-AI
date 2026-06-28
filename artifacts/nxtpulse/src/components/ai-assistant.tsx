@@ -2,8 +2,9 @@ import { useState, useRef, useEffect } from "react";
 import {
   Bot, X, Send, Loader2, Trash2, Sparkles, ChevronDown,
   ShieldAlert, BarChart3, Users, Target, TrendingUp, Zap,
-  ChevronRight, Coffee
+  ChevronRight, Coffee, CalendarDays, MessageSquare, Activity
 } from "lucide-react";
+import { getAuthRole } from "@/lib/auth";
 
 const BASE = import.meta.env.BASE_URL?.replace(/\/$/, "") || "";
 
@@ -15,9 +16,9 @@ type Message = {
   followUps?: string[];
 };
 
-// ─── Shortcut Categories ──────────────────────────────────────────────────────
+// ─── Manager Shortcut Categories ─────────────────────────────────────────────
 
-const SHORTCUT_CATEGORIES = [
+const MANAGER_CATEGORIES = [
   {
     label: "Risk Monitoring",
     icon: ShieldAlert,
@@ -85,11 +86,86 @@ const SHORTCUT_CATEGORIES = [
   },
 ];
 
-const MORNING_BRIEF = "Generate Morning Brief";
+// ─── POC Shortcut Categories ──────────────────────────────────────────────────
+
+const POC_CATEGORIES = [
+  {
+    label: "Attendance",
+    icon: Activity,
+    color: "text-red-600",
+    bg: "bg-red-50 border-red-200 hover:bg-red-100",
+    activeBg: "bg-red-600 text-white border-red-600",
+    shortcuts: [
+      "Show attendance alerts",
+      "Who is absent today?",
+      "Late login trainees",
+      "Who has attendance below 70%?",
+    ],
+  },
+  {
+    label: "Standups",
+    icon: MessageSquare,
+    color: "text-primary",
+    bg: "bg-primary/5 border-primary/20 hover:bg-primary/10",
+    activeBg: "bg-primary text-white border-primary",
+    shortcuts: [
+      "Who missed standup today?",
+      "Show inactive trainees",
+      "Standup summary for Cohort-7",
+      "Which trainees are disengaged?",
+    ],
+  },
+  {
+    label: "Trainees",
+    icon: Users,
+    color: "text-violet-600",
+    bg: "bg-violet-50 border-violet-200 hover:bg-violet-100",
+    activeBg: "bg-violet-600 text-white border-violet-600",
+    shortcuts: [
+      "Which trainees need follow-up?",
+      "Show high-risk trainees",
+      "Who needs a 1-on-1 today?",
+      "Show trainee progress summary",
+    ],
+  },
+  {
+    label: "Performance",
+    icon: BarChart3,
+    color: "text-amber-600",
+    bg: "bg-amber-50 border-amber-200 hover:bg-amber-100",
+    activeBg: "bg-amber-500 text-white border-amber-500",
+    shortcuts: [
+      "Show low demo performers",
+      "Weak trainees in Cohort-7",
+      "Who has high AI dependency?",
+      "Show learning gaps",
+    ],
+  },
+  {
+    label: "Actions",
+    icon: Target,
+    color: "text-emerald-600",
+    bg: "bg-emerald-50 border-emerald-200 hover:bg-emerald-100",
+    activeBg: "bg-emerald-600 text-white border-emerald-600",
+    shortcuts: [
+      "Who needs sync-up today?",
+      "Suggest interventions",
+      "What should I do first today?",
+      "Schedule follow-ups",
+    ],
+  },
+];
+
+const MANAGER_WELCOME = "Hi! I'm **NxtPulse GPT** — your AI program assistant.\n\nI help you:\n- identify trainee risks\n- analyze cohort performance\n- prioritize interventions\n- recommend actions\n- predict future issues\n\nYou can ask me anything about trainees, cohorts, risks, and performance.";
+
+const POC_WELCOME = "Hi! I'm **NxtPulse GPT for POC**.\n\nI help you with daily operations:\n- monitor trainee attendance\n- track standup participation\n- manage sync-up follow-ups\n- prioritize interventions\n- identify struggling trainees\n\nAsk me anything about your trainees, daily actions, or who needs attention right now.";
+
+const MANAGER_MORNING_BRIEF = "Generate Morning Brief";
+const POC_MORNING_BRIEF = "Generate Daily Action Plan";
 
 // ─── Follow-up suggestions per keyword ───────────────────────────────────────
 
-function deriveFollowUps(userQuery: string): string[] {
+function deriveFollowUpsManager(userQuery: string): string[] {
   const q = userQuery.toLowerCase();
   if (q.includes("risk") || q.includes("fail") || q.includes("alert") || q.includes("attention"))
     return ["Why is the top trainee high risk?", "Show intervention plan", "Compare with cohort average", "Notify POC"];
@@ -104,6 +180,30 @@ function deriveFollowUps(userQuery: string): string[] {
   if (q.includes("brief") || q.includes("morning") || q.includes("summary"))
     return ["Show critical trainees now", "What actions should I start with?", "Who needs a 1-on-1 today?"];
   return ["Tell me more", "What actions should I take?", "Show related risks"];
+}
+
+function deriveFollowUpsPOC(userQuery: string): string[] {
+  const q = userQuery.toLowerCase();
+  if (q.includes("attendance") || q.includes("absent") || q.includes("late"))
+    return ["Schedule sync-up with absent trainee", "Create attendance intervention", "Who else has attendance issues?"];
+  if (q.includes("standup") || q.includes("missed") || q.includes("inactive"))
+    return ["How many times did they miss standup?", "Should I create an intervention?", "Show their attendance trend"];
+  if (q.includes("follow") || q.includes("sync") || q.includes("schedule"))
+    return ["Who else needs follow-up?", "What was the last sync-up outcome?", "Set a reminder for this trainee"];
+  if (q.includes("demo") || q.includes("performance") || q.includes("score"))
+    return ["What topics are weak?", "Recommend a practice plan", "Pair with a mentor"];
+  if (q.includes("ai") || q.includes("dependency"))
+    return ["Suggest no-AI practice tasks", "Who else has high AI dependency?", "How to reduce dependency?"];
+  if (q.includes("action") || q.includes("today") || q.includes("prioritize") || q.includes("plan"))
+    return ["Who is the highest priority?", "Show critical alerts", "Who missed standup today?"];
+  if (q.includes("intervention"))
+    return ["What type of intervention is needed?", "Has this been escalated?", "Schedule sync-up first"];
+  return ["Who needs attention now?", "Show today's follow-ups", "Any critical alerts?"];
+}
+
+function deriveFollowUps(userQuery: string, role: string | null): string[] {
+  if (role === "poc") return deriveFollowUpsPOC(userQuery);
+  return deriveFollowUpsManager(userQuery);
 }
 
 // ─── Text Formatter ───────────────────────────────────────────────────────────
@@ -142,13 +242,18 @@ function AssistantMessage({ content }: { content: string }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function AIAssistant() {
+  const role = getAuthRole();
+  const isPOC = role === "poc";
+  const SHORTCUT_CATEGORIES = isPOC ? POC_CATEGORIES : MANAGER_CATEGORIES;
+  const MORNING_BRIEF = isPOC ? POC_MORNING_BRIEF : MANAGER_MORNING_BRIEF;
+
   const [open, setOpen] = useState(false);
   const [minimised, setMinimised] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "welcome",
       role: "assistant",
-      content: "Hi! I'm **NxtPulse GPT** — your AI program assistant.\n\nI help you:\n- identify trainee risks\n- analyze cohort performance\n- prioritize interventions\n- recommend actions\n- predict future issues\n\nYou can ask me anything about trainees, cohorts, risks, and performance.",
+      content: isPOC ? POC_WELCOME : MANAGER_WELCOME,
       ts: new Date(),
     },
   ]);
@@ -194,7 +299,7 @@ export function AIAssistant() {
         role: "assistant",
         content: data.reply || "Sorry, something went wrong.",
         ts: new Date(),
-        followUps: deriveFollowUps(content),
+        followUps: deriveFollowUps(content, role),
       }]);
     } catch {
       setMessages((m) => [...m, {
@@ -213,7 +318,7 @@ export function AIAssistant() {
     setMessages([{
       id: "welcome2",
       role: "assistant",
-      content: "Chat cleared. What would you like to know?",
+      content: isPOC ? POC_WELCOME : MANAGER_WELCOME,
       ts: new Date(),
     }]);
     setShowShortcuts(true);
@@ -255,7 +360,7 @@ export function AIAssistant() {
                 NxtPulse GPT
                 <span className="text-[9px] font-normal px-1.5 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700">Online</span>
               </p>
-              <p className="text-[10px] text-muted-foreground">AI Program Intelligence Assistant</p>
+              <p className="text-[10px] text-muted-foreground">{isPOC ? "POC Operations Assistant" : "AI Program Intelligence Assistant"}</p>
             </div>
             <div className="flex items-center gap-0.5">
               <button
@@ -363,8 +468,8 @@ export function AIAssistant() {
                         <Coffee className="w-3.5 h-3.5" />
                       </div>
                       <div className="text-left flex-1 min-w-0">
-                        <p className="text-xs font-bold text-primary">Generate Morning Brief</p>
-                        <p className="text-[10px] text-muted-foreground">Daily AI summary — risks, actions & priorities</p>
+                        <p className="text-xs font-bold text-primary">{isPOC ? "Generate Daily Action Plan" : "Generate Morning Brief"}</p>
+                        <p className="text-[10px] text-muted-foreground">{isPOC ? "Daily ops summary — attendance, standups & follow-ups" : "Daily AI summary — risks, actions & priorities"}</p>
                       </div>
                       <Zap className="w-3.5 h-3.5 text-primary/60 shrink-0 group-hover:text-primary transition-colors" />
                     </button>
@@ -437,7 +542,7 @@ export function AIAssistant() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
-                    placeholder="Ask about trainees, cohorts, risks, interventions, or predictions..."
+                    placeholder={isPOC ? "Ask about attendance, standups, follow-ups, or trainees..." : "Ask about trainees, cohorts, risks, interventions, or predictions..."}
                     disabled={loading}
                     className="flex-1 bg-transparent text-xs text-foreground placeholder:text-muted-foreground/40 outline-none disabled:opacity-50"
                   />

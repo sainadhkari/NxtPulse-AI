@@ -202,7 +202,7 @@ function TraineesContent() {
                           {t.trainee_name.charAt(0)}
                         </div>
                         <div>
-                          <Link href={`/trainee/${t.trainee_id}`} className="font-semibold text-foreground hover:text-primary hover:underline underline-offset-2 transition-colors">
+                          <Link href={`/poc/trainee/${t.trainee_id}`} className="font-semibold text-foreground hover:text-primary hover:underline underline-offset-2 transition-colors">
                             {t.trainee_name}
                           </Link>
                           <div className="text-xs text-muted-foreground">{t.track}</div>
@@ -235,7 +235,7 @@ function TraineesContent() {
                     <td className="px-4 py-3">
                       <div className="flex gap-1">
                         <Button size="sm" variant="ghost" className="h-7 w-7 p-0" title="View Profile" asChild>
-                          <Link href={`/trainee/${t.trainee_id}`}><Eye className="w-3.5 h-3.5" /></Link>
+                          <Link href={`/poc/trainee/${t.trainee_id}`}><Eye className="w-3.5 h-3.5" /></Link>
                         </Button>
                         <Button size="sm" variant="ghost" className="h-7 w-7 p-0" title="Schedule Sync-up">
                           <Video className="w-3.5 h-3.5" />

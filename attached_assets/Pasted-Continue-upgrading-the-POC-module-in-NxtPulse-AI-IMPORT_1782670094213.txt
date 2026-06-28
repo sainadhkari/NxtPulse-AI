@@ -1,0 +1,236 @@
+Continue upgrading the POC module in NxtPulse AI.
+
+IMPORTANT:
+- Do NOT modify Manager module
+- Do NOT break existing routes
+- Only improve POC module
+
+POC should remain operational and people-focused.
+
+--------------------------------------------------
+STEP 11 — Create Calendar Page
+--------------------------------------------------
+
+Create a new page called Calendar.
+
+Purpose:
+POC should manage daily schedules and trainee-related events.
+
+Calendar should track:
+- Standups
+- Sync-ups
+- Demo dates
+- Assessments
+- Leaves
+- Follow-ups
+
+Use a clean calendar layout inspired by Darwinbox.
+
+Calendar views:
+- Daily
+- Weekly
+- Monthly
+
+Events should use color coding:
+- Blue = Standups
+- Green = Sync-ups
+- Yellow = Demo
+- Red = Critical Follow-up
+- Gray = Leave
+
+Example:
+Monday
+10:00 AM → Standup Cohort-7
+2:00 PM → Rahul Sync-up
+5:00 PM → Demo Review
+
+Right panel:
+Today’s Events
+Upcoming Events
+Missed Events
+
+Goal:
+Help POC manage daily schedules efficiently.
+
+--------------------------------------------------
+STEP 12 — Create Notifications Page
+--------------------------------------------------
+
+Create full Notifications page.
+
+Purpose:
+Central alerts center for POC.
+
+Create sections:
+- Critical
+- Warning
+- Resolved
+
+Examples of alerts:
+- attendance drop
+- AI dependency spike
+- missed standup
+- low demo score
+- missed sync-up
+
+Example alert:
+
+CRITICAL
+Rahul Verma
+Attendance dropped to 62%
+Missed 3 standups
+
+AI Recommendation:
+Immediate intervention.
+
+Each notification should show:
+- Severity
+- Issue
+- Timestamp
+- Recommended Action
+
+Add filters:
+- All
+- Critical
+- Warning
+- Resolved
+
+Goal:
+POC should quickly identify urgent issues.
+
+--------------------------------------------------
+STEP 13 — Create Trainee Profile Page
+--------------------------------------------------
+
+Create detailed Trainee Profile page.
+
+This should open when clicking View Profile in My Trainees page.
+
+Example profile:
+
+Rahul Verma
+Cohort: C7
+Assigned SDI: Sai Krishna
+
+Key metrics:
+- Attendance: 62%
+- Demo Score: 48
+- Teach Score: 51
+- SDI Progress: 57%
+- AI Dependency: 84%
+
+Add charts:
+- Attendance Trend
+- Performance Trend
+- Learning Progress
+
+Show sections:
+
+1. Basic Info
+2. Performance Metrics
+3. Intervention History
+4. Attendance History
+5. Standup History
+6. AI Insights
+
+Example AI Insight:
+Rahul is showing increased disengagement due to low attendance, weak demo performance, and high AI dependency.
+
+Recommendation:
+Immediate intervention required.
+
+Goal:
+Provide complete trainee-level visibility.
+
+--------------------------------------------------
+STEP 14 — Upgrade POC GPT Assistant
+--------------------------------------------------
+
+Customize GPT assistant specifically for POC role.
+
+Current issue:
+POC GPT feels too similar to Manager GPT.
+
+POC GPT should focus on daily operations.
+
+Update welcome message:
+
+Hi! I’m NxtPulse GPT for POC.
+
+I help you:
+- monitor trainees
+- track attendance
+- manage standups
+- prioritize interventions
+- schedule follow-ups
+
+Add shortcut categories.
+
+Category 1 — Attendance
+- Show attendance alerts
+- Who is absent today?
+- Late login trainees
+
+Category 2 — Standups
+- Who missed standup today?
+- Show inactive trainees
+
+Category 3 — Trainees
+- Which trainees need follow-up?
+- High-risk trainees
+
+Category 4 — Performance
+- Low demo performers
+- Weak trainees
+
+Category 5 — Actions
+- Who needs sync-up?
+- Suggest interventions
+
+Examples:
+- Who missed standup today?
+- Which trainees need sync-up?
+- Show low demo performers
+- Who needs intervention?
+
+POC GPT should focus on:
+- alerts
+- daily actions
+- follow-ups
+
+Not executive analytics.
+
+--------------------------------------------------
+STEP 15 — Final UI Polish for POC Module
+--------------------------------------------------
+
+Perform full UI consistency check across all POC pages.
+
+Ensure:
+- consistent spacing
+- consistent card styling
+- consistent colors
+- consistent typography
+- same NxtPulse design language
+
+Improve:
+- visual hierarchy
+- empty spaces
+- readability
+- responsiveness
+
+Use same design system:
+- sidebar style
+- cards
+- buttons
+- charts
+- tables
+
+Primary color:
+#2563eb
+
+Final goal:
+POC module should feel like a complete operational dashboard, clearly different from Manager module.
+
+Manager = Strategic + Analytics
+POC = Operations + People + Daily Action
