@@ -15,6 +15,7 @@ import {
   CalendarCheck, MessageSquare, ShieldAlert, Eye,
   UserCheck, Zap, TrendingDown, TrendingUp,
   Phone, Video, FileText, ArrowRight,
+  Activity, Bell, Target, ChevronRight,
 } from "lucide-react";
 import { Link } from "wouter";
 
@@ -28,6 +29,31 @@ function getGreeting() {
 function formatDate() {
   return new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
 }
+
+// ─── Daily Ops data ──────────────────────────────────────────────────────────
+
+const STANDUP_STATUS = [
+  { name: "Rahul Verma",  done: false, status: "missed" },
+  { name: "Vikram Singh", done: true,  status: "done" },
+  { name: "Sai Krishna",  done: true,  status: "done" },
+  { name: "Pooja Menon",  done: false, status: "pending" },
+  { name: "Arjun Das",    done: true,  status: "done" },
+  { name: "Kiran Patel",  done: false, status: "pending" },
+  { name: "Deepa Nair",   done: true,  status: "done" },
+];
+
+const ATTENDANCE_TODAY = {
+  present: 7,
+  absent: 3,
+  late: 2,
+  total: 10,
+};
+
+const PRIORITY_ACTIONS = [
+  { label: "Call Rahul Verma — absent 5 days, 3 standups missed", severity: "critical", href: "/poc/trainee/t1" },
+  { label: "Review Vikram Singh demo — AI dependency at 88%",      severity: "warning",  href: "/poc/trainee/t2" },
+  { label: "Reschedule missed sync-up with Pooja Menon",           severity: "warning",  href: "/poc/syncups" },
+];
 
 const TODAY_SCHEDULE = [
   { time: "09:30 AM", type: "Standup", label: "Cohort-7 Daily Standup", trainees: "5 trainees", icon: MessageSquare, color: "bg-primary/10 text-primary", border: "border-primary/20" },
@@ -52,6 +78,122 @@ export default function POCDashboard() {
         </div>
       </Layout>
     </ProtectedRoute>
+  );
+}
+
+function DailyOpsSummary() {
+  const done = STANDUP_STATUS.filter((s) => s.done).length;
+  const total = STANDUP_STATUS.length;
+  const pct = Math.round((done / total) * 100);
+  const attPct = Math.round((ATTENDANCE_TODAY.present / ATTENDANCE_TODAY.total) * 100);
+
+  return (
+    <GlassCard className="p-0 overflow-hidden border-primary/20">
+      {/* Top bar */}
+      <div className="flex items-center gap-3 px-5 py-3 border-b border-border bg-primary/[0.02]">
+        <div className="w-6 h-6 rounded-md bg-primary/10 flex items-center justify-center">
+          <Activity className="w-3.5 h-3.5 text-primary" />
+        </div>
+        <span className="text-xs font-bold text-primary uppercase tracking-wider">Daily Ops Summary</span>
+        <span className="text-xs text-muted-foreground ml-1">— {formatDate()}</span>
+        <Link href="/poc/notifications" className="ml-auto flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors font-medium">
+          <Bell className="w-3 h-3" /> View all alerts <ChevronRight className="w-3 h-3" />
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-border">
+
+        {/* Panel 1 — Standup Completion */}
+        <div className="px-5 py-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <MessageSquare className="w-4 h-4 text-primary" />
+              <span className="text-xs font-semibold text-foreground">Standup Completion</span>
+            </div>
+            <span className={`text-xs font-bold tabular-nums ${pct >= 80 ? "text-emerald-600" : pct >= 50 ? "text-amber-600" : "text-red-600"}`}>
+              {done}/{total} done
+            </span>
+          </div>
+          {/* Progress arc-style bar */}
+          <div className="h-2 bg-muted rounded-full mb-3 overflow-hidden">
+            <div
+              className={`h-full rounded-full transition-all ${pct >= 80 ? "bg-emerald-500" : pct >= 50 ? "bg-amber-500" : "bg-red-500"}`}
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+          {/* Per-trainee dots */}
+          <div className="flex flex-wrap gap-1.5">
+            {STANDUP_STATUS.map((s) => (
+              <div
+                key={s.name}
+                title={`${s.name} — ${s.status}`}
+                className={`flex items-center gap-1 px-2 py-1 rounded-lg border text-[10px] font-medium ${
+                  s.status === "done"
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    : s.status === "missed"
+                    ? "border-red-200 bg-red-50 text-red-700"
+                    : "border-border bg-muted/40 text-muted-foreground"
+                }`}
+              >
+                <span className={`w-1.5 h-1.5 rounded-full ${s.status === "done" ? "bg-emerald-500" : s.status === "missed" ? "bg-red-500" : "bg-gray-400"}`} />
+                {s.name.split(" ")[0]}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Panel 2 — Attendance Snapshot */}
+        <div className="px-5 py-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center gap-2">
+              <CalendarCheck className="w-4 h-4 text-primary" />
+              <span className="text-xs font-semibold text-foreground">Attendance Snapshot</span>
+            </div>
+            <span className={`text-xs font-bold tabular-nums ${attPct >= 80 ? "text-emerald-600" : attPct >= 60 ? "text-amber-600" : "text-red-600"}`}>
+              {attPct}%
+            </span>
+          </div>
+          <div className="h-2 bg-muted rounded-full mb-3 overflow-hidden">
+            <div
+              className={`h-full rounded-full ${attPct >= 80 ? "bg-emerald-500" : attPct >= 60 ? "bg-amber-500" : "bg-red-500"}`}
+              style={{ width: `${attPct}%` }}
+            />
+          </div>
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { label: "Present", value: ATTENDANCE_TODAY.present, color: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200" },
+              { label: "Absent",  value: ATTENDANCE_TODAY.absent,  color: "text-red-700",     bg: "bg-red-50 border-red-200" },
+              { label: "Late",    value: ATTENDANCE_TODAY.late,    color: "text-amber-700",   bg: "bg-amber-50 border-amber-200" },
+            ].map(({ label, value, color, bg }) => (
+              <div key={label} className={`text-center px-2 py-2 rounded-xl border ${bg}`}>
+                <div className={`text-lg font-bold tabular-nums ${color}`}>{value}</div>
+                <div className="text-[10px] text-muted-foreground">{label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Panel 3 — Priority Actions */}
+        <div className="px-5 py-4">
+          <div className="flex items-center gap-2 mb-3">
+            <Target className="w-4 h-4 text-primary" />
+            <span className="text-xs font-semibold text-foreground">Top Priority Actions</span>
+          </div>
+          <div className="space-y-2">
+            {PRIORITY_ACTIONS.map((a, i) => (
+              <Link key={i} href={a.href} className="group flex items-start gap-2 hover:bg-muted/40 rounded-lg p-1.5 -mx-1.5 transition-colors">
+                <span className={`mt-0.5 shrink-0 w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black ${
+                  a.severity === "critical" ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-700"
+                }`}>{i + 1}</span>
+                <span className="text-xs text-foreground leading-relaxed group-hover:text-primary transition-colors">{a.label}</span>
+                <ChevronRight className="w-3 h-3 text-muted-foreground/40 shrink-0 mt-0.5 group-hover:text-primary transition-colors" />
+              </Link>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </GlassCard>
   );
 }
 
@@ -93,6 +235,9 @@ function DashboardContent() {
           )}
         </div>
       </div>
+
+      {/* ── Daily Ops Summary ── */}
+      <DailyOpsSummary />
 
       {/* ── KPI Cards ── */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -186,7 +331,7 @@ function DashboardContent() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <Link href={`/trainee/${t.trainee_id}`} className="text-sm font-semibold text-foreground hover:text-primary hover:underline underline-offset-2 transition-colors">
+                        <Link href={`/poc/trainee/${t.trainee_id}`} className="text-sm font-semibold text-foreground hover:text-primary hover:underline underline-offset-2 transition-colors">
                           {t.trainee_name}
                         </Link>
                         <Badge variant="outline" className={`text-xs ${isHigh ? "text-red-700 border-red-200 bg-red-50" : "text-amber-700 border-amber-200 bg-amber-50"}`}>
@@ -204,7 +349,7 @@ function DashboardContent() {
                     </div>
                     <div className="flex gap-1.5 shrink-0">
                       <Button size="sm" variant="ghost" className="h-7 w-7 p-0" asChild>
-                        <Link href={`/trainee/${t.trainee_id}`}><Eye className="w-3.5 h-3.5" /></Link>
+                        <Link href={`/poc/trainee/${t.trainee_id}`}><Eye className="w-3.5 h-3.5" /></Link>
                       </Button>
                       <Button size="sm" variant="ghost" className={`h-7 w-7 p-0 ${isHigh ? "text-red-500 hover:text-red-700 hover:bg-red-50" : "text-amber-500 hover:text-amber-700 hover:bg-amber-50"}`} asChild>
                         <Link href="/interventions"><ShieldAlert className="w-3.5 h-3.5" /></Link>
@@ -245,8 +390,8 @@ function DashboardContent() {
               </div>
             ))}
           </div>
-          <Button size="sm" variant="outline" className="w-full mt-4 text-xs gap-1 h-8">
-            <CalendarCheck className="w-3 h-3" /> Full Calendar
+          <Button size="sm" variant="outline" className="w-full mt-4 text-xs gap-1 h-8" asChild>
+            <Link href="/poc/calendar"><CalendarCheck className="w-3 h-3" /> Full Calendar</Link>
           </Button>
         </GlassCard>
       </div>
@@ -291,7 +436,7 @@ function DashboardContent() {
                     <div className="flex gap-1 shrink-0">
                       <Button size="sm" variant="outline" className="h-7 text-xs px-2">Resolve</Button>
                       <Button size="sm" variant="ghost" className="h-7 w-7 p-0" asChild>
-                        <Link href={`/trainee/${sug.trainee_id}`}><ArrowRight className="w-3.5 h-3.5" /></Link>
+                        <Link href={`/poc/trainee/${sug.trainee_id}`}><ArrowRight className="w-3.5 h-3.5" /></Link>
                       </Button>
                     </div>
                   </div>
