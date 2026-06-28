@@ -15,6 +15,9 @@ import InterventionsPage from "@/pages/interventions";
 import CohortsPage from "@/pages/cohorts";
 import TraineeProfile from "@/pages/trainee-profile";
 import UnderstudyPage from "@/pages/understudy";
+import MyTraineesPage from "@/pages/poc/my-trainees";
+import AttendancePage from "@/pages/poc/attendance";
+import StandupsPage from "@/pages/poc/standups";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +36,9 @@ function Router() {
       <Route path="/cohorts" component={CohortsPage} />
       <Route path="/trainee/:id" component={TraineeProfile} />
       <Route path="/understudy" component={UnderstudyPage} />
+      <Route path="/poc/my-trainees" component={MyTraineesPage} />
+      <Route path="/poc/attendance" component={AttendancePage} />
+      <Route path="/poc/standups" component={StandupsPage} />
       <Route component={NotFound} />
     </Switch>
   );

@@ -1,0 +1,242 @@
+Continue upgrading the POC module in NxtPulse AI.
+
+IMPORTANT:
+- Do NOT modify Manager pages
+- Do NOT change existing manager routes
+- Only improve POC module
+
+POC module should remain operational and action-focused.
+
+--------------------------------------------------
+STEP 6 — Redesign POC Cohorts Page
+--------------------------------------------------
+
+Keep Cohorts page in POC module.
+
+Current problem:
+POC Cohorts page still feels too manager-focused with heavy analytics.
+
+POC needs cohort-level operational monitoring.
+
+Remove unnecessary executive-level analytics.
+
+Focus on these operational metrics:
+- Attendance
+- Demo Readiness
+- Teach Score
+- SDI Progress
+- High Risk Count
+
+Each cohort card should show:
+
+- Cohort Name
+- Number of trainees
+- Attendance %
+- Demo Score
+- Teach Score
+- SDI Progress
+- High Risk Count
+
+Example:
+
+Cohort-7
+Trainees: 42
+Attendance: 68%
+Demo Score: 52%
+Teach Score: 61%
+SDI Progress: 57%
+High Risk: 8
+
+Add risk color coding:
+- Green = healthy
+- Yellow = warning
+- Red = high risk
+
+Below cohort cards add:
+- Low performers in cohort
+- Upcoming demo readiness
+- Pending interventions
+
+Goal:
+POC should quickly know which cohort needs attention.
+
+--------------------------------------------------
+STEP 7 — Improve Interventions Page
+--------------------------------------------------
+
+Keep current Interventions page.
+
+This is a core POC workflow page.
+
+Improve it for operational tracking.
+
+Add tabs:
+- Pending
+- Escalated
+- Completed
+- Overdue
+
+Each intervention card should show:
+- Trainee Name
+- Issue
+- Severity
+- Due Date
+- Status
+- Assigned POC
+- Recommended Action
+
+Example:
+
+Rahul Verma
+Issue: Attendance dropped to 62%
+Severity: High
+Due Date: Tomorrow
+Status: Pending
+
+AI Recommendation:
+Schedule immediate 1-on-1.
+
+Add filters:
+- Severity
+- Status
+- Cohort
+
+Goal:
+POC should manage interventions efficiently.
+
+--------------------------------------------------
+STEP 8 — Improve Understudy AI for POC
+--------------------------------------------------
+
+Keep Understudy AI page.
+
+Current issue:
+Too analytics-focused.
+
+POC needs action-oriented mentoring support.
+
+Focus page on:
+- trainee pairing
+- mentor suggestions
+- outreach queue
+
+Main sections:
+
+1. Recommended Mentor Pairings
+Show:
+- Mentor
+- Trainee
+- Match Score
+- Reason
+
+Example:
+Meena Iyer → Rahul Verma
+Match Score: 82%
+Reason:
+Strong mentor in React + good communication.
+
+2. Outreach Queue
+Show trainees needing mentoring.
+
+3. Pairing Success Metrics
+Show:
+- active pairings
+- successful pairings
+- pending outreach
+
+Goal:
+Help POC improve peer mentoring.
+
+--------------------------------------------------
+STEP 9 — Improve LearnGuard AI for POC
+--------------------------------------------------
+
+Keep LearnGuard AI page.
+
+Focus on learning gaps and weak trainees.
+
+Main purpose:
+Help POC identify weak topics and struggling trainees.
+
+Show:
+- weak topics
+- repeated failures
+- low comprehension
+- low confidence
+
+Example:
+
+Rahul Verma
+Weak Topics:
+- Closures
+- Async JS
+- Promises
+
+Scores:
+Understanding: 48%
+Confidence: 42%
+Readiness: 51%
+
+AI Recommendation:
+Assign practice module + re-evaluate after 3 days.
+
+Add sections:
+- Weakest trainees
+- Weak topics
+- Recent evaluations
+
+Goal:
+POC should know who needs learning support.
+
+--------------------------------------------------
+STEP 10 — Create Sync-ups Page
+--------------------------------------------------
+
+Create new page called Sync-ups.
+
+Purpose:
+POC manages trainee sync-ups and follow-ups.
+
+Track:
+- pending sync-ups
+- completed sync-ups
+- missed sync-ups
+- notes
+
+Top cards:
+- Pending
+- Completed
+- Missed
+- Today’s Sync-ups
+
+Each sync-up card should show:
+- Trainee Name
+- Cohort
+- Issue
+- Date
+- Status
+- Notes
+
+Example:
+
+Rahul Verma
+Cohort: C7
+Issue: Low attendance + missed standups
+Date: Today 3:00 PM
+Status: Pending
+
+Add filters:
+- Pending
+- Completed
+- Missed
+
+Goal:
+Make sync-up tracking simple and practical.
+
+--------------------------------------------------
+
+Requirements:
+- Keep existing NxtPulse design system
+- Keep same color palette (#2563eb)
+- Maintain clean UI consistency
+- Do not break existing functionality

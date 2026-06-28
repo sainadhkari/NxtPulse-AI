@@ -1,14 +1,17 @@
 import React from "react";
 import { Link, useLocation } from "wouter";
-import { 
-  Activity, 
-  BarChart3, 
+import {
+  Activity,
+  BarChart3,
   Bot,
   Brain,
-  LayoutDashboard, 
+  CalendarCheck,
+  LayoutDashboard,
   LogOut,
+  MessageSquare,
   ShieldAlert,
-  Users
+  UserCheck,
+  Users,
 } from "lucide-react";
 import { getAuthRole, clearAuth } from "@/lib/auth";
 import { NotificationBell } from "@/components/notification-bell";
@@ -47,6 +50,59 @@ function NavLink({ href, icon, label, currentPath, matchPrefix }: NavLinkProps) 
       <span className={isActive ? "text-primary" : ""}>{icon}</span>
       {label}
     </Link>
+  );
+}
+
+function NavSection({ label }: { label: string }) {
+  return (
+    <div className="pt-3 pb-1 px-3">
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/50">{label}</span>
+    </div>
+  );
+}
+
+function ManagerNav({ location, dashboardLink }: { location: string; dashboardLink: string }) {
+  return (
+    <>
+      <NavLink href={dashboardLink} icon={<LayoutDashboard className="w-4 h-4" />} label="Dashboard" currentPath={location} matchPrefix />
+      <NavSection label="Programme" />
+      <NavLink href="/cohorts" icon={<Users className="w-4 h-4" />} label="Cohorts" currentPath={location} />
+      <NavLink href="/interventions" icon={<ShieldAlert className="w-4 h-4" />} label="Interventions" currentPath={location} />
+      <NavSection label="AI Tools" />
+      <NavLink href="/understudy" icon={<Bot className="w-4 h-4" />} label="Understudy AI" currentPath={location} />
+      <NavLink href="/learnguard" icon={<Brain className="w-4 h-4" />} label="LearnGuard AI" currentPath={location} />
+      <NavSection label="Analytics" />
+      <NavLink href="/insights" icon={<BarChart3 className="w-4 h-4" />} label="Insights" currentPath={location} />
+      <NavLink href="/wellness" icon={<Activity className="w-4 h-4" />} label="Wellness" currentPath={location} />
+    </>
+  );
+}
+
+function POCNav({ location, dashboardLink }: { location: string; dashboardLink: string }) {
+  return (
+    <>
+      <NavLink href={dashboardLink} icon={<LayoutDashboard className="w-4 h-4" />} label="Dashboard" currentPath={location} matchPrefix />
+      <NavSection label="My Work" />
+      <NavLink href="/poc/my-trainees" icon={<UserCheck className="w-4 h-4" />} label="My Trainees" currentPath={location} />
+      <NavLink href="/poc/attendance" icon={<CalendarCheck className="w-4 h-4" />} label="Attendance" currentPath={location} />
+      <NavLink href="/poc/standups" icon={<MessageSquare className="w-4 h-4" />} label="Standups" currentPath={location} />
+      <NavSection label="Programme" />
+      <NavLink href="/cohorts" icon={<Users className="w-4 h-4" />} label="Cohorts" currentPath={location} />
+      <NavLink href="/interventions" icon={<ShieldAlert className="w-4 h-4" />} label="Interventions" currentPath={location} />
+      <NavSection label="AI Tools" />
+      <NavLink href="/understudy" icon={<Bot className="w-4 h-4" />} label="Understudy AI" currentPath={location} />
+      <NavLink href="/learnguard" icon={<Brain className="w-4 h-4" />} label="LearnGuard AI" currentPath={location} />
+    </>
+  );
+}
+
+function SDINav({ location, dashboardLink }: { location: string; dashboardLink: string }) {
+  return (
+    <>
+      <NavLink href={dashboardLink} icon={<LayoutDashboard className="w-4 h-4" />} label="Dashboard" currentPath={location} matchPrefix />
+      <NavLink href="/learnguard" icon={<Brain className="w-4 h-4" />} label="LearnGuard AI" currentPath={location} />
+      <NavLink href="/understudy" icon={<Bot className="w-4 h-4" />} label="Understudy AI" currentPath={location} />
+    </>
   );
 }
 
@@ -90,53 +146,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
           )}
         </div>
 
-        <nav className="flex-1 p-3 space-y-0.5">
+        <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
           <SearchTrigger />
-          {role && (
-            <NavLink
-              href={dashboardLink}
-              icon={<LayoutDashboard className="w-4 h-4" />}
-              label="Dashboard"
-              currentPath={location}
-              matchPrefix
-            />
+          {role === "manager" && <ManagerNav location={location} dashboardLink={dashboardLink} />}
+          {role === "poc"     && <POCNav     location={location} dashboardLink={dashboardLink} />}
+          {role === "sdi"     && <SDINav     location={location} dashboardLink={dashboardLink} />}
+          {!role && (
+            <NavLink href={dashboardLink} icon={<LayoutDashboard className="w-4 h-4" />} label="Dashboard" currentPath={location} matchPrefix />
           )}
-          <NavLink
-            href="/cohorts"
-            icon={<Users className="w-4 h-4" />}
-            label="Cohorts"
-            currentPath={location}
-          />
-          <NavLink
-            href="/interventions"
-            icon={<ShieldAlert className="w-4 h-4" />}
-            label="Interventions"
-            currentPath={location}
-          />
-          <NavLink
-            href="/understudy"
-            icon={<Bot className="w-4 h-4" />}
-            label="Understudy AI"
-            currentPath={location}
-          />
-          <NavLink
-            href="/learnguard"
-            icon={<Brain className="w-4 h-4" />}
-            label="LearnGuard AI"
-            currentPath={location}
-          />
-          <NavLink
-            href="/insights"
-            icon={<BarChart3 className="w-4 h-4" />}
-            label="Insights"
-            currentPath={location}
-          />
-          <NavLink
-            href="/wellness"
-            icon={<Activity className="w-4 h-4" />}
-            label="Wellness"
-            currentPath={location}
-          />
         </nav>
 
         {role && (

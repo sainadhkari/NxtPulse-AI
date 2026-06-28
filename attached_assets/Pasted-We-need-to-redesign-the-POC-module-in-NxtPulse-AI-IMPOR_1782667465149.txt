@@ -1,0 +1,221 @@
+We need to redesign the POC module in NxtPulse AI.
+
+IMPORTANT:
+Do NOT modify Manager pages.
+Manager module is already complete and should remain unchanged.
+
+Current issue:
+POC dashboard feels like a cloned Manager dashboard.
+We need to redesign POC based on actual POC workflow.
+
+POC responsibilities:
+- managing standups
+- tracking attendance
+- monitoring trainees
+- checking teach scores
+- checking demo scores
+- monitoring SDI progress
+- scheduling sync-ups
+- follow-ups
+- interventions
+
+Design philosophy:
+Manager = strategy + analytics
+POC = people + operations + daily action
+
+POC dashboard should answer:
+“What needs attention today?”
+
+--------------------------------------------------
+STEP 1 — Update POC Sidebar
+--------------------------------------------------
+
+Update POC sidebar navigation.
+
+Replace current POC sidebar with:
+
+- Dashboard
+- Attendance
+- My Trainees
+- Standups
+- Cohorts
+- Interventions
+- Understudy AI
+- LearnGuard AI
+- Sync-ups
+- Calendar
+- Notifications
+
+Remove these pages from POC:
+- Insights
+- Wellness
+
+These remain manager-only.
+
+Keep same sidebar UI design and styling.
+
+--------------------------------------------------
+STEP 2 — Redesign POC Dashboard
+--------------------------------------------------
+
+Redesign POC dashboard completely.
+
+Rename dashboard:
+POC Command Center
+OR
+Trainee Monitoring Dashboard
+
+Dashboard must focus on daily operations.
+
+Top cards:
+- Pending Actions
+- Attendance Alerts
+- Today Standups
+- Sync-ups Scheduled
+
+Below cards create sections:
+
+SECTION 1 — High Priority Trainees
+Show trainees needing immediate attention.
+
+Examples:
+- Rahul → attendance issue
+- Vikram → AI dependency high
+- Sai → low demo score
+
+Each trainee card should show:
+- Name
+- Issue
+- Severity
+- Recommended Action
+
+SECTION 2 — Today’s Schedule
+Show:
+- standups
+- sync-ups
+- follow-ups
+- demo reviews
+
+SECTION 3 — AI Recommendations
+Examples:
+- 3 trainees need intervention
+- 2 trainees missed standup
+- 4 attendance alerts
+
+SECTION 4 — Quick Metrics
+Show:
+- Avg attendance
+- Avg demo score
+- Avg teach score
+- Avg SDI progress
+
+Keep NxtPulse design system unchanged.
+
+--------------------------------------------------
+STEP 3 — Create Attendance Page
+--------------------------------------------------
+
+Create new Attendance page.
+
+Purpose:
+POC should monitor trainee attendance daily.
+
+Page features:
+- attendance calendar
+- daily attendance status
+- leave tracking
+- absent tracking
+- late login tracking
+- standup attendance tracking
+
+Filters:
+- Cohort
+- SDI
+- Date range
+
+Top cards:
+- Present
+- Absent
+- Leave
+- Late
+
+Add right-side alert panel.
+
+Examples:
+- Rahul absent 2 days
+- Sai late login 4 times
+- Vikram on leave
+
+Use clean layout inspired by Darwinbox.
+
+--------------------------------------------------
+STEP 4 — Create My Trainees Page
+--------------------------------------------------
+
+Create new page called My Trainees.
+
+This page should show all trainees assigned to POC.
+
+Display table with columns:
+
+- Name
+- Cohort
+- Attendance
+- Demo Score
+- Teach Score
+- SDI Progress
+- Risk Level
+- Actions
+
+Example:
+Rahul | C7 | 62% | 45 | 52 | 61% | High
+
+Actions:
+- View Profile
+- Schedule Sync-up
+- Create Intervention
+
+Add filters:
+- Cohort
+- Risk
+- Performance
+
+This page should become a core POC page.
+
+--------------------------------------------------
+STEP 5 — Create Standups Page
+--------------------------------------------------
+
+Create new Standups page.
+
+Purpose:
+Track trainee participation in standups.
+
+Metrics:
+- Attended
+- Missed
+- Inactive
+
+Track:
+- standup attendance
+- participation level
+- communication score
+
+Example trainee card:
+
+Rahul Verma
+Missed 3 consecutive standups
+Risk: HIGH
+
+AI Recommendation:
+Schedule immediate 1-on-1 call.
+
+This page should help POC quickly identify disengaged trainees.
+
+--------------------------------------------------
+
+Requirements:
+- Keep same NxtPulse UI design
+- Do not affect Manager module
+- Only upgrade POC module
+- Maintain existing routes where possible
