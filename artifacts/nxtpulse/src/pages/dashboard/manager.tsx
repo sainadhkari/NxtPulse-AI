@@ -117,7 +117,7 @@ export default function ManagerDashboard() {
   return (
     <ProtectedRoute allowedRoles={["manager"]}>
       <Layout>
-        <div className="p-6 space-y-6 overflow-y-auto h-screen">
+        <div className="p-6 space-y-6">
           <DashboardContent />
         </div>
       </Layout>

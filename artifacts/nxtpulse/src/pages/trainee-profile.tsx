@@ -239,7 +239,7 @@ export default function TraineeProfile() {
   if (tLoading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
       </Layout>
@@ -249,7 +249,7 @@ export default function TraineeProfile() {
   if (!trainee) {
     return (
       <Layout>
-        <div className="flex flex-col items-center justify-center h-screen gap-4">
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
           <p className="text-muted-foreground font-mono">Trainee not found.</p>
           <Link href="/dashboard/manager" className="text-primary text-sm hover:underline">Back to Dashboard</Link>
         </div>
@@ -261,7 +261,7 @@ export default function TraineeProfile() {
 
   return (
     <Layout>
-      <div ref={contentRef} className="p-6 space-y-6 overflow-y-auto h-screen">
+      <div ref={contentRef} className="p-6 space-y-6">
         {/* Back + Export */}
         <div className="flex items-center justify-between">
           <Link

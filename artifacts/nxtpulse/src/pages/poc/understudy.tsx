@@ -182,7 +182,7 @@ export default function POCUnderstudyPage() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 overflow-y-auto h-screen">
+      <div className="p-6 space-y-6">
 
         {/* Header */}
         <div>
@@ -193,7 +193,7 @@ export default function POCUnderstudyPage() {
         </div>
 
         {/* Pairing Success Metrics */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: "Active Pairings", value: approvedPairings.size.toString(), icon: <Users className="w-4 h-4 text-primary" />, color: "text-primary", bg: "bg-primary/8" },
             { label: "Successful Pairings", value: "6", icon: <Award className="w-4 h-4 text-emerald-600" />, color: "text-emerald-600", bg: "bg-emerald-50" },

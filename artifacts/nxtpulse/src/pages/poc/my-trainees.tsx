@@ -49,7 +49,7 @@ export default function MyTraineesPage() {
   return (
     <ProtectedRoute allowedRoles={["poc", "manager"]}>
       <Layout>
-        <div className="p-6 space-y-6 overflow-y-auto h-screen">
+        <div className="p-6 space-y-6">
           <div>
             <div className="flex items-center gap-2 mb-0.5">
               <UserCheck className="w-5 h-5 text-primary" />

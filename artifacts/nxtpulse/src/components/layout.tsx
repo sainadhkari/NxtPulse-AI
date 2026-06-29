@@ -145,7 +145,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const dashboardLink = getDashboardLink();
 
   return (
-    <div className="min-h-screen bg-background text-foreground flex flex-col md:flex-row">
+    <div className="bg-background text-foreground flex flex-col md:flex-row md:h-screen md:overflow-hidden">
       <GlobalSearch />
       <AIAssistant />
       {/* Sidebar */}
@@ -190,7 +190,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-auto bg-background">
+      <main className="flex-1 overflow-y-auto bg-background min-h-0">
         {children}
       </main>
     </div>

@@ -46,7 +46,7 @@ export default function AttendancePage() {
   return (
     <ProtectedRoute allowedRoles={["poc", "manager"]}>
       <Layout>
-        <div className="p-6 space-y-6 overflow-y-auto h-screen">
+        <div className="p-6 space-y-6">
           <div>
             <div className="flex items-center gap-2 mb-0.5">
               <CalendarCheck className="w-5 h-5 text-primary" />
@@ -99,7 +99,7 @@ function AttendanceContent() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* Main attendance table */}
-        <div className="lg:col-span-2 space-y-4">
+        <div className="lg:col-span-2 space-y-4 min-w-0">
           {/* Filters */}
           <div className="flex items-center gap-3 flex-wrap">
             <div className="flex items-center gap-1 border border-border rounded-lg overflow-hidden">
@@ -128,7 +128,7 @@ function AttendanceContent() {
           </div>
 
           {/* Weekly heatmap grid */}
-          <GlassCard className="overflow-hidden">
+          <GlassCard className="overflow-x-auto">
             <div className="p-4 border-b border-border bg-muted/30">
               <div className="grid grid-cols-[1fr_repeat(7,_40px)] gap-2 items-center">
                 <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Trainee</span>

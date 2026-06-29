@@ -170,7 +170,7 @@ export default function UnderstudyPage() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 overflow-y-auto h-screen">
+      <div className="p-6 space-y-6">
 
         {/* Header */}
         <div>
@@ -202,7 +202,7 @@ export default function UnderstudyPage() {
         </div>
 
         {/* Success Metrics */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: "Pairing Success Rate", value: "82%", icon: <Award className="w-4 h-4 text-emerald-600" />, color: "text-emerald-600" },
             { label: "Avg Learning Improvement", value: "+24%", icon: <TrendingUp className="w-4 h-4 text-primary" />, color: "text-primary" },

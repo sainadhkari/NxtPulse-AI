@@ -76,7 +76,7 @@ export default function POCDashboard() {
   return (
     <ProtectedRoute allowedRoles={["poc", "manager"]}>
       <Layout>
-        <div className="p-6 space-y-6 overflow-y-auto h-screen">
+        <div className="p-6 space-y-6">
           <DashboardContent />
         </div>
       </Layout>

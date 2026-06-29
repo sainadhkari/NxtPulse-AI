@@ -442,7 +442,7 @@ export default function LearnGuardChat() {
 
   return (
     <Layout>
-      <div className="h-screen flex flex-col overflow-hidden">
+      <div className="h-full flex flex-col overflow-hidden">
 
         {/* Header */}
         <div className="px-5 py-3 border-b border-border bg-card flex items-center justify-between flex-wrap gap-3">

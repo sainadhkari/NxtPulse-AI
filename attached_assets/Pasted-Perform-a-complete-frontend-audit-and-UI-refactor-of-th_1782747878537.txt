@@ -1,0 +1,274 @@
+Perform a complete frontend audit and UI refactor of the entire NxtPulse AI application.
+
+IMPORTANT:
+Audit ALL modules and ALL frontend files.
+
+Modules:
+1. Manager
+2. POC
+3. SDI
+
+This is NOT a small bug fix.
+This is a full frontend architecture audit and UI/UX refactor.
+
+--------------------------------------------------
+PROJECT-WIDE AUDIT REQUIRED
+--------------------------------------------------
+
+Inspect ALL frontend files including:
+
+- all pages
+- all components
+- layouts
+- routes
+- shared UI components
+- CSS files
+- Tailwind config
+- global styles
+- utility files
+- dashboard wrappers
+- sidebar components
+- navbar/header components
+
+Check entire frontend for:
+
+1. UI bugs
+2. Layout issues
+3. Responsiveness issues
+4. Overflow issues
+5. Nested scrolling issues
+6. Broken grids
+7. Broken flex layouts
+8. Height/width issues
+9. CSS conflicts
+10. Performance issues
+
+--------------------------------------------------
+MAIN ISSUES TO FIX
+--------------------------------------------------
+
+Fix all layout and UI problems across Manager, POC, and SDI dashboards.
+
+Known issues include:
+
+1. Huge blank white spaces
+Some pages show large empty white sections.
+Dashboard should properly occupy full viewport.
+
+2. Nested scrolling problems
+Current app has multiple scroll containers:
+- sidebar scroll
+- page scroll
+- card scroll
+
+This creates bad UX.
+
+Fix:
+- sidebar stable
+- main content scroll properly
+- avoid unnecessary inner scrollbars
+
+3. Broken responsiveness
+Layouts break on different screen sizes.
+
+4. Cards overflow or resize badly
+Check:
+- KPI cards
+- charts
+- tasks
+- alerts
+- AI widgets
+- tables
+- calendar pages
+
+5. Improper viewport usage
+Some dashboards do not use full screen properly.
+
+6. Overflow bugs
+Some pages overflow horizontally or vertically.
+
+--------------------------------------------------
+MODULES TO CHECK
+--------------------------------------------------
+
+Audit every page in:
+
+MANAGER:
+- Dashboard
+- Cohorts
+- Interventions
+- Insights
+- Wellness
+- AI widgets
+
+POC:
+- Dashboard
+- Attendance
+- Standups
+- Sync-ups
+- Tasks
+- Alerts
+- Calendar views
+
+SDI:
+- Dashboard
+- Attendance
+- CCBP Progress
+- Tech OS
+- Demo Performance
+- LearnGuard AI
+- Understudy AI
+- Instructor Readiness
+- Alerts
+- AI Coach
+
+--------------------------------------------------
+TECHNICAL ROOT CAUSE ANALYSIS
+--------------------------------------------------
+
+Inspect codebase for root causes.
+
+Check for:
+
+1. Fixed heights causing layout issues
+Examples:
+- h-screen
+- h-full
+- max-h-screen
+- min-h-screen
+
+2. Bad width constraints
+Examples:
+- fixed widths
+- max-width issues
+- w-full misuse
+
+3. Broken grid systems
+Check:
+- grid-cols
+- col-span
+- flex-wrap
+- breakpoints
+
+4. Parent-child height mismatch
+
+Example:
+Parent = h-screen
+Child = min-h-full
+
+5. Overflow misuse
+Check:
+- overflow-hidden
+- overflow-scroll
+- overflow-auto
+
+6. Tailwind misuse
+Check all responsive classes.
+
+--------------------------------------------------
+RESPONSIVE REQUIREMENTS
+--------------------------------------------------
+
+Make entire application responsive for:
+
+- 1366x768
+- 1440x900
+- 1536x864
+- 1920x1080
+- tablet
+- small laptop screens
+
+Rules:
+- No horizontal scroll
+- No broken cards
+- No overlapping UI
+- No clipped content
+- No strange whitespace
+- Proper spacing everywhere
+
+--------------------------------------------------
+LAYOUT ARCHITECTURE REFACTOR
+--------------------------------------------------
+
+Refactor app layout architecture if necessary.
+
+Recommended structure:
+
+Root:
+- min-h-screen
+- flex
+
+Sidebar:
+- fixed width
+- stable
+- no weird scroll
+
+Main content:
+- flex-1
+- proper overflow handling
+- single main scroll container
+
+Content wrapper:
+- responsive padding
+- full width
+- no unnecessary height restrictions
+
+Avoid:
+- nested scrolling
+- multiple overflow containers
+- fixed heights unless necessary
+
+--------------------------------------------------
+UI CONSISTENCY AUDIT
+--------------------------------------------------
+
+Check consistency across entire app.
+
+Ensure:
+- equal spacing
+- consistent padding
+- consistent card radius
+- consistent shadows
+- consistent typography
+- consistent alignment
+
+Fix:
+- misaligned cards
+- uneven spacing
+- inconsistent heights
+
+--------------------------------------------------
+DESIGN REQUIREMENTS
+--------------------------------------------------
+
+Maintain NxtPulse design system:
+
+- Blue-white AI theme
+- Premium SaaS UI
+- Rounded cards
+- Soft shadows
+- Clean typography
+- Modern analytics dashboard feel
+
+Improve:
+- spacing consistency
+- layout balance
+- visual hierarchy
+- alignment
+
+--------------------------------------------------
+FINAL DELIVERABLE REQUIRED
+--------------------------------------------------
+
+After audit, provide complete report:
+
+1. All issues found
+2. Root causes
+3. Files checked
+4. Files modified
+5. Fixes implemented
+6. Remaining recommendations
+
+Do not only patch small bugs.
+
+Perform a complete professional frontend audit and refactor of the whole NxtPulse application.

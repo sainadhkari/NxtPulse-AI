@@ -60,7 +60,7 @@ export default function POCCohortsPage() {
   if (isLoading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
       </Layout>
@@ -71,7 +71,7 @@ export default function POCCohortsPage() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 overflow-y-auto h-screen">
+      <div className="p-6 space-y-6">
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

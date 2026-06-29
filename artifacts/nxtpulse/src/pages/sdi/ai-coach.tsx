@@ -120,7 +120,7 @@ export default function SDIAICoachPage() {
 
   return (
     <Layout>
-      <div className="flex flex-col h-screen">
+      <div className="flex flex-col h-full">
 
         {/* Header */}
         <div className="flex items-center gap-3 px-6 py-4 border-b border-border bg-sidebar shrink-0">

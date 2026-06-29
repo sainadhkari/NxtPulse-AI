@@ -1,2 +1,3 @@
 - [Auth implementation](auth-implementation.md) — real DB-backed auth with bcryptjs; users seeded from demo list on every server start
 - [bcrypt vs bcryptjs](bcryptjs-note.md) — use bcryptjs not bcrypt; native bcrypt build scripts are blocked by pnpm security policy in this workspace
+- [Layout scroll architecture](layout-scroll-architecture.md) — single scroll container in <main>; pages must not add h-screen or overflow-y-auto; chat pages use h-full not h-screen

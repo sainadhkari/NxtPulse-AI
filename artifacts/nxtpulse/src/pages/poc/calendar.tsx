@@ -120,7 +120,7 @@ function RightPanel({ selectedDate }: { selectedDate: Date }) {
   const missed = EVENTS.filter((e) => e.status === "missed");
 
   return (
-    <div className="w-72 shrink-0 space-y-4 overflow-y-auto">
+    <div className="space-y-4">
       {/* Legend */}
       <GlassCard className="p-4">
         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-3">Event Types</div>
@@ -389,7 +389,7 @@ export default function POCCalendarPage() {
 
   return (
     <Layout>
-      <div className="p-6 overflow-y-auto h-screen">
+      <div className="p-6">
 
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
@@ -443,14 +443,18 @@ export default function POCCalendarPage() {
         </div>
 
         {/* Main grid */}
-        <div className="flex gap-4 items-start">
+        <div className="flex flex-col xl:flex-row gap-4 items-start">
           {/* Calendar view */}
-          {viewMode === "daily" && <DailyView date={currentDate} onAddEvent={() => setShowAddModal(true)} />}
-          {viewMode === "weekly" && <WeeklyView weekDates={weekDates} onAddEvent={() => setShowAddModal(true)} />}
-          {viewMode === "monthly" && <MonthlyView year={currentDate.getFullYear()} month={currentDate.getMonth()} onAddEvent={() => setShowAddModal(true)} />}
+          <div className="flex-1 min-w-0 overflow-x-auto">
+            {viewMode === "daily" && <DailyView date={currentDate} onAddEvent={() => setShowAddModal(true)} />}
+            {viewMode === "weekly" && <WeeklyView weekDates={weekDates} onAddEvent={() => setShowAddModal(true)} />}
+            {viewMode === "monthly" && <MonthlyView year={currentDate.getFullYear()} month={currentDate.getMonth()} onAddEvent={() => setShowAddModal(true)} />}
+          </div>
 
           {/* Right panel */}
-          <RightPanel selectedDate={currentDate} />
+          <div className="w-full xl:w-72 shrink-0">
+            <RightPanel selectedDate={currentDate} />
+          </div>
         </div>
 
         {/* Add Event Modal */}

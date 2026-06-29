@@ -83,7 +83,7 @@ export default function StandupsPage() {
   return (
     <ProtectedRoute allowedRoles={["poc", "manager"]}>
       <Layout>
-        <div className="p-6 space-y-6 overflow-y-auto h-screen">
+        <div className="p-6 space-y-6">
           <div>
             <div className="flex items-center gap-2 mb-0.5">
               <MessageSquare className="w-5 h-5 text-primary" />

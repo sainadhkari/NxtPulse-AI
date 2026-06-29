@@ -46,7 +46,7 @@ export default function SDITechOSPage() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 overflow-y-auto h-screen">
+      <div className="p-6 space-y-6">
 
         <div className="flex items-center justify-between flex-wrap gap-3">
           <div>
@@ -59,7 +59,7 @@ export default function SDITechOSPage() {
         </div>
 
         {/* Summary strip */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[
             { label: "Tech OS Score", value: `${TECH_OS_OVERALL}%`, color: "text-primary", bg: "bg-primary/5", border: "border-primary/20" },
             { label: "Skills Mastered", value: `${mastered}/${SKILLS.length}`, color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200" },

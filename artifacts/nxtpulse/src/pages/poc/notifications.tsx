@@ -229,7 +229,7 @@ export default function POCNotificationsPage() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 overflow-y-auto h-screen">
+      <div className="p-6 space-y-6">
 
         {/* Header */}
         <div className="flex items-center justify-between flex-wrap gap-3">

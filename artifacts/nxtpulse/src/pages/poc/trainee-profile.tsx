@@ -137,7 +137,7 @@ export default function POCTraineeProfile() {
   if (isLoading) {
     return (
       <Layout>
-        <div className="flex items-center justify-center h-screen">
+        <div className="flex items-center justify-center min-h-[60vh]">
           <Loader2 className="w-8 h-8 animate-spin text-primary" />
         </div>
       </Layout>
@@ -147,7 +147,7 @@ export default function POCTraineeProfile() {
   if (!trainee) {
     return (
       <Layout>
-        <div className="flex flex-col items-center justify-center h-screen gap-4">
+        <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
           <p className="text-sm text-muted-foreground">Trainee not found.</p>
           <Link href="/poc/my-trainees" className="text-primary text-sm hover:underline">Back to My Trainees</Link>
         </div>
@@ -168,7 +168,7 @@ export default function POCTraineeProfile() {
 
   return (
     <Layout>
-      <div className="p-6 space-y-6 overflow-y-auto h-screen">
+      <div className="p-6 space-y-6">
 
         {/* Back nav */}
         <div className="flex items-center justify-between flex-wrap gap-3">
