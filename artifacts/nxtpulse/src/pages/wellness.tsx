@@ -188,17 +188,17 @@ function WellnessContent() {
               value={metrics.stress_score}
               trendPct={8}
               trendPositive={false}
-              statusLabel={metrics.stress_level === "low" ? "Low" : metrics.stress_level === "moderate" ? "Moderate" : "High"}
+              statusLabel={metrics.stress_level === "low" ? "Low" : metrics.stress_level === "medium" ? "Moderate" : "High"}
               statusColor={
                 metrics.stress_level === "low"
                   ? "border-emerald-300 text-emerald-700 bg-emerald-50"
-                  : metrics.stress_level === "moderate"
+                  : metrics.stress_level === "medium"
                   ? "border-amber-300 text-amber-700 bg-amber-50"
                   : "border-red-300 text-red-700 bg-red-50"
               }
               borderClass={
                 metrics.stress_level === "low" ? "border-l-emerald-500"
-                  : metrics.stress_level === "moderate" ? "border-l-amber-500"
+                  : metrics.stress_level === "medium" ? "border-l-amber-500"
                   : "border-l-red-500"
               }
             />
@@ -208,17 +208,17 @@ function WellnessContent() {
               value={metrics.burnout_score}
               trendPct={5}
               trendPositive={false}
-              statusLabel={metrics.burnout_risk === "low" ? "Low" : metrics.burnout_risk === "moderate" ? "Moderate" : "High"}
+              statusLabel={metrics.burnout_risk === "low" ? "Low" : metrics.burnout_risk === "medium" ? "Moderate" : "High"}
               statusColor={
                 metrics.burnout_risk === "low"
                   ? "border-emerald-300 text-emerald-700 bg-emerald-50"
-                  : metrics.burnout_risk === "moderate"
+                  : metrics.burnout_risk === "medium"
                   ? "border-amber-300 text-amber-700 bg-amber-50"
                   : "border-red-300 text-red-700 bg-red-50"
               }
               borderClass={
                 metrics.burnout_risk === "low" ? "border-l-emerald-500"
-                  : metrics.burnout_risk === "moderate" ? "border-l-amber-500"
+                  : metrics.burnout_risk === "medium" ? "border-l-amber-500"
                   : "border-l-red-500"
               }
             />

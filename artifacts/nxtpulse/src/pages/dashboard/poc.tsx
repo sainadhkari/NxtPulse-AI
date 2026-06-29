@@ -10,6 +10,9 @@ import {
   useGetOutreachSuggestions,
   useGetUnderstudySimulation,
 } from "@workspace/api-client-react";
+import type { TelemetryRow } from "@workspace/api-client-react";
+
+type ExtTelemetryRow = TelemetryRow & { cohort?: string; attendance?: number; ai_dependency?: number };
 import {
   AlertCircle, Clock, CheckCircle2, Users,
   CalendarCheck, MessageSquare, ShieldAlert, Eye,

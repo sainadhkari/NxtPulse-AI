@@ -14,6 +14,10 @@ import {
   useGetCohortStats,
   useGetRecommendedActions,
 } from "@workspace/api-client-react";
+import type { TelemetryRow, RecommendedAction } from "@workspace/api-client-react";
+
+type ExtTelemetryRow = TelemetryRow & { cohort?: string; attendance?: number; ai_dependency?: number };
+type ExtRecommendedAction = RecommendedAction & { description?: string };
 import {
   AlertCircle, Activity, BrainCircuit, Users,
   TrendingUp, TrendingDown, ShieldAlert, Bot,

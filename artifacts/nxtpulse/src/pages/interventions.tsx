@@ -19,6 +19,8 @@ import {
 } from "@workspace/api-client-react";
 import type { Intervention } from "@workspace/api-client-react";
 
+type ExtIntervention = Intervention & { assigned_to?: string; due_date?: string };
+
 const TRAINEE_OPTIONS = [
   { id: "t1", name: "Rahul Verma" },
   { id: "t2", name: "Sai Krishna" },

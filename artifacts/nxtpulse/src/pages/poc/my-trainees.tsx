@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { useGetTelemetry } from "@workspace/api-client-react";
+import type { TelemetryRow } from "@workspace/api-client-react";
+
+type ExtTelemetryRow = TelemetryRow & { cohort?: string; attendance?: number; ai_dependency?: number };
 import {
   Search, Filter, Eye, ShieldAlert, Video,
   TrendingUp, TrendingDown, UserCheck, Users,
