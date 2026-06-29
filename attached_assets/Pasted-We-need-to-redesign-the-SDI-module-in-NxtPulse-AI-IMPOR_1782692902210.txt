@@ -1,0 +1,422 @@
+We need to redesign the SDI module in NxtPulse AI.
+
+IMPORTANT:
+Do NOT modify Manager module.
+Do NOT modify POC module.
+Only redesign SDI module.
+
+SDI = Software Development Instructor.
+
+SDI is NOT a manager and NOT a POC.
+
+SDI responsibilities include:
+- attending standups
+- maintaining attendance
+- completing CCBP curriculum
+- mastering Tech OS workflows
+- giving demos
+- improving technical knowledge
+- improving communication
+- reducing AI dependency
+- becoming instructor-ready
+
+Design philosophy:
+
+Manager = Strategic + Analytics  
+POC = Operational + Execution  
+SDI = Technical Growth + Demo + Instructor Readiness  
+
+The SDI dashboard should feel like a premium AI-powered technical growth platform.
+
+Goal:
+Help SDIs improve performance and become instructor-ready.
+
+SDI lifecycle:
+
+Attendance → CCBP Progress → Tech OS Mastery → Demo Performance → AI Evaluation → Instructor Readiness
+
+--------------------------------------------------
+REMOVE MANAGER/POC FEATURES FROM SDI
+--------------------------------------------------
+
+Remove manager/POC-focused pages from SDI module:
+- Cohorts
+- Interventions
+- Insights
+- Wellness
+- Manager Analytics
+
+These are not relevant for SDI.
+
+Keep SDI dashboard fully personal and growth-focused.
+
+--------------------------------------------------
+SDI SIDEBAR STRUCTURE
+--------------------------------------------------
+
+Create SDI sidebar with:
+
+1. Dashboard
+2. Attendance
+3. CCBP Progress
+4. Tech OS
+5. Demo Performance
+6. LearnGuard AI
+7. Understudy AI
+8. Instructor Readiness
+9. Alerts
+10. AI Coach
+
+Optional future pages:
+- Profile
+- Achievements
+- Notes
+
+--------------------------------------------------
+DESIGN REQUIREMENTS
+--------------------------------------------------
+
+Use modern premium SaaS dashboard design.
+
+Theme:
+- Blue-white AI theme
+- Clean futuristic UI
+- Light theme
+- Rounded cards
+- Soft shadows
+- Spacious layout
+- Premium analytics dashboard feel
+
+Use existing NxtPulse design system:
+- same typography
+- same spacing
+- same card styling
+- same sidebar design
+
+Primary color:
+#2563eb
+
+Keep everything responsive and visually premium.
+
+--------------------------------------------------
+PAGE 1 — DASHBOARD
+--------------------------------------------------
+
+Purpose:
+Main SDI command center.
+
+Top KPI cards:
+- Attendance %
+- CCBP Progress
+- Tech OS Progress
+- Demo Score
+- Instructor Readiness
+
+Main sections:
+
+1. Today’s Tasks
+Examples:
+- Complete React Hooks module
+- Prepare for demo
+- Practice without AI for 30 mins
+
+2. Upcoming Demos
+Show upcoming demo schedule.
+
+3. Pending Modules
+Show incomplete modules.
+
+4. AI Recommendations
+Examples:
+- Revise Closures
+- Improve communication
+- Reduce AI dependency
+
+5. Daily AI Brief
+Example:
+Today’s Focus:
+- Complete Node module
+- Demo tomorrow
+- Practice communication
+
+6. Learning Streak
+Example:
+15 Day Learning Streak 🔥
+
+7. Achievement Badges
+Examples:
+- Perfect Attendance
+- Demo Topper
+- Fast Learner
+- AI Independent
+
+--------------------------------------------------
+PAGE 2 — ATTENDANCE
+--------------------------------------------------
+
+Create Darwinbox-inspired attendance page.
+
+Track:
+- Present
+- Absent
+- Leave
+- Late login
+- Missed standups
+
+Top cards:
+- Present Days
+- Absent Days
+- Leave Count
+- Attendance %
+
+Widgets:
+- Monthly attendance calendar
+- Attendance trend chart
+- Attendance history
+
+AI Insights:
+- Attendance improving
+- Attendance risk
+- Attendance affecting demo performance
+
+Example:
+Attendance dropped by 8%.
+Demo performance may be affected.
+
+--------------------------------------------------
+PAGE 3 — CCBP PROGRESS
+--------------------------------------------------
+
+Track SDI progress in CCBP curriculum.
+
+Show:
+- Total modules
+- Completed modules
+- Pending modules
+- Weekly progress
+- Completion %
+
+Track subject progress:
+- HTML/CSS
+- JavaScript
+- React
+- Node
+- SQL
+- DSA
+- Python
+
+Widgets:
+- Current module
+- Next module
+- Weak modules
+- Learning timeline
+- Learning streak
+
+AI should:
+- Recommend next module
+- Detect weak areas
+- Suggest revision plan
+
+--------------------------------------------------
+PAGE 4 — TECH OS
+--------------------------------------------------
+
+Track Tech OS mastery.
+
+Skills:
+- Standups
+- Session preparation
+- Communication
+- Reporting
+- Internal workflows
+- Demo handling
+
+Show:
+- Tech OS Completion %
+- Skills mastered
+- Pending skills
+- Practice score
+
+AI Insights:
+- Communication quality
+- Technical explanation ability
+- Teaching readiness
+
+--------------------------------------------------
+PAGE 5 — DEMO PERFORMANCE
+--------------------------------------------------
+
+Track demo performance.
+
+Show:
+- Demo history
+- Demo scores
+- Pass %
+- Improvement trend
+
+Evaluate:
+- Technical understanding
+- Communication
+- Confidence
+- Problem solving
+- AI dependency
+
+AI Feedback:
+- Strengths
+- Weaknesses
+- Improvement recommendations
+
+--------------------------------------------------
+PAGE 6 — LEARNGUARD AI
+--------------------------------------------------
+
+AI learning evaluation engine.
+
+Track:
+- Topic mastery
+- Knowledge gaps
+- Confidence score
+- AI dependency
+- Concept understanding
+
+Examples:
+React Hooks → 78%
+Closures → 52%
+Node APIs → 61%
+
+AI Recommendations:
+- Practice weak topics
+- Reduce AI dependency
+- Improve conceptual clarity
+
+--------------------------------------------------
+PAGE 7 — UNDERSTUDY AI
+--------------------------------------------------
+
+Convert this page into AI Practice Lab.
+
+Features:
+- Mock interviewer
+- Demo simulator
+- Question generator
+- Coding practice
+- Viva practice
+- AI mentor
+
+Purpose:
+Help SDI practice before demos and improve technical delivery.
+
+--------------------------------------------------
+PAGE 8 — INSTRUCTOR READINESS
+--------------------------------------------------
+
+Core evaluation page.
+
+Track:
+- Technical mastery
+- Communication
+- Demo performance
+- Confidence
+- AI independence
+- Teaching readiness
+
+Final score:
+Instructor Readiness %
+
+Status:
+- Needs Improvement
+- Almost Ready
+- Ready
+
+Example:
+Instructor Readiness = 82%
+
+AI prediction:
+Estimate readiness timeline.
+
+Example:
+Likely instructor-ready in 2 weeks.
+
+--------------------------------------------------
+PAGE 9 — ALERTS
+--------------------------------------------------
+
+Personal alerts only.
+
+Examples:
+- Demo scheduled tomorrow
+- Attendance dropped
+- CCBP deadline missed
+- AI dependency increased
+- Tech OS pending
+
+Add sections:
+- Critical
+- Warning
+- Resolved
+
+--------------------------------------------------
+PAGE 10 — AI COACH
+--------------------------------------------------
+
+Create NxtPulse GPT assistant for SDI.
+
+Welcome text:
+Hi! I’m NxtPulse AI Coach.
+
+I help you:
+- improve technical skills
+- prepare for demos
+- reduce AI dependency
+- improve communication
+- become instructor-ready
+
+Quick prompts:
+- What should I focus on today?
+- What are my weak areas?
+- How can I improve demo score?
+- Am I instructor ready?
+- Build revision plan
+
+Features:
+- Generate daily plan
+- Build revision roadmap
+- Summarize performance
+
+--------------------------------------------------
+EXTRA FEATURES
+--------------------------------------------------
+
+Add these globally across SDI module:
+
+1. Weekly Progress Report
+Show:
+- Learning growth
+- Demo growth
+- Attendance trend
+
+2. AI Dependency Tracker
+Track:
+- AI usage %
+- AI reliance trend
+- Independence score
+
+3. Smart Alerts
+Examples:
+- Learning pace slowed
+- Demo score dropped
+- AI dependency increased
+
+4. Achievement System
+Examples:
+- Perfect Attendance
+- Demo Topper
+- Consistent Performer
+- Fast Learner
+
+--------------------------------------------------
+
+Final Goal:
+Build a premium AI-powered SDI Success Platform inside NxtPulse AI.
+
+This should feel like a production-level technical growth dashboard built specifically for Software Development Instructors.

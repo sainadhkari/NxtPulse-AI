@@ -15,6 +15,15 @@ import InterventionsPage from "@/pages/interventions";
 import CohortsPage from "@/pages/cohorts";
 import TraineeProfile from "@/pages/trainee-profile";
 import UnderstudyPage from "@/pages/understudy";
+import SDIAttendancePage from "@/pages/sdi/attendance";
+import SDICCBPPage from "@/pages/sdi/ccbp";
+import SDITechOSPage from "@/pages/sdi/tech-os";
+import SDIDemoPerformancePage from "@/pages/sdi/demo-performance";
+import SDILearnGuardPage from "@/pages/sdi/learnguard";
+import SDIUnderstudyPage from "@/pages/sdi/understudy";
+import SDIInstructorReadinessPage from "@/pages/sdi/instructor-readiness";
+import SDIAlertsPage from "@/pages/sdi/alerts";
+import SDIAICoachPage from "@/pages/sdi/ai-coach";
 import MyTraineesPage from "@/pages/poc/my-trainees";
 import AttendancePage from "@/pages/poc/attendance";
 import StandupsPage from "@/pages/poc/standups";
@@ -44,6 +53,15 @@ function Router() {
       <Route path="/cohorts" component={CohortsPage} />
       <Route path="/trainee/:id" component={TraineeProfile} />
       <Route path="/understudy" component={UnderstudyPage} />
+      <Route path="/sdi/attendance" component={SDIAttendancePage} />
+      <Route path="/sdi/ccbp" component={SDICCBPPage} />
+      <Route path="/sdi/tech-os" component={SDITechOSPage} />
+      <Route path="/sdi/demo-performance" component={SDIDemoPerformancePage} />
+      <Route path="/sdi/learnguard" component={SDILearnGuardPage} />
+      <Route path="/sdi/understudy" component={SDIUnderstudyPage} />
+      <Route path="/sdi/instructor-readiness" component={SDIInstructorReadinessPage} />
+      <Route path="/sdi/alerts" component={SDIAlertsPage} />
+      <Route path="/sdi/ai-coach" component={SDIAICoachPage} />
       <Route path="/poc/my-trainees" component={MyTraineesPage} />
       <Route path="/poc/attendance" component={AttendancePage} />
       <Route path="/poc/standups" component={StandupsPage} />

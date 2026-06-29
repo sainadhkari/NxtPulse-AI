@@ -14,6 +14,11 @@ import {
   ShieldAlert,
   UserCheck,
   Users,
+  Target,
+  BookOpen,
+  Award,
+  AlertCircle,
+  Zap,
 } from "lucide-react";
 import { getAuthRole, clearAuth } from "@/lib/auth";
 import { NotificationBell } from "@/components/notification-bell";
@@ -104,9 +109,19 @@ function POCNav({ location, dashboardLink }: { location: string; dashboardLink: 
 function SDINav({ location, dashboardLink }: { location: string; dashboardLink: string }) {
   return (
     <>
-      <NavLink href={dashboardLink} icon={<LayoutDashboard className="w-4 h-4" />} label="Dashboard" currentPath={location} matchPrefix />
-      <NavLink href="/learnguard" icon={<Brain className="w-4 h-4" />} label="LearnGuard AI" currentPath={location} />
-      <NavLink href="/understudy" icon={<Bot className="w-4 h-4" />} label="Understudy AI" currentPath={location} />
+      <NavLink href={dashboardLink} icon={<LayoutDashboard className="w-4 h-4" />} label="Dashboard" currentPath={location} />
+      <NavSection label="My Growth" />
+      <NavLink href="/sdi/attendance" icon={<CalendarCheck className="w-4 h-4" />} label="Attendance" currentPath={location} />
+      <NavLink href="/sdi/ccbp" icon={<BookOpen className="w-4 h-4" />} label="CCBP Progress" currentPath={location} />
+      <NavLink href="/sdi/tech-os" icon={<BarChart3 className="w-4 h-4" />} label="Tech OS" currentPath={location} />
+      <NavLink href="/sdi/demo-performance" icon={<Target className="w-4 h-4" />} label="Demo Performance" currentPath={location} />
+      <NavSection label="AI Tools" />
+      <NavLink href="/sdi/learnguard" icon={<Brain className="w-4 h-4" />} label="LearnGuard AI" currentPath={location} />
+      <NavLink href="/sdi/understudy" icon={<Bot className="w-4 h-4" />} label="Understudy AI" currentPath={location} />
+      <NavSection label="Evaluation" />
+      <NavLink href="/sdi/instructor-readiness" icon={<Award className="w-4 h-4" />} label="Instructor Readiness" currentPath={location} />
+      <NavLink href="/sdi/alerts" icon={<AlertCircle className="w-4 h-4" />} label="Alerts" currentPath={location} />
+      <NavLink href="/sdi/ai-coach" icon={<Zap className="w-4 h-4" />} label="AI Coach" currentPath={location} />
     </>
   );
 }
