@@ -17,4 +17,6 @@ export interface Intervention {
   recommendation: string;
   issue: string;
   created_at: string;
+  assigned_to?: string | null;
+  due_date?: string | null;
 }

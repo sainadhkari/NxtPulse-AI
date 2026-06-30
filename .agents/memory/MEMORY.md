@@ -1,3 +1,6 @@
 - [Auth implementation](auth-implementation.md) — real DB-backed auth with bcryptjs; users seeded from demo list on every server start
 - [bcrypt vs bcryptjs](bcryptjs-note.md) — use bcryptjs not bcrypt; native bcrypt build scripts are blocked by pnpm security policy in this workspace
 - [Layout scroll architecture](layout-scroll-architecture.md) — single scroll container in <main>; pages must not add h-screen or overflow-y-auto; chat pages use h-full not h-screen
+- [Lib package build requirement](lib-build-requirement.md) — api-client-react, api-zod, db must be built (tsc -p tsconfig.json) before frontend tsc; no build = cascading TS6305 errors
+- [Generated type sync rule](generated-type-sync.md) — any type change must be applied to BOTH lib/api-client-react/src/generated/ AND lib/api-zod/src/generated/types/; they mirror each other
+- [API auth credentials](auth-credentials.md) — demo logins are manager@nxtpulse.ai/manager123, poc@nxtpulse.ai/poc123, sdi@nxtpulse.ai/sdi123; health endpoint is /api/healthz not /api/health

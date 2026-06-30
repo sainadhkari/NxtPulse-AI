@@ -11,8 +11,11 @@ export interface TelemetryRow {
   trainee_id: string;
   trainee_name: string;
   track: string;
+  cohort: string;
   learning_score: number;
   demo_score: number;
+  attendance: number;
+  ai_dependency: number;
   risk_level: TelemetryRowRiskLevel;
   status: string;
 }

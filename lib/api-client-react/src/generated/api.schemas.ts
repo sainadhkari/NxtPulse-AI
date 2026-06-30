@@ -127,8 +127,11 @@ export interface TelemetryRow {
   trainee_id: string;
   trainee_name: string;
   track: string;
+  cohort: string;
   learning_score: number;
   demo_score: number;
+  attendance: number;
+  ai_dependency: number;
   risk_level: TelemetryRowRiskLevel;
   status: string;
 }
@@ -184,6 +187,8 @@ export interface Intervention {
   recommendation: string;
   issue: string;
   created_at: string;
+  assigned_to?: string | null;
+  due_date?: string | null;
 }
 
 export interface LearnGuardEvaluateRequest {
@@ -248,6 +253,7 @@ export interface UnderstudySimulation {
   assigned_trainees: number;
   resolved_today: number;
   drafts_ready: number;
+  active_pairings: number;
   simulated_at: string;
 }
 
@@ -379,6 +385,7 @@ export interface RecommendedAction {
   action: string;
   affected_count: number;
   category: string;
+  description?: string;
 }
 
 export type GetTraineesParams = {
@@ -405,6 +412,7 @@ export type GetInterventionsStatus = typeof GetInterventionsStatus[keyof typeof 
 
 export const GetInterventionsStatus = {
   pending: 'pending',
+  acknowledged: 'acknowledged',
   resolved: 'resolved',
   dismissed: 'dismissed',
 } as const;

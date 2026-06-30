@@ -298,9 +298,9 @@ export default function InterventionsPage() {
   const [showCreate, setShowCreate] = useState(false);
   const [actingId, setActingId] = useState<string | null>(null);
 
-  const { data: interventions = [], isLoading } = useGetInterventions(
-    activeTab !== "all" ? { status: activeTab } : undefined
-  );
+  // Always fetch all interventions so tab counts are always correct.
+  // Client-side filtering handles the active tab's display.
+  const { data: interventions = [], isLoading } = useGetInterventions();
 
   const ack = useAcknowledgeIntervention({
     mutation: {
@@ -324,13 +324,16 @@ export default function InterventionsPage() {
     },
   });
 
-  const allData = interventions;
   const counts = {
-    pending: allData.filter((i) => i.status === "pending").length,
-    acknowledged: allData.filter((i) => i.status === "acknowledged").length,
-    resolved: allData.filter((i) => i.status === "resolved").length,
-    dismissed: allData.filter((i) => i.status === "dismissed").length,
+    pending: interventions.filter((i) => i.status === "pending").length,
+    acknowledged: interventions.filter((i) => i.status === "acknowledged").length,
+    resolved: interventions.filter((i) => i.status === "resolved").length,
+    dismissed: interventions.filter((i) => i.status === "dismissed").length,
   };
+
+  const displayedInterventions = activeTab === "all"
+    ? interventions
+    : interventions.filter((i) => i.status === activeTab);
 
   return (
     <Layout>
@@ -371,7 +374,7 @@ export default function InterventionsPage() {
         <div className="flex items-center gap-1 flex-wrap border-b border-border pb-0">
           <Filter className="w-3.5 h-3.5 text-muted-foreground/60 mr-2" />
           {STATUS_TABS.map((tab) => {
-            const count = tab === "all" ? interventions.length : counts[tab as keyof typeof counts];
+            const count = tab === "all" ? interventions.length : counts[tab as keyof typeof counts] ?? 0;
             return (
               <button
                 key={tab}
@@ -399,7 +402,7 @@ export default function InterventionsPage() {
           <div className="space-y-4">
             {Array(3).fill(0).map((_, i) => <div key={i} className="h-36 rounded-xl bg-muted animate-pulse" />)}
           </div>
-        ) : interventions.length === 0 ? (
+        ) : displayedInterventions.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-muted-foreground">
             <Archive className="w-12 h-12 mb-4 opacity-30" />
             <p className="text-sm font-medium">No interventions in this category</p>
@@ -409,7 +412,7 @@ export default function InterventionsPage() {
           </div>
         ) : (
           <div className="space-y-3">
-            {interventions.map((item) => (
+            {displayedInterventions.map((item) => (
               <InterventionCard
                 key={item.id}
                 item={item}

@@ -1,0 +1,141 @@
+---
+
+## ADDITIONAL ENGINEERING AUDIT REQUIREMENTS
+
+This audit should NOT be limited to UI/frontend only.
+
+Perform additional full-stack engineering audit.
+
+---
+
+## FULL CODEBASE SCAN
+
+Before making any changes, first show complete project file tree.
+
+Scan ENTIRE project including:
+
+* frontend
+* backend
+* shared libraries
+* services
+* utilities
+* configs
+
+Check for:
+
+* unused files
+* dead code
+* duplicate files
+* duplicate components
+* duplicate logic
+* unused imports
+* unused dependencies
+* outdated code
+* temporary files
+* old prototype files
+* abandoned files
+* test junk files
+
+Provide report:
+
+* files used
+* files unused
+* removable files
+* duplicate files
+
+Safely remove unnecessary files.
+
+---
+
+## BUILD + RUNTIME ERROR AUDIT
+
+Run project completely and inspect for:
+
+* build errors
+* TypeScript errors
+* runtime errors
+* browser console errors
+* terminal errors
+* warnings
+* hydration issues
+* import errors
+* routing errors
+* state management issues
+
+Fix all errors.
+
+---
+
+## API + ENV TESTING
+
+Use real environment variables and API keys to test application flows.
+
+IMPORTANT:
+Ask me for any missing API keys / environment variables before testing integrations.
+
+Use provided API keys to test real application behavior.
+
+Check:
+
+* API calls
+* backend integrations
+* failed requests
+* loading issues
+* auth issues
+* invalid payloads
+* timeout issues
+* error handling
+
+Test all critical flows for:
+
+* Manager
+* POC
+* SDI
+
+Especially:
+
+* dashboards
+* analytics
+* alerts
+* AI widgets
+* AI Coach
+* data fetching
+
+Fix all broken integrations.
+
+---
+
+## PERFORMANCE AUDIT
+
+Check for:
+
+* unnecessary re-renders
+* heavy components
+* slow rendering
+* excessive API calls
+* bundle size issues
+
+Optimize where needed.
+
+---
+
+## CLEANUP + REFACTOR
+
+Refactor codebase for:
+
+* cleaner architecture
+* reusable components
+* reduced duplication
+* better maintainability
+
+---
+
+## FINAL REPORT ADDITIONS
+
+Final report must also include:
+
+1. All files scanned
+2. Files modified
+3. Files removed
+4. Bugs fixed
+5. Remaining recommendations

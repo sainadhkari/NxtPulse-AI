@@ -13,4 +13,5 @@ export interface RecommendedAction {
   action: string;
   affected_count: number;
   category: string;
+  description?: string;
 }

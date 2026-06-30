@@ -79,8 +79,11 @@ router.get("/trainees/telemetry", (_req, res) => {
       trainee_id: t.id,
       trainee_name: t.name,
       track: t.track,
+      cohort: t.cohort,
       learning_score: t.learning_score,
       demo_score: t.demo_score,
+      attendance: t.attendance,
+      ai_dependency: t.ai_dependency,
       risk_level: t.risk_level,
       status: t.status,
     }))

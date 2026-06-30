@@ -236,7 +236,7 @@ export default function UnderstudyPage() {
               {tab.key === "pairings" ? "🔗" : "📣"} {tab.label}
               {tab.count && (
                 <span className={`text-xs px-1.5 py-0.5 rounded-full font-semibold ${
-                  tab.urgent ? "bg-red-50 text-red-600" : "bg-primary/10 text-primary"
+                  ('urgent' in tab && tab.urgent) ? "bg-red-50 text-red-600" : "bg-primary/10 text-primary"
                 }`}>{tab.count}</span>
               )}
             </button>

@@ -9,7 +9,6 @@ import { Input } from "@/components/ui/input";
 import { useGetTelemetry } from "@workspace/api-client-react";
 import type { TelemetryRow } from "@workspace/api-client-react";
 
-type ExtTelemetryRow = TelemetryRow & { cohort?: string; attendance?: number; ai_dependency?: number };
 import {
   Search, Filter, Eye, ShieldAlert, Video,
   TrendingUp, TrendingDown, UserCheck, Users,
@@ -81,7 +80,7 @@ function TraineesContent() {
       let av: number | string = 0, bv: number | string = 0;
       if (sortKey === "risk_level") { av = RISK_ORDER[a.risk_level] ?? 3; bv = RISK_ORDER[b.risk_level] ?? 3; }
       else if (sortKey === "trainee_name") { av = a.trainee_name; bv = b.trainee_name; }
-      else { av = (a as Record<string, unknown>)[sortKey] as number; bv = (b as Record<string, unknown>)[sortKey] as number; }
+      else { av = (a as unknown as Record<string, unknown>)[sortKey] as number; bv = (b as unknown as Record<string, unknown>)[sortKey] as number; }
       if (av < bv) return sortDir === "asc" ? -1 : 1;
       if (av > bv) return sortDir === "asc" ? 1 : -1;
       return 0;

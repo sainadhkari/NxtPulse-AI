@@ -11,6 +11,7 @@ export type GetInterventionsStatus = typeof GetInterventionsStatus[keyof typeof 
 
 export const GetInterventionsStatus = {
   pending: 'pending',
+  acknowledged: 'acknowledged',
   resolved: 'resolved',
   dismissed: 'dismissed',
 } as const;

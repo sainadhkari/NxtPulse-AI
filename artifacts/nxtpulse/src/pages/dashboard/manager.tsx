@@ -16,8 +16,6 @@ import {
 } from "@workspace/api-client-react";
 import type { TelemetryRow, RecommendedAction } from "@workspace/api-client-react";
 
-type ExtTelemetryRow = TelemetryRow & { cohort?: string; attendance?: number; ai_dependency?: number };
-type ExtRecommendedAction = RecommendedAction & { description?: string };
 import {
   AlertCircle, Activity, BrainCircuit, Users,
   TrendingUp, TrendingDown, ShieldAlert, Bot,
@@ -521,7 +519,7 @@ function DashboardContent() {
                         {action.priority?.toUpperCase()}
                       </Badge>
                     </div>
-                    <p className="text-xs text-muted-foreground line-clamp-2">{action.description}</p>
+                    <p className="text-xs text-muted-foreground line-clamp-2">{action.description ?? action.action}</p>
                   </div>
                 </div>
               );

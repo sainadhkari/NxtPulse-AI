@@ -15,5 +15,6 @@ export interface UnderstudySimulation {
   assigned_trainees: number;
   resolved_today: number;
   drafts_ready: number;
+  active_pairings: number;
   simulated_at: string;
 }

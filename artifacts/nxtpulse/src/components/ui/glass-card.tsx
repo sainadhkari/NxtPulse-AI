@@ -4,18 +4,24 @@ import { cn } from "@/lib/utils";
 export function GlassCard({ 
   className, 
   children,
-  glowing = false
+  glowing = false,
+  onClick,
 }: { 
   className?: string; 
   children: React.ReactNode;
   glowing?: boolean;
+  onClick?: React.MouseEventHandler<HTMLDivElement>;
 }) {
   return (
-    <div className={cn(
-      "bg-card border border-border rounded-xl shadow-xs transition-all duration-200",
-      glowing && "hover:shadow-md hover:border-primary/40",
-      className
-    )}>
+    <div
+      className={cn(
+        "bg-card border border-border rounded-xl shadow-xs transition-all duration-200",
+        glowing && "hover:shadow-md hover:border-primary/40",
+        onClick && "cursor-pointer",
+        className
+      )}
+      onClick={onClick}
+    >
       {children}
     </div>
   );
