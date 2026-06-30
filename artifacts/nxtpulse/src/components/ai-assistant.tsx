@@ -2,7 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import {
   Bot, X, Send, Loader2, Trash2, Sparkles, ChevronDown,
   ShieldAlert, BarChart3, Users, Target, TrendingUp, Zap,
-  ChevronRight, Coffee, CalendarDays, MessageSquare, Activity
+  ChevronRight, Coffee, CalendarDays, MessageSquare, Activity,
+  Brain, BookOpen, Mic, Award
 } from "lucide-react";
 import { getAuthRole } from "@/lib/auth";
 
@@ -156,12 +157,85 @@ const POC_CATEGORIES = [
   },
 ];
 
+// ─── SDI Shortcut Categories ──────────────────────────────────────────────────
+
+const SDI_CATEGORIES = [
+  {
+    label: "CCBP Topics",
+    icon: BookOpen,
+    color: "text-primary",
+    bg: "bg-primary/5 border-primary/20 hover:bg-primary/10",
+    activeBg: "bg-primary text-white border-primary",
+    shortcuts: [
+      "Help me with SQL joins practice",
+      "Explain JavaScript closures",
+      "DSA problem — Binary Search",
+      "What should I study today?",
+    ],
+  },
+  {
+    label: "Demo Prep",
+    icon: Mic,
+    color: "text-amber-600",
+    bg: "bg-amber-50 border-amber-200 hover:bg-amber-100",
+    activeBg: "bg-amber-500 text-white border-amber-500",
+    shortcuts: [
+      "Quiz me on React Hooks",
+      "How do I improve my demo score?",
+      "Mock demo questions for today",
+      "Tips to reduce filler words",
+    ],
+  },
+  {
+    label: "AI Independence",
+    icon: Brain,
+    color: "text-violet-600",
+    bg: "bg-violet-50 border-violet-200 hover:bg-violet-100",
+    activeBg: "bg-violet-600 text-white border-violet-600",
+    shortcuts: [
+      "Give me a no-AI coding challenge",
+      "How can I reduce AI dependency?",
+      "Debug this without AI hints",
+      "Practice problem from scratch",
+    ],
+  },
+  {
+    label: "Readiness",
+    icon: Award,
+    color: "text-emerald-600",
+    bg: "bg-emerald-50 border-emerald-200 hover:bg-emerald-100",
+    activeBg: "bg-emerald-600 text-white border-emerald-600",
+    shortcuts: [
+      "What is my instructor readiness score?",
+      "How to improve communication confidence?",
+      "Rate my standup delivery",
+      "What makes a great teacher?",
+    ],
+  },
+  {
+    label: "Growth Plan",
+    icon: TrendingUp,
+    color: "text-rose-600",
+    bg: "bg-rose-50 border-rose-200 hover:bg-rose-100",
+    activeBg: "bg-rose-600 text-white border-rose-600",
+    shortcuts: [
+      "Build my weekly study plan",
+      "What are my weakest areas?",
+      "How am I trending this week?",
+      "Set goals for this week",
+    ],
+  },
+];
+
 const MANAGER_WELCOME = "Hi! I'm **NxtPulse GPT** — your AI program assistant.\n\nI help you:\n- identify trainee risks\n- analyze cohort performance\n- prioritize interventions\n- recommend actions\n- predict future issues\n\nYou can ask me anything about trainees, cohorts, risks, and performance.";
 
 const POC_WELCOME = "Hi! I'm **NxtPulse GPT for POC**.\n\nI help you with daily operations:\n- monitor trainee attendance\n- track standup participation\n- manage sync-up follow-ups\n- prioritize interventions\n- identify struggling trainees\n\nAsk me anything about your trainees, daily actions, or who needs attention right now.";
 
+const SDI_WELCOME = "Hi Arjun! 👋 I'm your **NxtPulse AI Coach**.\n\nI'm here to help you grow:\n- master CCBP topics & weak areas\n- prepare for demos with mock Q&A\n- reduce AI dependency step by step\n- improve your instructor readiness\n- build personalised study plans\n\nAsk me anything — let's level up together!";
+
 const MANAGER_MORNING_BRIEF = "Generate Morning Brief";
 const POC_MORNING_BRIEF = "Generate Daily Action Plan";
+const SDI_MORNING_BRIEF = "Get My Daily Focus Plan";
 
 // ─── Follow-up suggestions per keyword ───────────────────────────────────────
 
@@ -201,8 +275,28 @@ function deriveFollowUpsPOC(userQuery: string): string[] {
   return ["Who needs attention now?", "Show today's follow-ups", "Any critical alerts?"];
 }
 
+function deriveFollowUpsSDI(userQuery: string): string[] {
+  const q = userQuery.toLowerCase();
+  if (q.includes("sql") || q.includes("join") || q.includes("database"))
+    return ["Give me a practice problem", "Explain with an example", "What should I study next?", "Quiz me on this topic"];
+  if (q.includes("closure") || q.includes("scope") || q.includes("javascript") || q.includes("js"))
+    return ["Give me a coding challenge", "Explain with a real example", "What are common mistakes?", "Quiz me on closures"];
+  if (q.includes("demo") || q.includes("presentation") || q.includes("mock") || q.includes("question"))
+    return ["Give me more mock questions", "How do I structure my answer?", "Tips for confidence?", "Review my weak topics"];
+  if (q.includes("ai dependency") || q.includes("no-ai") || q.includes("challenge") || q.includes("practice"))
+    return ["Give me another challenge", "How am I doing on AI reduction?", "Harder problem please", "Tips to think independently"];
+  if (q.includes("readiness") || q.includes("instructor") || q.includes("communication") || q.includes("standup"))
+    return ["How to improve my standup?", "Practice delivery with me", "What score should I target?", "Tips for teaching clarity"];
+  if (q.includes("weak") || q.includes("improve") || q.includes("plan") || q.includes("study") || q.includes("goal"))
+    return ["Create a daily schedule", "What to focus on today?", "Track my progress", "Set weekly targets"];
+  if (q.includes("dsa") || q.includes("algorithm") || q.includes("data structure"))
+    return ["Explain this step by step", "Give me a simpler problem", "What patterns should I know?", "Practice similar problem"];
+  return ["Give me a practice exercise", "What should I focus on next?", "How can I improve faster?"];
+}
+
 function deriveFollowUps(userQuery: string, role: string | null): string[] {
   if (role === "poc") return deriveFollowUpsPOC(userQuery);
+  if (role === "sdi") return deriveFollowUpsSDI(userQuery);
   return deriveFollowUpsManager(userQuery);
 }
 
@@ -244,8 +338,11 @@ function AssistantMessage({ content }: { content: string }) {
 export function AIAssistant() {
   const role = getAuthRole();
   const isPOC = role === "poc";
-  const SHORTCUT_CATEGORIES = isPOC ? POC_CATEGORIES : MANAGER_CATEGORIES;
-  const MORNING_BRIEF = isPOC ? POC_MORNING_BRIEF : MANAGER_MORNING_BRIEF;
+  const isSDI = role === "sdi";
+  const SHORTCUT_CATEGORIES = isSDI ? SDI_CATEGORIES : isPOC ? POC_CATEGORIES : MANAGER_CATEGORIES;
+  const MORNING_BRIEF = isSDI ? SDI_MORNING_BRIEF : isPOC ? POC_MORNING_BRIEF : MANAGER_MORNING_BRIEF;
+
+  const welcomeContent = isSDI ? SDI_WELCOME : isPOC ? POC_WELCOME : MANAGER_WELCOME;
 
   const [open, setOpen] = useState(false);
   const [minimised, setMinimised] = useState(false);
@@ -253,7 +350,7 @@ export function AIAssistant() {
     {
       id: "welcome",
       role: "assistant",
-      content: isPOC ? POC_WELCOME : MANAGER_WELCOME,
+      content: welcomeContent,
       ts: new Date(),
     },
   ]);
@@ -291,7 +388,7 @@ export function AIAssistant() {
       const res = await fetch(`${BASE}/api/assistant/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: content, session_id: sessionId }),
+        body: JSON.stringify({ message: content, session_id: sessionId, role }),
       });
       const data = await res.json();
       setMessages((m) => [...m, {
@@ -318,7 +415,7 @@ export function AIAssistant() {
     setMessages([{
       id: "welcome2",
       role: "assistant",
-      content: isPOC ? POC_WELCOME : MANAGER_WELCOME,
+      content: welcomeContent,
       ts: new Date(),
     }]);
     setShowShortcuts(true);
@@ -360,7 +457,7 @@ export function AIAssistant() {
                 NxtPulse GPT
                 <span className="text-[9px] font-normal px-1.5 py-0.5 rounded-full bg-emerald-100 border border-emerald-300 text-emerald-700">Online</span>
               </p>
-              <p className="text-[10px] text-muted-foreground">{isPOC ? "POC Operations Assistant" : "AI Program Intelligence Assistant"}</p>
+              <p className="text-[10px] text-muted-foreground">{isSDI ? "Your Personal AI Growth Coach" : isPOC ? "POC Operations Assistant" : "AI Program Intelligence Assistant"}</p>
             </div>
             <div className="flex items-center gap-0.5">
               <button
@@ -468,8 +565,8 @@ export function AIAssistant() {
                         <Coffee className="w-3.5 h-3.5" />
                       </div>
                       <div className="text-left flex-1 min-w-0">
-                        <p className="text-xs font-bold text-primary">{isPOC ? "Generate Daily Action Plan" : "Generate Morning Brief"}</p>
-                        <p className="text-[10px] text-muted-foreground">{isPOC ? "Daily ops summary — attendance, standups & follow-ups" : "Daily AI summary — risks, actions & priorities"}</p>
+                        <p className="text-xs font-bold text-primary">{isSDI ? "Get My Daily Focus Plan" : isPOC ? "Generate Daily Action Plan" : "Generate Morning Brief"}</p>
+                        <p className="text-[10px] text-muted-foreground">{isSDI ? "Personalised study plan — topics, demos & goals for today" : isPOC ? "Daily ops summary — attendance, standups & follow-ups" : "Daily AI summary — risks, actions & priorities"}</p>
                       </div>
                       <Zap className="w-3.5 h-3.5 text-primary/60 shrink-0 group-hover:text-primary transition-colors" />
                     </button>
@@ -514,11 +611,12 @@ export function AIAssistant() {
                   {/* Default quick pills when no category selected */}
                   {!activeCat && (
                     <div className="px-3 pb-3 flex flex-wrap gap-1.5">
-                      {[
-                        "Who are my highest-risk trainees?",
-                        "Summarize Cohort-7",
-                        "Who needs attention today?",
-                      ].map((s) => (
+                      {(isSDI
+                        ? ["What should I study today?", "Quiz me on React Hooks", "Give me a no-AI challenge"]
+                        : isPOC
+                        ? ["Who is absent today?", "Who missed standup?", "Show high-risk trainees"]
+                        : ["Who are my highest-risk trainees?", "Summarize Cohort-7", "Who needs attention today?"]
+                      ).map((s) => (
                         <button
                           key={s}
                           onClick={() => send(s)}
@@ -542,7 +640,7 @@ export function AIAssistant() {
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && !e.shiftKey && send()}
-                    placeholder={isPOC ? "Ask about attendance, standups, follow-ups, or trainees..." : "Ask about trainees, cohorts, risks, interventions, or predictions..."}
+                    placeholder={isSDI ? "Ask me to quiz you, build a plan, or explain a topic..." : isPOC ? "Ask about attendance, standups, follow-ups, or trainees..." : "Ask about trainees, cohorts, risks, interventions, or predictions..."}
                     disabled={loading}
                     className="flex-1 bg-transparent text-xs text-foreground placeholder:text-muted-foreground/40 outline-none disabled:opacity-50"
                   />
