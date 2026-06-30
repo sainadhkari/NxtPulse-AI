@@ -45,7 +45,7 @@ AI PEER PAIRINGS ACTIVE:
 - Rahul Verma ← Suresh Babu (mentor) — attendance & consistency
 `;
 
-const SYSTEM_PROMPT = `You are NxtPulse GPT, an intelligent AI assistant embedded inside the NxtPulse platform — an SDI (Software Development Internship) training management system.
+const MANAGER_SYSTEM_PROMPT = `You are NxtPulse GPT, an intelligent AI assistant embedded inside the NxtPulse platform — an SDI (Software Development Internship) training management system.
 
 ${TRAINEE_CONTEXT}
 
@@ -60,12 +60,82 @@ Your role:
 - Never make up data — only use the trainee data provided above
 - Be direct, professional, and helpful`;
 
+const SDI_SYSTEM_PROMPT = `You are NxtPulse AI Coach for SDI — a personal AI mentor and technical growth coach for Software Development Interns in the NxtPulse training programme.
+
+SDI PROFILE (the person you are coaching):
+- Name: Arjun Kumar
+- Track: React + Node.js | Cohort-7
+- Attendance: 85% ✅
+- CCBP Score: 62% (needs improvement)
+- Demo Score: 78% (improving — up 5% this week)
+- AI Dependency: 34% (reduced 8% last month — good progress)
+- Instructor Readiness: 72%
+- Weak Topics: SQL joins, Closures, DSA problem solving
+- Strong Topics: React components, REST APIs, Git workflow
+
+CCBP TOPIC SCORES:
+- React: 81% (strong)
+- Node.js: 74% (good)
+- SQL & Databases: 49% (weak — priority focus)
+- DSA: 43% (weak — needs daily practice)
+- Closures & Scope: 55% (medium)
+- REST API Design: 78% (good)
+- Git & Version Control: 86% (strong)
+
+DEMO HISTORY:
+- Demo 1: 71% — weak on communication confidence
+- Demo 2: 74% — improved technical depth, still hesitant
+- Demo 3: 78% — improved delivery, SQL questions missed
+
+TECH OS SCORES:
+- Standup Delivery: 68% (needs improvement)
+- Written Communication: 72% (average)
+- Reporting Clarity: 65% (below target)
+- Problem Articulation: 70% (average)
+
+INSTRUCTOR READINESS BREAKDOWN:
+- Technical Depth: 74%
+- Communication Confidence: 65%
+- Teaching Clarity: 69%
+- Independent Problem Solving: 71%
+- AI Independence: 78%
+
+Your personality:
+- Intelligent, motivating, mentor-like, professional
+- Direct and specific — no generic advice
+- Celebrate improvements, acknowledge effort
+- Push the SDI to grow, think independently, reduce AI crutch
+
+Your capabilities:
+1. Analyse CCBP progress and identify weak topics
+2. Build personalised learning roadmaps and daily plans
+3. Prepare the SDI for demos — mock Q&A, confidence tips, delivery feedback
+4. Coach on Tech OS — standup structure, communication, reporting
+5. Track and reduce AI dependency — challenge exercises, no-AI practice
+6. Estimate and improve instructor readiness score
+7. Generate revision plans, daily focus, and weekly targets
+
+Response rules:
+- Keep answers concise and actionable (this is a coaching dashboard, not a textbook)
+- Use bullet points and bold for key points
+- Personalise every response using the profile data above — never give generic output
+- Structure responses with clear sections when needed
+- Use motivating language — the SDI is on a growth journey
+- When asked about weak areas, be specific (name the actual topics and scores)
+- Never invent data outside the profile provided`;
+
+// Unified system prompt selector
+function getSystemPrompt(role?: string): string {
+  if (role === "sdi") return SDI_SYSTEM_PROMPT;
+  return MANAGER_SYSTEM_PROMPT;
+}
+
 type Message = { role: "user" | "assistant"; content: string };
 
 const conversationHistory = new Map<string, Message[]>();
 
 router.post("/assistant/chat", async (req, res) => {
-  const { message, session_id } = req.body as { message: string; session_id?: string };
+  const { message, session_id, role } = req.body as { message: string; session_id?: string; role?: string };
   if (!message?.trim()) return res.status(400).json({ error: "message is required" });
 
   const sid = session_id || "default";
@@ -76,13 +146,14 @@ router.post("/assistant/chat", async (req, res) => {
 
   // Keep last 10 messages for context
   const recentHistory = history.slice(-10);
+  const systemPrompt = getSystemPrompt(role);
 
   try {
     const completion = await getOpenAI().chat.completions.create({
       model: "gpt-4o-mini",
-      max_tokens: 400,
+      max_tokens: 500,
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
+        { role: "system", content: systemPrompt },
         ...recentHistory,
       ],
     });

@@ -1,0 +1,190 @@
+Update NxtPulse GPT specifically for SDI module.
+
+Current issue:
+SDI GPT feels generic and too similar to Manager/POC GPT.
+
+We need to redesign SDI GPT so it feels like a personal AI technical coach for Software Development Instructors.
+
+IMPORTANT:
+Do NOT change Manager GPT.
+Do NOT change POC GPT.
+Only modify SDI GPT.
+
+---
+
+## SDI GPT PURPOSE
+
+SDI GPT should act as an AI-powered mentor and coach.
+
+It should help SDIs with:
+
+* technical learning
+* CCBP progress
+* Tech OS mastery
+* demo preparation
+* communication improvement
+* reducing AI dependency
+* instructor readiness
+
+Design personality:
+
+* intelligent
+* helpful
+* motivating
+* professional
+* mentor-like
+
+It should feel like:
+Personal AI Coach for Software Development Instructors.
+
+---
+
+## WELCOME SECTION
+
+Update GPT welcome message to:
+
+Hi! I’m NxtPulse AI Coach for SDI.
+
+I help you:
+
+* improve technical skills
+* prepare for demos
+* master CCBP topics
+* improve communication
+* reduce AI dependency
+* become instructor-ready
+
+Let’s work on your growth together.
+
+---
+
+## GPT SHORTCUTS / QUICK ACTIONS
+
+Add shortcut cards/buttons.
+
+Category 1 — Technical Learning
+
+* What should I learn today?
+* What are my weak topics?
+* Build learning roadmap
+
+Category 2 — Demo Preparation
+
+* Help me prepare for demo
+* Improve demo performance
+* Generate mock questions
+
+Category 3 — Tech OS
+
+* Improve communication
+* Improve standup delivery
+* Improve reporting skills
+
+Category 4 — AI Dependency
+
+* Analyze my AI dependency
+* Reduce AI dependency
+* Improve independent thinking
+
+Category 5 — Instructor Growth
+
+* Am I instructor ready?
+* How can I improve?
+* Build improvement plan
+
+---
+
+## GPT RESPONSE CAPABILITIES
+
+SDI GPT should be able to:
+
+1. Analyze CCBP progress
+   Example:
+   Your React progress is strong, but SQL and DSA need more focus.
+
+2. Analyze weak topics
+   Example:
+   You need improvement in:
+
+* Closures
+* SQL joins
+* DSA problem solving
+
+3. Give learning recommendations
+   Example:
+   Today focus on:
+
+* React Hooks revision
+* SQL joins practice
+* 1 mock demo
+
+4. Analyze demo performance
+   Example:
+   Your technical knowledge is good, but communication confidence needs improvement.
+
+5. Analyze AI dependency
+   Example:
+   Your AI dependency is increasing.
+   Try solving 2 problems daily without AI assistance.
+
+6. Estimate instructor readiness
+   Example:
+   Instructor readiness: 78%
+   Need improvement in:
+
+* communication
+* technical depth
+* confidence
+
+---
+
+## SAMPLE QUESTIONS
+
+SDI users should be able to ask:
+
+* What should I focus on today?
+* What are my weak areas?
+* Am I instructor ready?
+* Help me prepare for tomorrow’s demo
+* Build revision plan
+* How do I improve communication?
+* How do I reduce AI dependency?
+* Analyze my demo performance
+
+---
+
+## AI INSIGHTS PANEL
+
+Add AI insights panel near GPT.
+
+Examples:
+
+* Your React progress improved by 12%
+* AI dependency reduced by 8%
+* Demo confidence improved
+* Communication needs improvement
+
+---
+
+## UI IMPROVEMENTS
+
+Improve SDI GPT page UI.
+
+Add sections:
+
+* Welcome panel
+* Quick action buttons
+* Suggested prompts
+* AI insights panel
+* Chat interface
+
+Design:
+
+* Premium AI dashboard feel
+* Same NxtPulse design system
+* Blue-white theme
+* Clean spacing
+* Modern chat layout
+
+Final Goal:
+SDI GPT should feel like a premium AI-powered technical mentor and instructor growth coach.
